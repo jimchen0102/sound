@@ -11,12 +11,12 @@ export default defineNuxtConfig({
       enabled: true
     },
     config: {
-      apiKey: 'AIzaSyDXqTV6UjZd4lWZiWFq8ihK_gm6j-4uE8A',
-      authDomain: 'sound-ebc19.firebaseapp.com',
-      projectId: 'sound-ebc19',
-      storageBucket: 'sound-ebc19.appspot.com',
-      messagingSenderId: '291203938606',
-      appId: '1:291203938606:web:c402f52640f870a11e22bf'
+      apiKey: process.env.FIREBASE_API_KEY,
+      authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+      messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+      appId: process.env.FIREBASE_APP_ID
     }
   }
 })
