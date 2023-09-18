@@ -13,6 +13,19 @@ module.exports = {
     './error.{js,ts,vue',
     './node_modules/@left4code/tw-starter/**/*.js'
   ],
-  theme: {},
+  theme: {
+    extend: {
+      keyframes: {
+        marquee: {
+          '0%': { backgroundPosition: '0 0' },
+          '100%': { backgroundPosition: '410vh 0' }
+        }
+      },
+      animation: {
+        marquee: 'marquee 40s linear infinite',
+        'marquee-reverse': 'marquee 40s linear reverse infinite'
+      }
+    }
+  },
   plugins: []
 }

@@ -16,8 +16,5 @@ defineProps({
 </script>
 
 <template>
-  <div
-    class="b:2 round @rotate|.5s|linear|infinite"
-    :class="`w:${width} h:${height} by:${color} bx:${color}/.4`"
-  />
+  <div class="h-6 w-6 animate-spin rounded-full border-2" />
 </template>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { onAuthStateChanged } from 'firebase/auth'
-import type { Auth } from 'firebase/auth'
+import { onAuthStateChanged, Auth } from 'firebase/auth'
 
 const auth = useFirebaseAuth()
 onAuthStateChanged(auth as Auth, (user) => {
@@ -16,7 +15,7 @@ onAuthStateChanged(auth as Auth, (user) => {
       <h1 class="text-2xl font-bold text-white md:text-3xl xl:text-4xl">
         探索歌曲
       </h1>
-      <div class="mt-[30px] grid grid-cols-6 gap-x-10 gap-y-6">
+      <div class="mt-[30px] grid grid-cols-6 gap-x-6 gap-y-10">
         <div>
           <div class="group relative">
             <NuxtLink
