@@ -36,7 +36,7 @@
   </p>
   <ul class="mt-5 flex flex-wrap gap-2">
     <li>
-      <div class="relative flex h-7.5 items-center gap-x-1 rounded-full bg-[#212121] px-2.5 text-sm text-white">
+      <div class="flex h-7.5 items-center gap-x-1 rounded-full bg-[#212121] px-2.5 text-sm text-white">
         <span class="opacity-50">
           #
         </span>
