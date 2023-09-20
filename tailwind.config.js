@@ -15,6 +15,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      spacing: {
+        7.5: '1.875rem',
+        15: '3.75rem',
+        25: '6.25rem',
+        35: '8.75rem'
+      },
       keyframes: {
         marquee: {
           '0%': { backgroundPosition: '0 0' },

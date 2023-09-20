@@ -14,14 +14,14 @@ const signIn = async () => {
 </script>
 
 <template>
-  <header class="fixed left-0 top-0 z-[999] flex h-[100px] w-full items-center justify-between px-5 md:px-10 xl:h-[140px] xl:px-20">
+  <header class="fixed left-0 top-0 z-[999] flex h-25 w-full items-center justify-between px-5 lg:h-35 lg:px-10 xl:px-20">
     <NuxtLink to="/">
       <img
         src="@/assets/img/sound-logo.svg"
         alt=""
         width="100"
         height="50"
-        class="w-20 sm:w-auto"
+        class="w-20 lg:w-auto"
       >
     </NuxtLink>
     <nav>
@@ -32,7 +32,7 @@ const signIn = async () => {
         <li>
           <NuxtLink
             to="/manage"
-            class="flex h-[60px] items-center gap-x-2.5 rounded-full bg-[#030303] pl-2.5 pr-6"
+            class="flex h-15 items-center gap-x-2.5 rounded-full bg-[#030303] pl-2.5 pr-6"
           >
             <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[#212121] text-white">
               <div class="h-5 w-5 rounded-full bg-white" />
@@ -45,7 +45,7 @@ const signIn = async () => {
         <li>
           <button
             type="button"
-            class="flex h-[60px] w-[60px] items-center justify-center rounded-full bg-[#030303] text-white"
+            class="flex h-15 w-15 items-center justify-center rounded-full bg-[#030303] text-white"
             @click="signOut(auth as Auth)"
           >
             登出
@@ -55,7 +55,7 @@ const signIn = async () => {
       <button
         v-else
         type="button"
-        class="flex h-[60px] items-center gap-x-2.5 rounded-full bg-[#030303] pl-2.5 pr-6"
+        class="flex h-15 items-center gap-x-2.5 rounded-full bg-[#030303] pl-2.5 pr-6"
         @click="signIn"
       >
         <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[#212121] text-white">
