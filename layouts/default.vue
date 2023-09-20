@@ -1,6 +1,7 @@
 <template>
   <TheBackground />
   <TheHeader />
-  <AuthModal />
   <slot />
+  <AuthModal />
+  <SongPlayer />
 </template>
