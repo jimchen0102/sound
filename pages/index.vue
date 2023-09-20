@@ -14,6 +14,7 @@ onAuthStateChanged(auth as Auth, (user) => {
     <div class="mx-auto max-w-[1500px]">
       <h1 class="text-2xl font-bold text-white md:text-3xl xl:text-4xl">
         探索歌曲
+        <IconPlay />
       </h1>
       <div class="mt-[30px] grid grid-cols-6 gap-x-6 gap-y-10">
         <div>

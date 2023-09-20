@@ -4,14 +4,10 @@
       class="absolute inset-0 bg-[repeating-linear-gradient(40deg,#262626,#262626_3px,#181818_3px,#181818_8px)]"
     />
     <div class="absolute left-1/2 top-1/2 w-[120%] -translate-x-1/2 -translate-y-1/2 rotate-[-12.5deg] [&_div]:h-[20vh] [&_div]:bg-[url('@/assets/img/sound-text-fill.svg')] [&_div]:bg-[length:auto_100%] odd:[&_div]:animate-marquee-reverse odd:[&_div]:opacity-[.05] even:[&_div]:animate-marquee even:[&_div]:opacity-[.025]">
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
-      <div />
+      <div
+        v-for="num in 8"
+        :key="num"
+      />
     </div>
     <div class="absolute bottom-[-20%] left-1/2 top-[20%] -translate-x-1/2 sm:bottom-[-60%] sm:top-[10%]">
       <img class="h-full max-w-none" src="@/assets/img/cd.png" alt="cd">

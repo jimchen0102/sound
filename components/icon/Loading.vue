@@ -1,17 +1,12 @@
-<script setup>
-defineProps({
-  width: {
-    type: [String, Number],
-    default: 24
-  },
-  height: {
-    type: [String, Number],
-    default: 24
-  },
-  color: {
-    type: String,
-    default: 'white'
-  }
+<script setup lang="ts">
+interface Props {
+  size?: number
+  color?: string
+}
+
+withDefaults(defineProps<Props>(), {
+  size: 24,
+  color: 'currentColor'
 })
 </script>
 

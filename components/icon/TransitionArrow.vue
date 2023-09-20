@@ -1,17 +1,12 @@
-<script setup>
-defineProps({
-  width: {
-    type: [String, Number],
-    default: 20
-  },
-  height: {
-    type: [String, Number],
-    default: 20
-  },
-  color: {
-    type: String,
-    default: 'currentColor'
-  }
+<script setup lang="ts">
+interface Props {
+  size?: number
+  color?: string
+}
+
+withDefaults(defineProps<Props>(), {
+  size: 20,
+  color: 'currentColor'
 })
 </script>
 
@@ -19,8 +14,8 @@ defineProps({
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
-    :width="width"
-    :height="height"
+    :width="size"
+    :height="size"
     :fill="color"
     preserveAspectRatio="none"
   >
