@@ -4,7 +4,10 @@ const { modalType, isModalOpen } = useAuthModal()
 
 <template>
   <Teleport to="body">
-    <div class="fixed inset-0 z-[1000] overflow-y-auto overflow-x-hidden bg-[repeating-linear-gradient(40deg,rgba(255,255,255,.1),rgba(255,255,255,.1)_3px,rgba(255,255,255,.05)_3px,rgba(255,255,255,.05)_8px)] backdrop-blur-md">
+    <div
+      v-if="isModalOpen"
+      class="fixed inset-0 z-[1000] overflow-y-auto overflow-x-hidden bg-[repeating-linear-gradient(40deg,rgba(255,255,255,.1),rgba(255,255,255,.1)_3px,rgba(255,255,255,.05)_3px,rgba(255,255,255,.05)_8px)] backdrop-blur-md"
+    >
       <div class="mx-auto my-15 flex min-h-[calc(100%-120px)] max-w-[600px] items-center">
         <div class="relative w-full">
           <button
@@ -17,24 +20,34 @@ const { modalType, isModalOpen } = useAuthModal()
           </button>
           <div class="rounded-[40px] bg-[#030303] lg:rounded-[60px]">
             <div class="p-5 pt-10 lg:px-15 lg:pb-7.5 lg:pt-15">
-              <div class="flex justify-center">
-                <div class="pr-5 lg:pr-7.5">
-                  <h3
-                    class="cursor-pointer text-2xl font-bold lg:text-3xl"
-                    :class="modalType === 'login' ? 'text-white' : 'text-[#696969]'"
+              <div class="flex justify-center divide-x divide-white">
+                <div class="px-5 lg:px-7.5">
+                  <button
+                    type="button"
+                    class="text-2xl font-bold lg:text-3xl"
+                    :class="
+                      modalType === 'login'
+                        ? 'text-white'
+                        : 'text-[#696969]'
+                    "
                     @click="modalType = 'login'"
                   >
                     登入
-                  </h3>
+                  </button>
                 </div>
-                <div class="border-l border-white pl-5 lg:pl-7.5">
-                  <h3
-                    class="cursor-pointer text-2xl font-bold lg:text-3xl"
-                    :class="modalType === 'register' ? 'text-white' : 'text-[#696969]'"
+                <div class="px-5 lg:px-7.5">
+                  <button
+                    type="button"
+                    class="text-2xl font-bold lg:text-3xl"
+                    :class="
+                      modalType === 'register'
+                        ? 'text-white'
+                        : 'text-[#696969]'
+                    "
                     @click="modalType = 'register'"
                   >
                     註冊
-                  </h3>
+                  </button>
                 </div>
               </div>
             </div>

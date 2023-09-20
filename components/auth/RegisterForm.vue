@@ -2,11 +2,18 @@
 import { createUserWithEmailAndPassword, Auth } from 'firebase/auth'
 
 const auth = useFirebaseAuth()
-const { modalType } = useAuthModal()
+const route = useRoute()
+const { modalType, isModalOpen } = useAuthModal()
+
+const handleSubmit = async () => {
+  await createUserWithEmailAndPassword(auth as Auth, 'aa@aa.aa', 'aaaaaa')
+  isModalOpen.value = false
+  if (route.query.redirect) await navigateTo(`${route.query.redirect}`)
+}
 </script>
 
 <template>
-  <form v-if="modalType === 'register'">
+  <form @submit.prevent="handleSubmit">
     <fieldset>
       <div>
         <label
@@ -71,7 +78,6 @@ const { modalType } = useAuthModal()
       <button
         type="submit"
         class="relative mt-10 block h-15 w-full rounded-full bg-[#fff645]"
-        @click="createUserWithEmailAndPassword(auth as Auth, 'aa@aa.aa', 'aaaaaa')"
       >
         <div class="absolute left-2.5 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-[#030303] text-white">
           <IconUser :size="20" />

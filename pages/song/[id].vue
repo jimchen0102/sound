@@ -7,9 +7,9 @@
             <div class="absolute inset-0 backdrop-blur-2xl backdrop-brightness-50" />
             <div class="relative aspect-square overflow-hidden bg-gradient-to-b from-[#383838] to-[#767676] sm:mx-auto sm:max-w-[400px]">
               <img
-                class="h-full w-full object-cover"
                 src="https://firebasestorage.googleapis.com/v0/b/sound-ebc19.appspot.com/o/covers%2FqEVcwq1gQhgKK21zz2v0rfjKnnp1%2F51421d7d-a2df-44e4-90fa-94ee5dd8c9f0?alt=media&amp;token=28df2fa5-d39d-44fd-bfc2-4cb76f4a6eb9"
                 alt="陳約翰 - 當我以為"
+                class="h-full w-full object-cover"
               >
             </div>
           </div>
@@ -22,7 +22,10 @@
                 秘密 • 古典 • 9 個月前
               </h2>
             </div>
-            <button class="relative flex h-16 w-16 items-center justify-center rounded-full bg-[#fff645]" type="button">
+            <button
+              type="button"
+              class="flex h-16 w-16 items-center justify-center rounded-full bg-[#fff645]"
+            >
               <IconPlay />
             </button>
           </div>
@@ -38,7 +41,9 @@
           <ul class="mt-5 flex flex-wrap gap-2">
             <li>
               <div class="relative flex h-7.5 items-center gap-x-1 rounded-full bg-[#212121] px-2.5 text-sm text-white">
-                #
+                <span class="opacity-50">
+                  #
+                </span>
                 <span class="line-clamp-1 max-w-[120px]">
                   陳約翰
                 </span>
@@ -67,7 +72,7 @@
             <form>
               <fieldset>
                 <textarea
-                  class="block h-[200px] w-full resize-none rounded-[30px] border-[3px] border-transparent bg-[#212121] px-7.5 py-5 leading-[1.75] text-white outline-none placeholder:text-white/70 focus:border-[#696969]"
+                  class="block h-40 w-full resize-none rounded-[30px] border-[3px] border-transparent bg-[#212121] px-7.5 py-5 leading-[1.75] text-white outline-none placeholder:text-white/70 focus:border-[#696969]"
                   placeholder="登入會員才能發表評論"
                 />
                 <button

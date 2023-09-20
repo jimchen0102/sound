@@ -2,11 +2,18 @@
 import { signInWithEmailAndPassword, Auth } from 'firebase/auth'
 
 const auth = useFirebaseAuth()
-const { modalType } = useAuthModal()
+const route = useRoute()
+const { modalType, isModalOpen } = useAuthModal()
+
+const handleSubmit = async () => {
+  await signInWithEmailAndPassword(auth as Auth, 'aa@aa.aa', 'aaaaaa')
+  isModalOpen.value = false
+  if (route.query.redirect) await navigateTo(`${route.query.redirect}`)
+}
 </script>
 
 <template>
-  <form @submit="signInWithEmailAndPassword(auth as Auth, 'aa@aa.aa', 'aaaaaa')">
+  <form @submit.prevent="handleSubmit">
     <fieldset>
       <div>
         <label

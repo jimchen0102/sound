@@ -15,7 +15,7 @@ definePageMeta({
           <div class="mt-5 lg:mt-7.5">
             <label
               for="uploadFile"
-              class="flex aspect-square items-center justify-center rounded-[30px] border-2 border-dashed border-[#696969] text-white md:aspect-[3/2]"
+              class="flex aspect-square items-center justify-center rounded-[30px] border-2 border-dashed border-[#696969] text-white hover:bg-[#212121] md:aspect-[3/2]"
             >
               <div>
                 <IconUpload
@@ -34,7 +34,12 @@ definePageMeta({
                 </h3>
               </div>
             </label>
-            <input id="uploadFile" class="hidden" type="file">
+            <input
+              id="uploadFile"
+              type="file"
+              class="hidden"
+              multiple
+            >
           </div>
         </div>
         <div>

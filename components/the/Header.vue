@@ -3,7 +3,13 @@ import { signOut, Auth } from 'firebase/auth'
 
 const auth = useFirebaseAuth()
 const user = useCurrentUser()
+const route = useRoute()
 const { isModalOpen } = useAuthModal()
+
+const handleClick = async () => {
+  await signOut(auth as Auth)
+  if (route.name === 'manage') await navigateTo('/')
+}
 </script>
 
 <template>
@@ -11,16 +17,14 @@ const { isModalOpen } = useAuthModal()
     <NuxtLink to="/">
       <img
         src="@/assets/img/sound-logo.svg"
-        alt=""
-        width="100"
-        height="50"
+        alt="SOUND"
         class="w-20 lg:w-auto"
       >
     </NuxtLink>
     <nav>
       <ul
         v-if="user"
-        class="flex items-center gap-x-2.5"
+        class="flex items-center gap-x-2.5 lg:gap-x-5"
       >
         <li>
           <NuxtLink
@@ -39,9 +43,9 @@ const { isModalOpen } = useAuthModal()
           <button
             type="button"
             class="flex h-15 w-15 items-center justify-center rounded-full bg-[#030303] text-white"
-            @click="signOut(auth as Auth)"
+            @click="handleClick"
           >
-            登出
+            <IconLogout />
           </button>
         </li>
       </ul>
@@ -63,6 +67,4 @@ const { isModalOpen } = useAuthModal()
       </button>
     </nav>
   </header>
-
-  <AuthModal v-if="isModalOpen" />
 </template>
