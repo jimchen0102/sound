@@ -1,16 +1,10 @@
 <script setup lang="ts">
-import { signInWithEmailAndPassword, signOut, Auth } from 'firebase/auth'
+import { signOut, Auth } from 'firebase/auth'
 
 const auth = useFirebaseAuth()
 const user = useCurrentUser()
 
-const isLoading = ref(false)
-
-const signIn = async () => {
-  isLoading.value = true
-  await signInWithEmailAndPassword(auth as Auth, 'aa@aa.aa', 'aaaaaa')
-  isLoading.value = false
-}
+const isModalOpen = ref(false)
 </script>
 
 <template>
@@ -56,7 +50,7 @@ const signIn = async () => {
         v-else
         type="button"
         class="flex h-15 items-center gap-x-2.5 rounded-full bg-[#030303] pl-2.5 pr-6"
-        @click="signIn"
+        @click="isModalOpen = true"
       >
         <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[#212121] text-white">
           <IconUser
@@ -70,4 +64,6 @@ const signIn = async () => {
       </button>
     </nav>
   </header>
+
+  <AuthModal v-if="isModalOpen" />
 </template>
