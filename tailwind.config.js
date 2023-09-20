@@ -21,7 +21,8 @@ module.exports = {
         15: '3.75rem',
         25: '6.25rem',
         30: '7.5rem',
-        35: '8.75rem'
+        35: '8.75rem',
+        45: '11.25rem'
       },
       keyframes: {
         marquee: {

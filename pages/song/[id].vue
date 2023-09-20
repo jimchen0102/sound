@@ -50,73 +50,7 @@
               </div>
             </li>
           </ul>
-          <div class="mt-15 flex items-center justify-between gap-x-7.5 lg:mt-10 lg:justify-start">
-            <span class="text-white">
-              5 則留言
-            </span>
-            <div class="relative text-white">
-              <select class="block h-10 w-[180px] appearance-none bg-transparent outline-none">
-                <option value="descending" class="text-black">
-                  排序依據 (由新到舊)
-                </option>
-                <option value="ascending" class="text-black">
-                  排序依據 (由舊到新)
-                </option>
-              </select>
-              <div class="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2">
-                <IconAdjust />
-              </div>
-            </div>
-          </div>
-          <div class="relative mt-5">
-            <form>
-              <fieldset>
-                <textarea
-                  class="block h-40 w-full resize-none rounded-[30px] border-[3px] border-transparent bg-[#212121] px-7.5 py-5 leading-[1.75] text-white outline-none placeholder:text-white/70 focus:border-[#696969]"
-                  placeholder="登入會員才能發表評論"
-                />
-                <button
-                  type="button"
-                  class="relative mx-auto -mt-7.5 block h-15 w-40 rounded-full border-[3px] border-[#030303] bg-[#212121] text-white hover:bg-[#383838]"
-                >
-                  登入 / 註冊
-                </button>
-              </fieldset>
-            </form>
-          </div>
-          <div class="relative mt-7.5">
-            <ul class="space-y-7.5">
-              <li>
-                <div class="relative">
-                  <div class="flex items-center gap-x-2">
-                    <h3 class="line-clamp-1 font-bold text-white lg:text-lg">
-                      秘密
-                    </h3>
-                    <span class="text-xs text-white/50">
-                      9 個月前
-                    </span>
-                  </div>
-                  <p class="mt-1 whitespace-pre-wrap text-sm leading-[1.75] text-white/70">
-                    當我以為我忘記你了
-                    <br>
-                    當我以為我不念舊了
-                    <br>
-                    當我以為我痊癒了
-                    <br>
-                    但都只是自己騙自己的
-                    <br>
-                    當我以為我能夠負荷
-                    <br>
-                    當我以為我已經自由了
-                    <br>
-                    當我以為我不在意了
-                    <br>
-                    當我以為我已經走遠了
-                  </p>
-                </div>
-              </li>
-            </ul>
-          </div>
+          <CommentPost />
         </div>
         <div class="lg:col-span-2">
           <h2 class="text-2xl font-bold text-white lg:text-3xl">
