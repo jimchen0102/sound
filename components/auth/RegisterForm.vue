@@ -2,6 +2,7 @@
 import { createUserWithEmailAndPassword, Auth } from 'firebase/auth'
 
 const auth = useFirebaseAuth()
+const { modalType } = useAuthModal()
 </script>
 
 <template>

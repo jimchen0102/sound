@@ -3,8 +3,7 @@ import { signOut, Auth } from 'firebase/auth'
 
 const auth = useFirebaseAuth()
 const user = useCurrentUser()
-
-const isModalOpen = ref(false)
+const { isModalOpen } = useAuthModal()
 </script>
 
 <template>
