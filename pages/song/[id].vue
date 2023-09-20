@@ -1,5 +1,5 @@
 <template>
-  <div class="relative mt-25 min-h-[calc(100vh-100px)] rounded-t-[40px] bg-[#030303] px-5 pb-35 pt-12 lg:mt-35 lg:min-h-[calc(100vh-140px)] lg:rounded-t-[60px] lg:px-10 lg:pt-20 xl:px-20">
+  <div class="relative mt-25 min-h-[calc(100vh-100px)] rounded-t-[40px] bg-[#030303] px-5 pb-35 pt-12.5 lg:mt-35 lg:min-h-[calc(100vh-140px)] lg:rounded-t-[60px] lg:px-10 lg:pt-20 xl:px-20">
     <div class="mx-auto max-w-[1500px]">
       <div class="grid grid-cols-1 gap-x-10 gap-y-15 lg:grid-cols-5">
         <div class="lg:col-span-3">
@@ -14,8 +14,8 @@
             </div>
           </div>
           <div class="mt-7.5 flex gap-x-5">
-            <div class="mt-1.5 flex-1 md:mt-0">
-              <h1 class="text-2xl font-bold text-white md:text-3xl">
+            <div class="mt-1.5 flex-1 lg:mt-0">
+              <h1 class="text-2xl font-bold text-white lg:text-3xl">
                 陳約翰 - 當我以為
               </h1>
               <h2 class="mt-1 text-sm text-white/50">
@@ -45,7 +45,7 @@
               </div>
             </li>
           </ul>
-          <div class="mt-15 flex items-center justify-between gap-x-7.5 md:mt-10 md:justify-start">
+          <div class="mt-15 flex items-center justify-between gap-x-7.5 lg:mt-10 lg:justify-start">
             <span class="text-white">
               5 則留言
             </span>
@@ -84,7 +84,7 @@
               <li>
                 <div class="relative">
                   <div class="flex items-center gap-x-2">
-                    <h3 class="line-clamp-1 font-bold text-white md:text-lg">
+                    <h3 class="line-clamp-1 font-bold text-white lg:text-lg">
                       秘密
                     </h3>
                     <span class="text-xs text-white/50">
@@ -114,10 +114,10 @@
           </div>
         </div>
         <div class="lg:col-span-2">
-          <h2 class="text-2xl font-bold text-white md:text-3xl">
+          <h2 class="text-2xl font-bold text-white lg:text-3xl">
             更多歌曲
           </h2>
-          <div class="relative mt-5 md:mt-7.5">
+          <div class="mt-5 lg:mt-7.5">
             <ul>
               <li class="border-b border-white/10">
                 <div class="group flex items-center gap-x-4 rounded p-2 hover:bg-[#212121]">
