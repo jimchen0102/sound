@@ -6,7 +6,7 @@ const user = useCurrentUser()
 const route = useRoute()
 const { isModalOpen } = useModal('auth')
 
-const handleClick = async () => {
+const handleSignOut = async () => {
   await signOut(auth as Auth)
   if (route.name === 'manage') await navigateTo('/')
 }
@@ -43,7 +43,7 @@ const handleClick = async () => {
           <button
             type="button"
             class="flex h-15 w-15 items-center justify-center rounded-full bg-[#030303] text-white"
-            @click="handleClick"
+            @click="handleSignOut"
           >
             <Icon name="Logout" />
           </button>
@@ -67,4 +67,10 @@ const handleClick = async () => {
       </button>
     </nav>
   </header>
+
+  <Teleport to="body">
+    <Transition name="fade">
+      <AuthModal v-if="isModalOpen" />
+    </Transition>
+  </Teleport>
 </template>
