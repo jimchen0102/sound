@@ -1,10 +1,8 @@
 <script setup lang="ts">
-interface Props {
+withDefaults(defineProps<{
   size?: number
-  color?: string
-}
-
-withDefaults(defineProps<Props>(), {
+  color: string
+}>(), {
   size: 20,
   color: 'currentColor'
 })

@@ -1,17 +1,12 @@
-<script setup>
-defineProps({
-  width: {
-    type: [String, Number],
-    default: 28
-  },
-  height: {
-    type: [String, Number],
-    default: 10
-  },
-  color: {
-    type: String,
-    default: 'currentColor'
-  }
+<script setup lang="ts">
+withDefaults(defineProps<{
+  width: string | number,
+  height: string | number,
+  color: string
+}>(), {
+  width: 28,
+  height: 10,
+  color: 'currentColor'
 })
 </script>
 
