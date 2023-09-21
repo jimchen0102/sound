@@ -6,5 +6,5 @@
       </li>
     </ul>
   </div>
-  <!-- <SongModifyModal /> -->
+  <SongModifyModal />
 </template>

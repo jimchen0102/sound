@@ -1,3 +1,7 @@
+<script setup lang="ts">
+const { isModalOpen } = useModal('modify')
+</script>
+
 <template>
   <div class="flex items-center gap-x-5 rounded p-2 hover:bg-[#212121]">
     <div class="flex flex-1 items-center gap-x-4">
@@ -23,14 +27,21 @@
       <button
         type="button"
         class="flex h-10 w-10 items-center justify-center text-white/50 hover:text-white"
+        @click="isModalOpen = true"
       >
-        <IconEdit :size="20" />
+        <Icon
+          name="Edit"
+          :size="20"
+        />
       </button>
       <button
         type="button"
         class="flex h-10 w-10 items-center justify-center text-white/50 hover:text-white"
       >
-        <IconDelete :size="20" />
+        <Icon
+          name="Delete"
+          :size="20"
+        />
       </button>
     </div>
   </div>

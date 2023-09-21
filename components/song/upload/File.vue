@@ -4,7 +4,8 @@
     class="flex aspect-square items-center justify-center rounded-[30px] border-2 border-dashed border-[#696969] text-white hover:bg-[#212121] md:aspect-[3/2]"
   >
     <div>
-      <IconUpload
+      <Icon
+        name="Upload"
         :size="40"
         class="mx-auto"
       />

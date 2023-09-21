@@ -7,7 +7,10 @@
         alt=""
       >
       <div class="absolute inset-0 z-10 flex items-center justify-center bg-black/10 text-white">
-        <IconPlay :size="20" />
+        <Icon
+          name="Play"
+          :size="20"
+        />
       </div>
     </div>
     <div class="flex-1">

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { modalType, isModalOpen } = useAuthModal()
+const { modalType, isModalOpen } = useModal('auth')
 </script>
 
 <template>

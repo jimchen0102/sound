@@ -3,7 +3,7 @@ import { signInWithEmailAndPassword, Auth } from 'firebase/auth'
 
 const auth = useFirebaseAuth()
 const route = useRoute()
-const { modalType, isModalOpen } = useAuthModal()
+const { modalType, isModalOpen } = useModal('auth')
 
 const handleSubmit = async () => {
   await signInWithEmailAndPassword(auth as Auth, 'aa@aa.aa', 'aaaaaa')
@@ -50,7 +50,10 @@ const handleSubmit = async () => {
         class="relative mt-10 block h-15 w-full rounded-full bg-[#fff645]"
       >
         <div class="absolute left-2.5 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-[#030303] text-white">
-          <IconUser :size="20" />
+          <Icon
+            name="User"
+            :size="20"
+          />
         </div>
         <span class="text-lg font-bold">
           登入

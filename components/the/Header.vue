@@ -4,7 +4,7 @@ import { signOut, Auth } from 'firebase/auth'
 const auth = useFirebaseAuth()
 const user = useCurrentUser()
 const route = useRoute()
-const { isModalOpen } = useAuthModal()
+const { isModalOpen } = useModal('auth')
 
 const handleClick = async () => {
   await signOut(auth as Auth)
@@ -45,7 +45,7 @@ const handleClick = async () => {
             class="flex h-15 w-15 items-center justify-center rounded-full bg-[#030303] text-white"
             @click="handleClick"
           >
-            <IconLogout />
+            <Icon name="Logout" />
           </button>
         </li>
       </ul>
@@ -56,9 +56,9 @@ const handleClick = async () => {
         @click="isModalOpen = true"
       >
         <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[#212121] text-white">
-          <IconUser
-            width="20"
-            height="20"
+          <Icon
+            name="User"
+            :size="20"
           />
         </div>
         <span class="font-bold text-white">

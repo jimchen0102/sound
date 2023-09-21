@@ -1,13 +1,10 @@
 <script setup lang="ts">
 interface Props {
-  size?: number
-  color?: string
+  size: number
+  color: string
 }
 
-withDefaults(defineProps<Props>(), {
-  size: 24,
-  color: 'currentColor'
-})
+defineProps<Props>()
 </script>
 
 <template>

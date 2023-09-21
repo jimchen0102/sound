@@ -22,7 +22,7 @@
       type="button"
       class="flex h-16 w-16 items-center justify-center rounded-full bg-[#fff645]"
     >
-      <IconPlay />
+      <Icon name="Play" />
     </button>
   </div>
   <p class="mt-5 whitespace-pre-wrap leading-[1.75] text-white/70">

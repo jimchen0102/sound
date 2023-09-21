@@ -14,7 +14,10 @@
       type="button"
       class="invisible absolute bottom-5 right-5 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-[#030303] text-white opacity-0 group-hover:visible group-hover:opacity-100"
     >
-      <IconPlay :size="20" />
+      <Icon
+        name="Play"
+        :size="20"
+      />
     </button>
   </div>
   <h2 class="mt-4 line-clamp-2 font-bold leading-tight text-white">
