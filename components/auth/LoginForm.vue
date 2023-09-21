@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { signInWithEmailAndPassword, Auth } from 'firebase/auth'
+import { AuthType } from '@/types'
+
+defineEmits<{(e: 'change-auth-type', value: AuthType): void}>()
 
 const auth = useFirebaseAuth()
 const route = useRoute()
-const { modalType, isModalOpen } = useModal('auth')
+const { isModalOpen } = useModal('auth')
 
 const handleSubmit = async () => {
   await signInWithEmailAndPassword(auth as Auth, 'aa@aa.aa', 'aaaaaa')
@@ -64,7 +67,7 @@ const handleSubmit = async () => {
       還沒有帳號嗎？
       <span
         class="cursor-pointer underline"
-        @click="modalType = 'register'"
+        @click="$emit('change-auth-type', AuthType.REGISTER)"
       >
         註冊
       </span>

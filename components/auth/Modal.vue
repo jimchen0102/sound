@@ -1,5 +1,8 @@
 <script setup lang="ts">
-const { modalType, isModalOpen } = useModal('auth')
+import { AuthType } from '@/types'
+
+const { isModalOpen } = useModal('auth')
+const authType = ref<AuthType>(AuthType.LOGIN)
 </script>
 
 <template>
@@ -26,11 +29,11 @@ const { modalType, isModalOpen } = useModal('auth')
                     type="button"
                     class="text-2xl font-bold lg:text-3xl"
                     :class="
-                      modalType === 'login'
+                      authType === AuthType.LOGIN
                         ? 'text-white'
                         : 'text-[#696969]'
                     "
-                    @click="modalType = 'login'"
+                    @click="authType = AuthType.LOGIN"
                   >
                     登入
                   </button>
@@ -40,11 +43,11 @@ const { modalType, isModalOpen } = useModal('auth')
                     type="button"
                     class="text-2xl font-bold lg:text-3xl"
                     :class="
-                      modalType === 'register'
+                      authType === AuthType.REGISTER
                         ? 'text-white'
                         : 'text-[#696969]'
                     "
-                    @click="modalType = 'register'"
+                    @click="authType = AuthType.REGISTER"
                   >
                     註冊
                   </button>
@@ -52,8 +55,14 @@ const { modalType, isModalOpen } = useModal('auth')
               </div>
             </div>
             <div class="rounded-[40px] bg-[#212121] px-5 py-7.5 lg:rounded-[60px] lg:p-10">
-              <AuthLoginForm v-if="modalType === 'login'" />
-              <AuthRegisterForm v-if="modalType === 'register'" />
+              <AuthLoginForm
+                v-if="authType === AuthType.LOGIN"
+                @change-auth-type="(type) => authType = type"
+              />
+              <AuthRegisterForm
+                v-if="authType === AuthType.REGISTER"
+                @change-auth-type="(type) => authType = type"
+              />
             </div>
           </div>
         </div>
