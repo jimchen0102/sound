@@ -4,11 +4,9 @@
       <div class="grid grid-cols-1 gap-x-10 gap-y-15 lg:grid-cols-5">
         <div class="lg:col-span-3">
           <SongInformation />
+          <CommentPost />
         </div>
         <div class="lg:col-span-2">
-          <h2 class="text-2xl font-bold text-white lg:text-3xl">
-            更多歌曲
-          </h2>
           <SongBadge />
         </div>
       </div>

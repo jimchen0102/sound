@@ -46,5 +46,4 @@
       </div>
     </li>
   </ul>
-  <CommentPost />
 </template>
