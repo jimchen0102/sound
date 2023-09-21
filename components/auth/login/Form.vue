@@ -7,16 +7,17 @@ defineEmits<{(e: 'change-auth-type', value: AuthType): void}>()
 
 const auth = useFirebaseAuth()
 const route = useRoute()
+
 const { isModalOpen } = useModal('auth')
+
 const { handleSubmit } = useForm({
   validationSchema: yup.object({
-    email: yup.string().required().email(),
-    password: yup.string().required().min(6)
+    email: yup.string().required('電子郵件為必填').email('須為有效的電子信箱'),
+    password: yup.string().required('密碼為必填')
   })
 })
 
 const onSubmit = handleSubmit(async ({ email, password }) => {
-  console.log(email, password)
   await signInWithEmailAndPassword(auth as Auth, email, password)
   isModalOpen.value = false
   if (route.query.redirect) await navigateTo(`${route.query.redirect}`)

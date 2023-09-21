@@ -8,7 +8,10 @@ const props = withDefaults(defineProps<{
   type: 'text'
 })
 
-const { value, errorMessage } = useField(() => props.name)
+const { value, errorMessage, handleChange } = useField(
+  () => props.name, undefined, {
+    validateOnValueUpdate: false
+  })
 </script>
 
 <template>
@@ -19,12 +22,22 @@ const { value, errorMessage } = useField(() => props.name)
     >
       {{ label }}
     </label>
-    <input
-      :id="id"
-      v-model="value"
-      :type="type"
-      class="mt-2 block h-15 w-full rounded-full border-[3px] border-transparent bg-[#030303] pl-6 pr-12 text-white outline-none focus:border-[#696969]"
-    >
+    <div class="relative">
+      <input
+        :id="id"
+        :value="value"
+        :type="type"
+        class="mt-2 block h-15 w-full rounded-full border-[3px] bg-[#030303] pl-6 pr-12 text-white outline-none"
+        :class="errorMessage ? 'border-[#ee2828]' : 'border-transparent focus:border-[#696969]'"
+        @change="handleChange"
+      >
+      <div
+        v-if="errorMessage"
+        class="absolute right-5 top-1/2 -translate-y-1/2 text-[#ee2828]"
+      >
+        <Icon name="Alert" />
+      </div>
+    </div>
     <span
       v-if="errorMessage"
       class="mt-1.5 inline-block text-sm text-[#ee2828]"
