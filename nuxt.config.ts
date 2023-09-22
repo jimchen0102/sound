@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   // devtools: { enabled: true },
-  ssr: false,
+  ssr: true,
   modules: [
     'nuxt-vuefire',
     '@nuxtjs/tailwindcss',
@@ -9,7 +9,8 @@ export default defineNuxtConfig({
   ],
   vuefire: {
     auth: {
-      enabled: true
+      enabled: true,
+      sessionCookie: true
     },
     config: {
       apiKey: process.env.FIREBASE_API_KEY,

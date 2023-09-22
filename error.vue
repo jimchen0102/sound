@@ -1,7 +1,5 @@
 <script setup lang="ts">
-clearError({
-  redirect: '/'
-})
+await navigateTo('/')
 </script>
 
 <template>

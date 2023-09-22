@@ -3,8 +3,10 @@ import { onAuthStateChanged, Auth } from 'firebase/auth'
 
 const auth = useFirebaseAuth()
 
-onAuthStateChanged(auth as Auth, (user) => {
-  console.log('onAuthStateChanged', user)
+onMounted(() => {
+  onAuthStateChanged(auth as Auth, (user) => {
+    console.log('onAuthStateChanged', user)
+  })
 })
 </script>
 
