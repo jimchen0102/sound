@@ -28,25 +28,21 @@ const onSubmit = handleSubmit(async ({ name, email, password, passwordConfirm })
 </script>
 
 <template>
-  <form @submit.prevent="onSubmit">
+  <form @submit="onSubmit">
     <div class="space-y-5">
       <BaseInput
-        id="registerName"
         name="name"
         label="該如何稱呼你？"
       />
       <BaseInput
-        id="registerEmail"
         name="email"
         label="你的電子郵件是什麼？"
       />
       <BaseInput
-        id="registerPassword"
         name="password"
         label="密碼"
       />
       <BaseInput
-        id="registerPasswordConfirm"
         name="passwordConfirm"
         label="確認密碼"
       />

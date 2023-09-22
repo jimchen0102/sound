@@ -1,5 +1,34 @@
 <script setup lang="ts">
+import * as yup from 'yup'
+
 const { isModalOpen } = useModal('modify')
+
+const genres = [
+  { title: '無', value: '' },
+  { title: '流行', value: '流行' },
+  { title: '搖滾', value: '搖滾' },
+  { title: '饒舌', value: '饒舌' },
+  { title: '古典', value: '古典' },
+  { title: '藍調', value: '藍調' },
+  { title: '爵士', value: '爵士' },
+  { title: '鄉村', value: '鄉村' }
+]
+
+const { handleSubmit } = useForm({
+  initialValues: {
+    title: '',
+    genre: '',
+    description: '',
+    tags: []
+  },
+  validationSchema: yup.object({
+    title: yup.string().required('歌曲名稱為必填')
+  })
+})
+
+const onSubmit = handleSubmit((values) => {
+  console.log(values)
+})
 </script>
 
 <template>
@@ -21,87 +50,43 @@ const { isModalOpen } = useModal('modify')
             </h3>
           </div>
           <div class="rounded-[40px] bg-[#212121] px-5 py-7.5 lg:rounded-[60px] lg:p-10">
-            <form>
-              <fieldset>
-                <div>
-                  <label
-                    class="relative mx-auto block aspect-square max-w-[200px] overflow-hidden rounded-lg border-2 border-dashed border-white/50 bg-gradient-to-b from-[#383838] to-[#767676] hover:border-white"
-                    for="uploadCover"
+            <form @submit="onSubmit">
+              <div>
+                <label
+                  class="relative mx-auto block aspect-square max-w-[200px] overflow-hidden rounded-lg border-2 border-dashed border-white/50 bg-gradient-to-b from-[#383838] to-[#767676] hover:border-white"
+                  for="uploadCover"
+                >
+                  <img
+                    src="https://firebasestorage.googleapis.com/v0/b/sound-ebc19.appspot.com/o/covers%2FqEVcwq1gQhgKK21zz2v0rfjKnnp1%2F51421d7d-a2df-44e4-90fa-94ee5dd8c9f0?alt=media&amp;token=28df2fa5-d39d-44fd-bfc2-4cb76f4a6eb9"
+                    alt=""
+                    class="h-full w-full object-cover"
                   >
-                    <img
-                      src="https://firebasestorage.googleapis.com/v0/b/sound-ebc19.appspot.com/o/covers%2FqEVcwq1gQhgKK21zz2v0rfjKnnp1%2F51421d7d-a2df-44e4-90fa-94ee5dd8c9f0?alt=media&amp;token=28df2fa5-d39d-44fd-bfc2-4cb76f4a6eb9"
-                      alt=""
-                      class="h-full w-full object-cover"
-                    >
-                    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white">
-                      <Icon
-                        name="Camera"
-                        :size="36"
-                      />
-                    </div>
-                  </label>
-                  <input id="uploadCover" type="file" class="hidden">
-                  <h3 class="relative mt-5 text-center font-bold text-white lg:text-xl">
-                    上傳歌曲封面 <br>
-                    <span class="text-sm text-white/50">
-                      支援檔案類型：JPG、PNG。≤1MB
-                    </span>
-                  </h3>
-                </div>
-                <div class="mt-7.5">
-                  <label class="font-bold text-white lg:text-lg">
-                    歌曲名稱
-                  </label>
-                  <div class="relative">
-                    <input
-                      type="text"
-                      class="mt-2 block h-15 w-full rounded-full border-[3px] border-transparent bg-[#030303] px-6 text-white outline-none focus:border-[#696969]"
-                    >
+                  <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white">
+                    <Icon
+                      name="Camera"
+                      :size="36"
+                    />
                   </div>
-                </div>
-                <div class="mt-5">
-                  <label class="font-bold text-white lg:text-lg">
-                    曲風
-                  </label>
-                  <div class="relative">
-                    <select
-                      class="mt-2 block h-15 w-full appearance-none rounded-full border-[3px] border-transparent bg-[#030303] px-6 text-white outline-none focus:border-[#696969]"
-                      name="genre"
-                    >
-                      <option value="無">
-                        無
-                      </option>
-                      <option value="流行">
-                        流行
-                      </option>
-                      <option value="搖滾">
-                        搖滾
-                      </option>
-                      <option value="饒舌">
-                        饒舌
-                      </option>
-                      <option value="古典">
-                        古典
-                      </option>
-                      <option value="藍調">
-                        藍調
-                      </option>
-                      <option value="爵士">
-                        爵士
-                      </option>
-                      <option value="鄉村">
-                        鄉村
-                      </option>
-                    </select>
-                    <div class="absolute right-6 top-1/2 -translate-y-1/2 text-white">
-                      <Icon
-                        name="SelectArrow"
-                        :size="16"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="mt-5">
+                </label>
+                <input id="uploadCover" type="file" class="hidden">
+                <h3 class="relative mt-5 text-center font-bold text-white lg:text-xl">
+                  上傳歌曲封面 <br>
+                  <span class="text-sm text-white/50">
+                    支援檔案類型：JPG、PNG。≤1MB
+                  </span>
+                </h3>
+              </div>
+              <div class="mt-7.5 space-y-5">
+                <BaseInput
+                  name="title"
+                  label="歌曲名稱"
+                />
+                <BaseSelect
+                  name="genre"
+                  label="曲風"
+                  :options="genres"
+                />
+                <div>
                   <label class="font-bold text-white lg:text-lg">
                     描述
                   </label>
@@ -110,7 +95,7 @@ const { isModalOpen } = useModal('modify')
                     type="text"
                   />
                 </div>
-                <div class="mt-5">
+                <div>
                   <label class="font-bold text-white lg:text-lg">
                     附加標籤
                   </label>
@@ -131,23 +116,21 @@ const { isModalOpen } = useModal('modify')
                     >
                   </div>
                 </div>
-                <div
-                  class="relative mx-auto mt-5 flex h-15 w-50 overflow-hidden rounded-full border-[3px] border-[#030303] bg-[#212121]"
+              </div>
+              <div
+                class="relative mx-auto mt-5 flex h-15 w-50 overflow-hidden rounded-full border-[3px] border-[#030303] bg-[#212121]"
+              >
+                <button class="flex h-full w-1/2 items-center justify-center text-white hover:bg-[#383838]">
+                  <span>確定</span>
+                </button>
+                <button
+                  type="button"
+                  class="flex h-full w-1/2 items-center justify-center text-white hover:bg-[#383838]"
+                  @click="isModalOpen = false"
                 >
-                  <button
-                    type="submit"
-                    class="flex h-full w-1/2 items-center justify-center text-white hover:bg-[#383838]"
-                  >
-                    <span>確定</span>
-                  </button>
-                  <button
-                    type="button"
-                    class="flex h-full w-1/2 items-center justify-center text-white hover:bg-[#383838]"
-                  >
-                    取消
-                  </button>
-                </div>
-              </fieldset>
+                  取消
+                </button>
+              </div>
             </form>
           </div>
         </div>

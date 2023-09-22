@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{
-  id: string
   name: string
   type?: string
   label: string
@@ -16,19 +15,17 @@ const { value, errorMessage, handleChange } = useField(
 
 <template>
   <div>
-    <label
-      :for="id"
-      class="font-bold text-white lg:text-lg"
-    >
+    <label class="font-bold text-white lg:text-lg">
       {{ label }}
     </label>
-    <div class="relative">
+    <div class="relative mt-2">
       <input
-        :id="id"
         :value="value"
         :type="type"
-        class="mt-2 block h-15 w-full rounded-full border-[3px] bg-[#030303] pl-6 pr-12 text-white outline-none"
-        :class="errorMessage ? 'border-[#ee2828]' : 'border-transparent focus:border-[#696969]'"
+        class="block h-15 w-full rounded-full border-[3px] border-transparent bg-[#030303] pl-6 pr-12 text-white outline-none focus:border-[#696969]"
+        :class="{
+          '!border-[#ee2828]': errorMessage
+        }"
         @change="handleChange"
       >
       <div

@@ -28,12 +28,10 @@ const onSubmit = handleSubmit(async ({ email, password }) => {
   <form @submit="onSubmit">
     <div class="space-y-5">
       <BaseInput
-        id="loginEmail"
         name="email"
         label="電子郵件"
       />
       <BaseInput
-        id="loginPassword"
         name="password"
         type="password"
         label="密碼"
