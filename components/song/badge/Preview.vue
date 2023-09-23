@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="flex items-center gap-x-4 rounded p-2 hover:bg-[#212121]">
+  <div class="group flex items-center gap-x-4 rounded p-2 hover:bg-[#212121]">
     <div class="relative aspect-square w-16 cursor-pointer overflow-hidden rounded bg-gradient-to-b from-[#383838] to-[#767676]">
       <img
         v-if="song.coverUrl"
@@ -15,7 +15,7 @@ defineProps<{
         :alt="song.title"
         class="h-full w-full object-cover"
       >
-      <div class="absolute inset-0 z-10 flex items-center justify-center bg-black/10 text-white">
+      <div class="absolute inset-0 z-10 flex items-center justify-center bg-black/80 text-white opacity-0 group-hover:opacity-100">
         <Icon
           name="Play"
           :size="20"

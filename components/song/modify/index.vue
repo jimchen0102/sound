@@ -1,5 +1,38 @@
 <script setup lang="ts">
+import {
+  collection,
+  query,
+  where,
+  orderBy,
+  getDocs,
+  DocumentData
+} from 'firebase/firestore'
+
 const { isModalOpen } = useModal('modify')
+
+const user = useCurrentUser()
+const db = useFirestore()
+const songsCollection = collection(db, 'songs')
+
+const songs = ref<DocumentData[]>([])
+
+const getSongsData = async () => {
+  const q = query(
+    songsCollection,
+    where('uid', '==', user.value?.uid),
+    orderBy('createdAt', 'desc')
+  )
+  const snapshot = await getDocs(q)
+
+  snapshot.forEach((doc) => {
+    songs.value.push({
+      ...doc.data(),
+      docID: doc.id
+    })
+  })
+}
+
+await getSongsData()
 </script>
 
 <template>
@@ -8,8 +41,12 @@ const { isModalOpen } = useModal('modify')
   </h2>
   <div class="mt-5 lg:mt-7.5">
     <ul>
-      <li class="border-b border-white/10">
-        <SongModifyPreview />
+      <li
+        v-for="song in songs"
+        :key="song.docID"
+        class="border-b border-white/10"
+      >
+        <SongModifyPreview :song="song" />
       </li>
     </ul>
   </div>
