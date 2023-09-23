@@ -11,6 +11,7 @@ module.exports = {
   rules: {
     'vue/no-multiple-template-root': 'off',
     'vue/multi-word-component-names': 'off',
+    'import/no-duplicates': 'off',
     curly: 'off'
   }
 }

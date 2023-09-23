@@ -21,6 +21,7 @@
     "@firebase/app-types": "^0.9.0",
     "@vee-validate/nuxt": "^4.11.6",
     "@vee-validate/yup": "^4.11.6",
+    "date-fns": "^2.30.0",
     "firebase": "^10.4.0",
     "firebase-admin": "^11.10.1",
     "firebase-functions": "^4.4.1",

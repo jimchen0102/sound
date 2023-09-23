@@ -13,7 +13,7 @@ defineProps<{
         {{ comment.name }}
       </h3>
       <span class="text-xs text-white/50">
-        {{ comment.createdAt }}
+        {{ formattedCreatedAt(comment.createdAt) }}
       </span>
     </div>
     <p class="mt-1 whitespace-pre-wrap text-sm leading-[1.75] text-white/70">

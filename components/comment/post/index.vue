@@ -37,7 +37,7 @@ await getCommentsData()
 <template>
   <div class="mt-15 flex items-center justify-between gap-x-7.5 lg:mt-10 lg:justify-start">
     <span class="text-white">
-      5 則留言
+      {{ comments.length }} 則留言
     </span>
     <div class="relative text-white">
       <select class="block h-10 w-[180px] appearance-none bg-transparent outline-none">

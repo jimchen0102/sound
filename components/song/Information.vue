@@ -51,7 +51,7 @@ await getSongData()
         {{ song.title }}
       </h1>
       <h2 class="mt-1 text-sm text-white/50">
-        {{ song.displayName }} • {{ song.genre }} • {{ song.createdAt }}
+        {{ song.displayName }} • {{ song.genre }} • {{ formattedCreatedAt(song.createdAt) }}
       </h2>
     </div>
     <button
