@@ -5,7 +5,7 @@ import {
   where,
   orderBy,
   getDocs,
-  type DocumentData
+  DocumentData
 } from 'firebase/firestore'
 
 const route = useRoute()

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type DocumentData } from 'firebase/firestore'
+import { DocumentData } from 'firebase/firestore'
 
 defineProps<{
   song: DocumentData

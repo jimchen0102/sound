@@ -3,7 +3,7 @@ import {
   collection,
   query,
   getDocs,
-  type DocumentData
+  DocumentData
 } from 'firebase/firestore'
 
 const db = useFirestore()

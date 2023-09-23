@@ -3,7 +3,7 @@ import {
   collection,
   doc,
   getDoc,
-  type DocumentData
+  DocumentData
 } from 'firebase/firestore'
 
 const route = useRoute()

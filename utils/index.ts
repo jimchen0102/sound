@@ -1,4 +1,4 @@
-import { Timestamp } from 'firebase-admin/firestore'
+import { Timestamp } from 'firebase/firestore'
 import { formatDistanceToNow } from 'date-fns'
 import { zhTW } from 'date-fns/locale'
 

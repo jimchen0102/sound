@@ -1,7 +1,34 @@
+<script setup lang="ts">
+const emit = defineEmits<{(e: 'upload-file', value: File[]): void}>()
+
+const isDragOver = ref(false)
+const uploadEl = ref<HTMLInputElement | null>(null)
+
+function uploadFile (event: Event | DragEvent) {
+  isDragOver.value = false
+
+  const files = (event as DragEvent).dataTransfer
+    ? [...((event as DragEvent).dataTransfer as DataTransfer).files]
+    : [...((event.target as HTMLInputElement).files as FileList)];
+
+  (uploadEl.value as HTMLInputElement).value = ''
+
+  emit('upload-file', files)
+}
+</script>
+
 <template>
   <label
-    for="uploadFile"
-    class="flex aspect-square items-center justify-center rounded-[30px] border-2 border-dashed border-[#696969] text-white hover:bg-[#212121] md:aspect-[3/2]"
+    for="upload"
+    class="flex aspect-square items-center justify-center rounded-[30px] border-2 border-dashed border-[#696969] text-white transition-colors duration-200 hover:border-white hover:bg-[#212121] md:aspect-[3/2]"
+    :class="{
+      'border-white bg-[#212121]': isDragOver
+    }"
+    @dragend.prevent.stop="isDragOver = false"
+    @dragover.prevent.stop="isDragOver = true"
+    @dragenter.prevent.stop="isDragOver = true"
+    @dragleave.prevent.stop="isDragOver = false"
+    @drop.prevent.stop="uploadFile"
   >
     <div>
       <Icon
@@ -21,10 +48,13 @@
       </h3>
     </div>
   </label>
+
   <input
-    id="uploadFile"
+    id="upload"
+    ref="uploadEl"
     type="file"
-    class="hidden"
     multiple
+    class="hidden"
+    @change="uploadFile"
   >
 </template>
