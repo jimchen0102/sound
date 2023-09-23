@@ -4,6 +4,7 @@ import { vOnClickOutside } from '@vueuse/components'
 
 const { isModalOpen } = useModal('modify')
 
+const tagInputEl = ref<HTMLInputElement | null>(null)
 const genres = [
   { title: '無', value: '' },
   { title: '流行', value: '流行' },
@@ -72,7 +73,11 @@ const onSubmit = handleSubmit((values) => {
                     />
                   </div>
                 </label>
-                <input id="uploadCover" type="file" class="hidden">
+                <input
+                  id="uploadCover"
+                  type="file"
+                  class="hidden"
+                >
                 <h3 class="relative mt-5 text-center font-bold text-white lg:text-xl">
                   上傳歌曲封面 <br>
                   <span class="text-sm text-white/50">
@@ -103,7 +108,7 @@ const onSubmit = handleSubmit((values) => {
                   <label class="font-bold text-white lg:text-lg">
                     附加標籤
                   </label>
-                  <div class="mt-2 flex min-h-[60px] cursor-text flex-wrap gap-2 rounded-[30px] border-[3px] border-transparent bg-[#030303] px-6 py-3 focus:border-[#696969]">
+                  <div class="mt-2 flex min-h-[60px] cursor-text flex-wrap gap-2 rounded-[30px] border-[3px] border-transparent bg-[#030303] p-3 focus:border-[#696969]" @click="tagInputEl?.focus()">
                     <div
                       class="flex h-7.5 cursor-pointer items-center gap-x-1 rounded-full bg-[#383838] px-2.5 text-sm text-white hover:line-through"
                     >
@@ -115,6 +120,7 @@ const onSubmit = handleSubmit((values) => {
                       </span>
                     </div>
                     <input
+                      ref="tagInputEl"
                       type="text"
                       class="w-30 bg-transparent text-white outline-none"
                     >
@@ -125,10 +131,10 @@ const onSubmit = handleSubmit((values) => {
                 class="relative mx-auto mt-5 flex h-15 w-50 overflow-hidden rounded-full border-[3px] border-[#030303] bg-[#212121]"
               >
                 <button class="flex h-full w-1/2 items-center justify-center text-white hover:bg-[#383838]">
-                  <span>確定</span>
+                  確定
                 </button>
+                <span class="absolute left-1/2 top-1/2 h-7.5 w-[3px] -translate-x-1/2 -translate-y-1/2 bg-[#030303]" />
                 <button
-                  type="button"
                   class="flex h-full w-1/2 items-center justify-center text-white hover:bg-[#383838]"
                   @click="isModalOpen = false"
                 >
