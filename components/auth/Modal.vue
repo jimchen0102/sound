@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { vOnClickOutside } from '@vueuse/components'
 import { AuthType } from '@/types'
 
 const { isModalOpen } = useModal('auth')
@@ -8,7 +9,10 @@ const authType = ref<AuthType>(AuthType.LOGIN)
 <template>
   <div class="fixed inset-0 z-[1000] overflow-y-auto overflow-x-hidden bg-[repeating-linear-gradient(40deg,rgba(255,255,255,.1),rgba(255,255,255,.1)_3px,rgba(255,255,255,.05)_3px,rgba(255,255,255,.05)_8px)] backdrop-blur-md">
     <div class="mx-auto my-15 flex min-h-[calc(100%-120px)] max-w-[600px] items-center">
-      <div class="relative w-full">
+      <div
+        v-on-click-outside="() => isModalOpen = false"
+        class="relative w-full"
+      >
         <button
           type="button"
           class="absolute right-5 top-5 z-10 h-10 w-10 rounded-full border-[3px] border-[#212121] lg:right-7.5 lg:top-7.5"

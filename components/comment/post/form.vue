@@ -6,8 +6,9 @@ const user = useCurrentUser()
   <form>
     <fieldset>
       <textarea
-        class="block h-40 w-full resize-none rounded-[30px] border-[3px] border-transparent bg-[#212121] px-7.5 py-5 leading-[1.75] text-white outline-none placeholder:text-white/70 focus:border-[#696969]"
+        class="block h-40 w-full resize-none rounded-[30px] border-[3px] border-transparent bg-[#212121] px-7.5 py-5 leading-[1.75] text-white outline-none placeholder:text-white/70 focus:border-[#696969] disabled:cursor-not-allowed"
         :placeholder="`${user ? '發表你對這首歌的感受吧!' : '登入會員才能發表評論'}`"
+        :disabled="!user"
       />
       <button
         type="button"
