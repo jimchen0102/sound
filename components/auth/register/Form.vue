@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { createUserWithEmailAndPassword, Auth } from 'firebase/auth'
-import * as yup from 'yup'
+import { object, string, ref } from 'yup'
 import { AuthType } from '@/types'
 
 defineEmits<{(e: 'change-auth-type', value: AuthType): void}>()
@@ -11,12 +11,14 @@ const route = useRoute()
 const { isModalOpen } = useModal('auth')
 
 const { handleSubmit } = useForm({
-  validationSchema: yup.object({
-    name: yup.string().required('姓名為必填'),
-    email: yup.string().required('電子郵件為必填').email('須為有效的電子信箱'),
-    password: yup.string().required('密碼為必填').min(6, '不能小於 6 個字元'),
-    passwordConfirm: yup.string().oneOf([yup.ref('password')], '密碼不一致')
-  })
+  validationSchema: toTypedSchema(
+    object({
+      name: string().required('姓名為必填'),
+      email: string().required('電子郵件為必填').email('須為有效的電子信箱'),
+      password: string().required('密碼為必填').min(6, '不能小於 6 個字元'),
+      passwordConfirm: string().oneOf([ref('password')], '密碼不一致')
+    })
+  )
 })
 
 const onSubmit = handleSubmit(async ({ name, email, password, passwordConfirm }) => {
