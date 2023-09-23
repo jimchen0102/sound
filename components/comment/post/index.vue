@@ -1,3 +1,39 @@
+<script setup lang="ts">
+import {
+  collection,
+  query,
+  where,
+  orderBy,
+  getDocs,
+  type DocumentData
+} from 'firebase/firestore'
+
+const route = useRoute()
+
+const db = useFirestore()
+const commentsCollection = collection(db, 'comments')
+
+const comments = ref<DocumentData[]>([])
+
+const getCommentsData = async () => {
+  const q = query(
+    commentsCollection,
+    where('songID', '==', route.params.id),
+    orderBy('createdAt', 'desc')
+  )
+  const snapshot = await getDocs(q)
+
+  snapshot.forEach((doc) => {
+    comments.value.push({
+      ...doc.data(),
+      docID: doc.id
+    })
+  })
+}
+
+await getCommentsData()
+</script>
+
 <template>
   <div class="mt-15 flex items-center justify-between gap-x-7.5 lg:mt-10 lg:justify-start">
     <span class="text-white">
@@ -30,8 +66,11 @@
 
   <div class="relative mt-7.5">
     <ul class="space-y-7.5">
-      <li>
-        <CommentPostPreview />
+      <li
+        v-for="comment in comments"
+        :key="comment.docID"
+      >
+        <CommentPostPreview :comment="comment" />
       </li>
     </ul>
   </div>

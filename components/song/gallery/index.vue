@@ -6,15 +6,16 @@ import {
   type DocumentData
 } from 'firebase/firestore'
 
+const db = useFirestore()
+const songsCollection = collection(db, 'songs')
+
 const songs = ref<DocumentData[]>([])
 
 const getSongsData = async () => {
-  const db = useFirestore()
-  const songsCollection = collection(db, 'songs')
   const q = query(songsCollection)
-  const querySnapshot = await getDocs(q)
+  const snapshot = await getDocs(q)
 
-  querySnapshot.forEach((doc) => {
+  snapshot.forEach((doc) => {
     songs.value.push({
       ...doc.data(),
       docID: doc.id

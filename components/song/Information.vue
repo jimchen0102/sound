@@ -38,6 +38,7 @@ await getSongData()
     <div class="absolute inset-0 backdrop-blur-2xl backdrop-brightness-50" />
     <div class="relative aspect-square overflow-hidden bg-gradient-to-b from-[#383838] to-[#767676] sm:mx-auto sm:max-w-[400px]">
       <img
+        v-if="song.coverUrl"
         :src="song.coverUrl"
         :alt="song.title"
         class="h-full w-full object-cover"
