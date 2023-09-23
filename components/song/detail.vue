@@ -8,10 +8,10 @@ import {
 
 const route = useRoute()
 
-const song = ref<DocumentData>({})
-
 const db = useFirestore()
 const songsCollection = collection(db, 'songs')
+
+const song = ref<DocumentData>({})
 
 const getSongData = async () => {
   try {

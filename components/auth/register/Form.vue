@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import { createUserWithEmailAndPassword, Auth } from 'firebase/auth'
+import { createUserWithEmailAndPassword, updateProfile, Auth } from 'firebase/auth'
+import { collection, doc, setDoc } from 'firebase/firestore'
 import { object, string, ref } from 'yup'
 import { AuthType } from '@/types'
 
 defineEmits<{(e: 'change-auth-type', value: AuthType): void}>()
 
-const auth = useFirebaseAuth()
 const route = useRoute()
+
+const auth = useFirebaseAuth()
+const db = useFirestore()
+const usersCollection = collection(db, 'users')
 
 const { isModalOpen } = useModal('auth')
 
@@ -21,11 +25,30 @@ const { handleSubmit } = useForm({
   )
 })
 
-const onSubmit = handleSubmit(async ({ name, email, password, passwordConfirm }) => {
-  console.log(name, email, password, passwordConfirm)
-  await createUserWithEmailAndPassword(auth as Auth, 'aa@aa.aa', 'aaaaaa')
-  isModalOpen.value = false
-  if (route.query.redirect) await navigateTo(`${route.query.redirect}`)
+const onSubmit = handleSubmit(async ({ name, email, password }) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth as Auth,
+      email,
+      password
+    )
+    const userRef = doc(usersCollection, userCredential.user.uid)
+    await setDoc(userRef, {
+      name,
+      email
+    })
+    await updateProfile(userCredential.user, {
+      displayName: name
+    })
+    isModalOpen.value = false
+    if (route.query.redirect) await navigateTo(`${route.query.redirect}`)
+  } catch (error) {
+    console.log(error)
+    // const errorCode = error.code
+    // if (errorCode === 'auth/email-already-in-use') {
+    //   errorCodeMessage.value = '這個電子郵件已經有人使用，請試試其他電子郵件。'
+    // }
+  }
 })
 </script>
 
@@ -49,10 +72,7 @@ const onSubmit = handleSubmit(async ({ name, email, password, passwordConfirm })
         label="確認密碼"
       />
     </div>
-    <button
-      type="submit"
-      class="relative mt-10 block h-15 w-full rounded-full bg-[#fff645]"
-    >
+    <button class="relative mt-10 block h-15 w-full rounded-full bg-[#fff645]">
       <div class="absolute left-2.5 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-[#030303] text-white">
         <Icon
           name="User"

@@ -21,7 +21,10 @@ const { isModalOpen } = useModal('modify')
       </div>
       <div class="flex-1">
         <h3 class="line-clamp-1 font-bold text-white">
-          <NuxtLink :to="`/song/${song.docID}`">
+          <NuxtLink
+            :to="`/song/${song.docID}`"
+            class="hover:underline"
+          >
             {{ song.title }}
           </NuxtLink>
         </h3>
