@@ -25,6 +25,10 @@ export const usePlayerStore = defineStore('player', () => {
       volume: volume.value,
       onplay () {
         updateProgress()
+      },
+      onend () {
+        sound.value?.unload()
+        currentSound.value = undefined
       }
     })
     sound.value.play()
@@ -42,13 +46,22 @@ export const usePlayerStore = defineStore('player', () => {
     seek.value = sound.value.seek()
     duration.value = sound.value.duration()
     progress.value = sound.value.seek() / sound.value.duration()
+
     requestAnimationFrame(updateProgress)
   }
 
-  const updateSeek = () => {
-    // const seconds = sound.value?.duration() * progress.value
-    // sound.value.seek(seconds)
-    // sound.value.play()
+  const updateSeek = (percent: number) => {
+    if (!sound.value) return
+
+    const seconds = sound.value.duration() * percent
+    sound.value.seek(seconds)
+  }
+
+  const updateVolume = (percent: number) => {
+    if (!sound.value) return
+
+    sound.value.volume(percent)
+    volume.value = percent
   }
 
   return {
@@ -62,6 +75,7 @@ export const usePlayerStore = defineStore('player', () => {
     createSound,
     toggleSound,
     updateProgress,
-    updateSeek
+    updateSeek,
+    updateVolume
   }
 })
