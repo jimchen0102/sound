@@ -35,7 +35,7 @@ const handleSignOut = async () => {
             class="flex h-15 items-center gap-x-2.5 rounded-full bg-[#030303] pl-2.5 pr-6"
           >
             <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[#212121] text-white">
-              <div class="h-5 w-5 rounded-full bg-white" />
+              <Icon name="Wave" />
             </div>
             <span class="font-bold text-white">
               我的歌曲

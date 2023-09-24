@@ -8,3 +8,10 @@ export const formattedCreatedAt = (createdAt: Timestamp) => {
     locale: zhTW
   })
 }
+
+export const formatTime = (time: number) => {
+  const minutes = Math.floor(time / 60) || 0
+  const seconds = Math.round(time - minutes * 60 || 0)
+
+  return `${minutes}:${seconds < 10 ? 0 : ''}${seconds}`
+}

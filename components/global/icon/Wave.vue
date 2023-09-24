@@ -1,7 +1,7 @@
 <script setup lang="ts">
 withDefaults(defineProps<{
-  width: string | number,
-  height: string | number,
+  width?: string | number,
+  height?: string | number,
   color: string
 }>(), {
   width: 28,
