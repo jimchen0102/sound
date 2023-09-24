@@ -6,55 +6,13 @@ const playerStore = usePlayerStore()
 const { volume } = storeToRefs(playerStore)
 const { updateVolume } = playerStore
 
-const dragging = ref(false)
-const sliderEl = ref<HTMLElement | null>(null)
-
-const handleSliderDown = (e: MouseEvent | TouchEvent) => {
-  e.preventDefault()
-
-  handleDragStart(e)
-
-  window.addEventListener('mousemove', handleDragging)
-  window.addEventListener('touchmove', handleDragging)
-  window.addEventListener('mouseup', handleDraggEnd)
-  window.addEventListener('touchend', handleDraggEnd)
-}
-
-const handleDragStart = (e: MouseEvent | TouchEvent) => {
-  if (!sliderEl.value) return
-
-  dragging.value = true
-
-  const clientX = getClientX(e)
-  const sliderSize = sliderEl.value.clientWidth
-  const sliderOffsetLeft = sliderEl.value.getBoundingClientRect().left
-  const percent = (clientX - sliderOffsetLeft) / sliderSize
-
-  updateVolume(percent)
-}
-
-const handleDragging = (e: MouseEvent | TouchEvent) => {
-  if (!dragging.value || !sliderEl.value) return
-
-  const clientX = getClientX(e)
-  const sliderSize = sliderEl.value.clientWidth
-  const sliderOffsetLeft = sliderEl.value.getBoundingClientRect().left
-  let percent = (clientX - sliderOffsetLeft) / sliderSize
-
-  if (percent < 0) percent = 0
-  else if (percent > 1) percent = 1
-
-  updateVolume(percent)
-}
-
-const handleDraggEnd = () => {
-  if (!dragging.value) return
-
-  dragging.value = false
-
-  window.removeEventListener('mousemove', handleDragging)
-  window.removeEventListener('touchmove', handleDragging)
-}
+const {
+  sliderEl,
+  handleSliderDown
+} = useSlider({
+  onDragStart: updateVolume,
+  onDragging: updateVolume
+})
 </script>
 
 <template>

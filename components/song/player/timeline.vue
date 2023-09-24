@@ -11,54 +11,14 @@ const {
 } = storeToRefs(playerStore)
 const { updateSeek } = playerStore
 
-const dragging = ref(false)
-const sliderEl = ref<HTMLElement | null>(null)
-const cacheProgress = ref(0)
-
-const handleSliderDown = (e: MouseEvent | TouchEvent) => {
-  e.preventDefault()
-
-  handleDragStart(e)
-
-  window.addEventListener('mousemove', handleDragging)
-  window.addEventListener('touchmove', handleDragging)
-  window.addEventListener('mouseup', handleDraggEnd)
-  window.addEventListener('touchend', handleDraggEnd)
-}
-
-const handleDragStart = (e: MouseEvent | TouchEvent) => {
-  if (!sliderEl.value) return
-
-  dragging.value = true
-
-  const clientX = getClientX(e)
-  const sliderSize = sliderEl.value.clientWidth
-  const sliderOffsetLeft = sliderEl.value.getBoundingClientRect().left
-  cacheProgress.value = (clientX - sliderOffsetLeft) / sliderSize
-}
-
-const handleDragging = (e: MouseEvent | TouchEvent) => {
-  if (!dragging.value || !sliderEl.value) return
-
-  const clientX = getClientX(e)
-  const sliderSize = sliderEl.value.clientWidth
-  const sliderOffsetLeft = sliderEl.value.getBoundingClientRect().left
-  cacheProgress.value = (clientX - sliderOffsetLeft) / sliderSize
-
-  if (cacheProgress.value < 0) cacheProgress.value = 0
-  else if (cacheProgress.value > 1) cacheProgress.value = 1
-}
-
-const handleDraggEnd = () => {
-  if (!dragging.value) return
-
-  dragging.value = false
-
-  window.removeEventListener('mousemove', handleDragging)
-  window.removeEventListener('touchmove', handleDragging)
-
-  updateSeek(cacheProgress.value)
-}
+const {
+  isDragging,
+  percent,
+  sliderEl,
+  handleSliderDown
+} = useSlider({
+  onDragEnd: updateSeek
+})
 </script>
 
 <template>
@@ -75,10 +35,10 @@ const handleDraggEnd = () => {
       }"
     />
     <div
-      v-if="dragging"
+      v-if="isDragging"
       class="absolute left-0 top-0 h-full bg-white/[.15]"
       :style="{
-        width: `${cacheProgress * 100}%`
+        width: `${percent * 100}%`
       }"
     />
     <div class="pointer-events-none relative flex h-full items-center justify-between gap-x-7.5 px-7.5 font-bold text-white">

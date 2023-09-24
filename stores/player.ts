@@ -14,11 +14,8 @@ export const usePlayerStore = defineStore('player', () => {
 
   const createSound = (song: DocumentData) => {
     if (song.docID === currentSound.value?.docID) return toggleSound()
-
     if (sound.value && song.docID !== currentSound.value?.docID) sound.value.unload()
-
     currentSound.value = song
-
     sound.value = new Howl({
       src: [song.url],
       html5: true,
@@ -36,30 +33,25 @@ export const usePlayerStore = defineStore('player', () => {
 
   const toggleSound = () => {
     if (!sound.value) return
-
     sound.value.playing() ? sound.value.pause() : sound.value.play()
   }
 
   const updateProgress = () => {
     if (!sound.value) return
-
     seek.value = sound.value.seek()
     duration.value = sound.value.duration()
     progress.value = sound.value.seek() / sound.value.duration()
-
     requestAnimationFrame(updateProgress)
   }
 
   const updateSeek = (percent: number) => {
     if (!sound.value) return
-
     const seconds = sound.value.duration() * percent
     sound.value.seek(seconds)
   }
 
   const updateVolume = (percent: number) => {
     if (!sound.value) return
-
     sound.value.volume(percent)
     volume.value = percent
   }

@@ -12,15 +12,12 @@ export const formattedCreatedAt = (createdAt: Timestamp) => {
 export const formatTime = (time: number) => {
   const minutes = Math.floor(time / 60) || 0
   const seconds = Math.floor(time - minutes * 60 || 0)
-
   return `${minutes}:${seconds < 10 ? 0 : ''}${seconds}`
 }
 
 export const getClientX = (e: MouseEvent | TouchEvent) => {
-  let clientX
-
+  let clientX: number
   if (e.type.startsWith('touch')) clientX = (e as TouchEvent).touches[0].clientX
   else clientX = (e as MouseEvent).clientX
-
   return clientX
 }
