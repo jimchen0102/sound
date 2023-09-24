@@ -33,6 +33,7 @@ export const usePlayerStore = defineStore('player', () => {
     sound,
     volume,
     isSoundPlaying,
-    createSound
+    createSound,
+    toggleSound
   }
 })

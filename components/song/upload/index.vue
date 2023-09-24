@@ -9,11 +9,11 @@ interface Upload {
   title: string
 }
 
-const uploads = ref<Upload[]>([])
+const uploads = ref<Upload[]>()
 
 function uploadFile (files: File[]) {
   files.forEach((file) => {
-    uploads.value.push({
+    uploads.value?.push({
       createdAt: serverTimestamp(),
       title: file.name.replace(/\.[^/\\.]+$/, '')
     })

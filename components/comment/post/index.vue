@@ -31,7 +31,9 @@ const getCommentsDocument = async () => {
   })
 }
 
-await getCommentsDocument()
+onMounted(async () => {
+  await getCommentsDocument()
+})
 </script>
 
 <template>

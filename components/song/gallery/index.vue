@@ -9,21 +9,23 @@ import {
 const db = useFirestore()
 const songsCollection = collection(db, 'songs')
 
-const songs = ref<DocumentData[]>([])
+const songs = ref<DocumentData[]>()
 
 const getSongsDocument = async () => {
   const q = query(songsCollection)
   const snapshot = await getDocs(q)
 
   snapshot.forEach((doc) => {
-    songs.value.push({
+    songs.value?.push({
       ...doc.data(),
       docID: doc.id
     })
   })
 }
 
-await getSongsDocument()
+onMounted(async () => {
+  await getSongsDocument()
+})
 </script>
 
 <template>
