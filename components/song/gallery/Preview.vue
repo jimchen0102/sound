@@ -1,9 +1,15 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { DocumentData } from 'firebase/firestore'
+import { usePlayerStore } from '@/stores/player'
 
 defineProps<{
   song: DocumentData
 }>()
+
+const playerStore = usePlayerStore()
+const { currentSound, isSoundPlaying } = storeToRefs(playerStore)
+const { createSound } = playerStore
 </script>
 
 <template>
@@ -18,12 +24,28 @@ defineProps<{
         :alt="song.title"
         class="h-full w-full object-cover"
       >
+      <div
+        class="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent"
+        :class="
+          song.docID === currentSound?.docID ? 'visible opacity-100' : 'invisible opacity-0 group-hover:visible group-hover:opacity-100'
+        "
+      />
     </NuxtLink>
     <button
       type="button"
-      class="invisible absolute bottom-5 right-5 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-[#030303] text-white opacity-0 group-hover:visible group-hover:opacity-100"
+      class="absolute bottom-5 right-5 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-[#030303] text-white"
+      :class="
+        song.docID === currentSound?.docID ? 'visible opacity-100' : 'invisible opacity-0 group-hover:visible group-hover:opacity-100'
+      "
+      @click="createSound(song)"
     >
       <Icon
+        v-if="song.docID === currentSound?.docID && isSoundPlaying"
+        name="Pause"
+        :size="20"
+      />
+      <Icon
+        v-else
         name="Play"
         :size="20"
       />

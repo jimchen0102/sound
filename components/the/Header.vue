@@ -13,15 +13,18 @@ const handleSignOut = async () => {
 </script>
 
 <template>
-  <header class="fixed left-0 top-0 z-[999] flex h-25 w-full items-center justify-between px-5 lg:h-35 lg:px-10 xl:px-20">
-    <NuxtLink to="/">
+  <header class="pointer-events-none fixed left-0 top-0 z-[999] flex h-25 w-full items-center justify-between px-5 lg:h-35 lg:px-10 xl:px-20">
+    <NuxtLink
+      to="/"
+      class="pointer-events-auto"
+    >
       <img
         src="@/assets/img/sound-logo.svg"
         alt="SOUND"
         class="w-20 lg:w-auto"
       >
     </NuxtLink>
-    <nav>
+    <nav class="pointer-events-auto">
       <ul
         v-if="user"
         class="flex items-center gap-x-2.5 lg:gap-x-5"

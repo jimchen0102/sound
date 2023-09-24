@@ -16,7 +16,7 @@ const songsCollection = collection(db, 'songs')
 
 const songs = ref<DocumentData[]>([])
 
-const getSongsData = async () => {
+const getSongsDocument = async () => {
   const q = query(
     songsCollection,
     where('uid', '==', user.value?.uid),
@@ -32,7 +32,7 @@ const getSongsData = async () => {
   })
 }
 
-await getSongsData()
+await getSongsDocument()
 </script>
 
 <template>

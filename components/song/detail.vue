@@ -1,19 +1,25 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import {
   collection,
   doc,
   getDoc,
   DocumentData
 } from 'firebase/firestore'
+import { usePlayerStore } from '@/stores/player'
 
 const route = useRoute()
 
 const db = useFirestore()
 const songsCollection = collection(db, 'songs')
 
+const playerStore = usePlayerStore()
+const { currentSound, isSoundPlaying } = storeToRefs(playerStore)
+const { createSound } = playerStore
+
 const song = ref<DocumentData>({})
 
-const getSongData = async () => {
+const getSongDocument = async () => {
   try {
     const snapshot = await getDoc(doc(songsCollection, route.params.id as string))
     if (!snapshot.exists()) return await navigateTo('/')
@@ -26,7 +32,7 @@ const getSongData = async () => {
   }
 }
 
-await getSongData()
+await getSongDocument()
 </script>
 
 <template>
@@ -57,8 +63,16 @@ await getSongData()
     <button
       type="button"
       class="flex h-16 w-16 items-center justify-center rounded-full bg-[#fff645]"
+      @click="createSound(song)"
     >
-      <Icon name="Play" />
+      <Icon
+        v-if="song.docID === currentSound?.docID && isSoundPlaying"
+        name="Pause"
+      />
+      <Icon
+        v-else
+        name="Play"
+      />
     </button>
   </div>
   <p class="mt-5 whitespace-pre-wrap leading-[1.75] text-white/70">

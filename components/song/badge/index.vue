@@ -11,7 +11,7 @@ const songsCollection = collection(db, 'songs')
 
 const songs = ref<DocumentData[]>([])
 
-const getSongsData = async () => {
+const getSongDocument = async () => {
   const q = query(songsCollection)
   const snapshot = await getDocs(q)
 
@@ -23,7 +23,7 @@ const getSongsData = async () => {
   })
 }
 
-await getSongsData()
+await getSongDocument()
 </script>
 
 <template>

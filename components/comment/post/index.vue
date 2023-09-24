@@ -15,7 +15,7 @@ const commentsCollection = collection(db, 'comments')
 
 const comments = ref<DocumentData[]>([])
 
-const getCommentsData = async () => {
+const getCommentsDocument = async () => {
   const q = query(
     commentsCollection,
     where('songID', '==', route.params.id),
@@ -31,7 +31,7 @@ const getCommentsData = async () => {
   })
 }
 
-await getCommentsData()
+await getCommentsDocument()
 </script>
 
 <template>

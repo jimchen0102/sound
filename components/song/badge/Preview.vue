@@ -1,26 +1,50 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { DocumentData } from 'firebase/firestore'
+import { usePlayerStore } from '@/stores/player'
 
 defineProps<{
   song: DocumentData
 }>()
+
+const playerStore = usePlayerStore()
+const { currentSound, isSoundPlaying } = storeToRefs(playerStore)
+const { createSound } = playerStore
 </script>
 
 <template>
-  <div class="group flex items-center gap-x-4 rounded p-2 hover:bg-[#212121]">
-    <div class="relative aspect-square w-16 cursor-pointer overflow-hidden rounded bg-gradient-to-b from-[#383838] to-[#767676]">
+  <div
+    class="group flex items-center gap-x-4 rounded p-2 hover:bg-[#212121]"
+    :class="{
+      'bg-[#212121]': song.docID === currentSound?.docID
+    }"
+  >
+    <div class="relative aspect-square w-16 overflow-hidden rounded bg-gradient-to-b from-[#383838] to-[#767676]">
       <img
         v-if="song.coverUrl"
         :src="song.coverUrl"
         :alt="song.title"
         class="h-full w-full object-cover"
       >
-      <div class="absolute inset-0 z-10 flex items-center justify-center bg-black/80 text-white opacity-0 group-hover:opacity-100">
+      <button
+        type="button"
+        class="absolute inset-0 z-10 flex items-center justify-center bg-black/80 text-white"
+        :class="
+          song.docID === currentSound?.docID ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+        "
+        @click="createSound(song)"
+      >
         <Icon
+          v-if="song.docID === currentSound?.docID && isSoundPlaying"
+          name="Pause"
+          :size="20"
+        />
+        <Icon
+          v-else
           name="Play"
           :size="20"
         />
-      </div>
+      </button>
     </div>
     <div class="flex-1">
       <h3 class="line-clamp-1 font-bold text-white">
