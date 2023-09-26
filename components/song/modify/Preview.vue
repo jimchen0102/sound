@@ -29,7 +29,7 @@ const { isModalOpen } = useModal('modify')
           </NuxtLink>
         </h3>
         <h4 class="mt-1 line-clamp-1 text-sm text-white/50">
-          {{ formattedCreatedAt(song.createdAt) }}
+          {{ formatCreatedAt(song.createdAt) }}
         </h4>
       </div>
     </div>

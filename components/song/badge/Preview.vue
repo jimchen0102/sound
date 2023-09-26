@@ -56,7 +56,7 @@ const { createSound } = playerStore
         </NuxtLink>
       </h3>
       <h4 class="mt-1 line-clamp-1 text-sm text-white/50">
-        {{ song.displayName }} • {{ song.genre }} • {{ formattedCreatedAt(song.createdAt) }}
+        {{ song.displayName }} • {{ song.genre }} • {{ formatCreatedAt(song.createdAt) }}
       </h4>
     </div>
   </div>

@@ -84,7 +84,7 @@ onMounted(async () => {
           {{ song.title }}
         </h1>
         <h2 class="mt-1 text-sm text-white/50">
-          {{ song.displayName }} • {{ song.genre }} • {{ formattedCreatedAt(song.createdAt) }}
+          {{ song.displayName }} • {{ song.genre }} • {{ formatCreatedAt(song.createdAt) }}
         </h2>
       </div>
       <button

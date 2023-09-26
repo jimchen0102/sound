@@ -29,14 +29,15 @@ const {
     @touchstart="handleSliderDown"
   >
     <div
+      v-show="!isDragging"
       class="absolute left-0 top-0 h-full bg-[#383838] bg-[url('/assets/img/progress-arrow.svg')]"
       :style="{
         width: `${progress * 100}%`
       }"
     />
     <div
-      v-if="isDragging"
-      class="absolute left-0 top-0 h-full bg-white/[.15]"
+      v-show="isDragging"
+      class="absolute left-0 top-0 h-full bg-[#4c4c4c] bg-[url('/assets/img/progress-arrow.svg')]"
       :style="{
         width: `${percent * 100}%`
       }"

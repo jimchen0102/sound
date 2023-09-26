@@ -8,6 +8,13 @@ export default defineNuxtConfig({
     '@vee-validate/nuxt',
     '@nuxtjs/tailwindcss'
   ],
+  app: {
+    head: {
+      bodyAttrs: {
+        style: 'background-color: #030303'
+      }
+    }
+  },
   vuefire: {
     auth: {
       enabled: true

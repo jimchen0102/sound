@@ -41,13 +41,14 @@ export const usePlayerStore = defineStore('player', () => {
     seek.value = sound.value.seek()
     duration.value = sound.value.duration()
     progress.value = sound.value.seek() / sound.value.duration()
-    requestAnimationFrame(updateProgress)
+    if (isSoundPlaying.value) requestAnimationFrame(updateProgress)
   }
 
   const updateSeek = (percent: number) => {
     if (!sound.value) return
     const seconds = sound.value.duration() * percent
     sound.value.seek(seconds)
+    sound.value.play()
   }
 
   const updateVolume = (percent: number) => {
