@@ -17,7 +17,6 @@ const {
   document: songs,
   isPending,
   observerEl,
-  getDocument: getSongsDocument,
   addDocument: addSongDocument,
   updateDocument: updateSongDocument,
   deleteDocument: deleteSongDocument
@@ -30,13 +29,12 @@ const openModifyModal = (song: DocumentData) => {
   modifySong.value = song
 }
 
-onMounted(async () => {
+onMounted(() => {
   $on('add-song-document', addSongDocument)
-  await getSongsDocument()
 })
 
 onUnmounted(() => {
-  $off('add-song-document')
+  $off('add-song-document', addSongDocument)
 })
 </script>
 
@@ -53,8 +51,8 @@ onUnmounted(() => {
       >
         <SongModifyPreview
           :song="song"
-          @open-modal="openModifyModal"
-          @delete-song="deleteSongDocument"
+          @open-modify-modal="openModifyModal"
+          @delete-song-document="deleteSongDocument"
         />
       </li>
     </ul>

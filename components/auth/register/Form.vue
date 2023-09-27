@@ -10,7 +10,7 @@ const route = useRoute()
 
 const auth = useFirebaseAuth()
 const db = useFirestore()
-const usersCollection = collection(db, 'users')
+const coll = collection(db, 'users')
 
 const { isModalOpen } = useModal('auth')
 
@@ -32,7 +32,7 @@ const onSubmit = handleSubmit(async ({ name, email, password }) => {
       email,
       password
     )
-    const userRef = doc(usersCollection, userCredential.user.uid)
+    const userRef = doc(coll, userCredential.user.uid)
     await setDoc(userRef, {
       name,
       email

@@ -15,23 +15,23 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'open-modal', value: DocumentData): void,
-  (e: 'delete-song', value: string): void
+  (e: 'open-modify-modal', value: DocumentData): void,
+  (e: 'delete-song-document', value: string): void
 }>()
 
 const user = useCurrentUser()
 const db = useFirestore()
 const storage = useFirebaseStorage()
-const songCollection = collection(db, 'songs')
+const coll = collection(db, 'songs')
 
-async function deleteSong () {
+async function deleteSongDocument () {
   const songRef = storageRef(storage, `songs/${user.value?.uid}/${props.song.songId}`)
   const coverRef = storageRef(storage, `covers/${user.value?.uid}/${props.song.coverId}`)
   try {
     await deleteObject(songRef)
     await deleteObject(coverRef)
-    await deleteDoc(doc(songCollection, props.song.docID))
-    emit('delete-song', props.song.docID)
+    await deleteDoc(doc(coll, props.song.docID))
+    emit('delete-song-document', props.song.docID)
   } catch (error) {
     console.log(error)
   }
@@ -67,7 +67,7 @@ async function deleteSong () {
       <button
         type="button"
         class="flex h-10 w-10 items-center justify-center text-white/50 hover:text-white"
-        @click="$emit('open-modal', song)"
+        @click="$emit('open-modify-modal', song)"
       >
         <Icon
           name="Edit"
@@ -77,7 +77,7 @@ async function deleteSong () {
       <button
         type="button"
         class="flex h-10 w-10 items-center justify-center text-white/50 hover:text-white"
-        @click="deleteSong"
+        @click="deleteSongDocument"
       >
         <Icon
           name="Delete"

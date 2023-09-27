@@ -9,7 +9,7 @@ defineProps<{
 <template>
   <div>
     <h3 class="text-sm text-white lg:text-base">
-      {{ upload.name }}
+      {{ upload.title }}
       <span
         v-if="upload.state"
         :class="

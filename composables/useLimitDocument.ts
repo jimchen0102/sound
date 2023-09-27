@@ -41,7 +41,7 @@ export function useLimitDocument (
   }
 
   const getDocument = async () => {
-    if (isPending.value || document.value.length >= documentCount.value) return
+    if (isPending.value || document.value.length === documentCount.value) return
 
     isPending.value = true
     let snapshots: QuerySnapshot

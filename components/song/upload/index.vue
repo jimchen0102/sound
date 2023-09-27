@@ -18,7 +18,7 @@ const { $emit } = useNuxtApp()
 const user = useCurrentUser()
 const db = useFirestore()
 const storage = useFirebaseStorage()
-const songCollection = collection(db, 'songs')
+const coll = collection(db, 'songs')
 
 const uploads = ref<Upload[]>([])
 
@@ -28,10 +28,10 @@ const uploadFile = (files: File[]) => {
     const songRef = storageRef(storage, `songs/${user.value?.uid}/${uuidv4()}`)
     const task = uploadBytesResumable(songRef, file)
     uploads.value.push({
-      task,
-      name: file.name,
       progress: 0,
-      state: ''
+      state: '',
+      task,
+      title: file.name
     })
     const index = uploads.value.length - 1
     task.on(
@@ -60,7 +60,7 @@ const uploadFile = (files: File[]) => {
         }
         try {
           song.songUrl = await getDownloadURL(task.snapshot.ref)
-          const songRef = await addDoc(songCollection, song)
+          const songRef = await addDoc(coll, song)
           const snapshot = await getDoc(songRef)
           uploads.value[index].state = 'success'
           $emit('add-song-document', snapshot)
@@ -88,7 +88,7 @@ onUnmounted(() => {
     <ul class="mt-5 space-y-5 lg:mt-7.5">
       <li
         v-for="upload in uploads"
-        :key="upload.name"
+        :key="upload.title"
       >
         <SongUploadPreview :upload="upload" />
       </li>

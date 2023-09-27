@@ -6,8 +6,8 @@ export enum AuthType {
 }
 
 export interface Upload {
-  task: UploadTask
-  name: string
   progress: number
   state: string
+  task: UploadTask
+  title: string
 }
