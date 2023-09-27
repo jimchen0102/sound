@@ -1,10 +1,5 @@
 <script setup lang="ts">
-import { FieldValue } from 'firebase/firestore'
-
-interface Upload {
-  createdAt: FieldValue
-  title: string
-}
+import { Upload } from '@/types'
 
 defineProps<{
   upload: Upload
@@ -14,14 +9,20 @@ defineProps<{
 <template>
   <div>
     <h3 class="text-sm text-white lg:text-base">
-      {{ upload.title }}
-      <span class="text-[#fff645]">(上傳成功)</span>
-      <!-- <span class="text-[#ee2828]">(上傳失敗)</span> -->
+      {{ upload.name }}
+      <span
+        v-if="upload.state"
+        :class="
+          upload.state === 'success' ? 'text-[#fff645]' : 'text-[#ee2828]'
+        "
+      >
+        {{ upload.state === 'success' ? '(上傳成功)' : '(上傳失敗)' }}
+      </span>
     </h3>
     <div class="relative mt-2 h-10 rounded-full bg-[#212121]">
       <div
-        class="absolute left-0 top-0 h-full overflow-hidden rounded-full bg-[#696969]"
-        :style="{ width: '60%' }"
+        class="absolute left-0 top-0 h-full overflow-hidden rounded-full bg-[#696969] transition-[width] duration-100"
+        :style="{ width: `${upload.progress}%` }"
       >
         <div class="absolute inset-0 bg-[url('@/assets/img/progress-arrow.svg')] bg-[length:50px_40px]" />
       </div>

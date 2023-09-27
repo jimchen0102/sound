@@ -4,7 +4,7 @@ const emit = defineEmits<{(e: 'upload-file', value: File[]): void}>()
 const isDragOver = ref(false)
 const uploadEl = ref<HTMLInputElement | null>(null)
 
-function uploadFile (event: Event | DragEvent) {
+const uploadFile = (event: Event | DragEvent) => {
   isDragOver.value = false
 
   const files = (event as DragEvent).dataTransfer
