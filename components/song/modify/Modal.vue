@@ -1,15 +1,35 @@
 <script setup lang="ts">
 import * as yup from 'yup'
-import { DocumentData } from 'firebase/firestore'
+import {
+  doc,
+  updateDoc,
+  collection,
+  DocumentData
+} from 'firebase/firestore'
+import {
+  ref as storageRef,
+  uploadBytes,
+  getDownloadURL
+} from 'firebase/storage'
+import { v4 as uuidv4 } from 'uuid'
 import { vOnClickOutside } from '@vueuse/components'
 
 const props = defineProps<{
   song: DocumentData
 }>()
 
+const emit = defineEmits<{
+  (e: 'update-song-document', value: DocumentData): void
+}>()
+
+const user = useCurrentUser()
+const db = useFirestore()
+const storage = useFirebaseStorage()
+const coll = collection(db, 'songs')
+
 const { isModalOpen } = useModal('modify')
 
-const tagInputEl = ref<HTMLInputElement | null>(null)
+const tags = ref([...props.song.tags])
 const genres = [
   { title: '無', value: '無' },
   { title: '流行', value: '流行' },
@@ -21,19 +41,55 @@ const genres = [
   { title: '鄉村', value: '鄉村' }
 ]
 
+const cover = ref<File | null>(null)
+const coverUrl = ref(props.song.coverUrl)
+const coverTypes = ['image/jpeg', 'image/png']
+const reader = new FileReader()
+
+const handleChange = (event: Event) => {
+  const file = ((event.target as HTMLInputElement).files as FileList)[0]
+  if (file.size > 1 * 1024 * 1024 || !coverTypes.includes(file.type)) return
+  cover.value = file
+  reader.readAsDataURL(file)
+}
+
+const handleFileLoaded = (event: ProgressEvent) => {
+  coverUrl.value = (event.target as FileReader).result
+}
+
+onMounted(() => {
+  reader.onload = handleFileLoaded
+})
+
 const { handleSubmit } = useForm({
   initialValues: {
-    title: props.song.title,
-    genre: props.song.genre,
-    description: props.song.description
+    ...props.song
   },
   validationSchema: yup.object({
     title: yup.string().required('歌曲名稱為必填')
   })
 })
 
-const onSubmit = handleSubmit((values) => {
-  console.log(values)
+const onSubmit = handleSubmit(async (values) => {
+  values.tags = tags.value
+  if (cover.value) {
+    const coverRef = storageRef(storage, `covers/${user.value?.uid}/${uuidv4()}`)
+    try {
+      const res = await uploadBytes(coverRef, cover.value)
+      const coverUrl = await getDownloadURL(res.ref)
+      values.coverId = coverRef.name
+      values.coverUrl = coverUrl
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  try {
+    await updateDoc(doc(coll, props.song.docID), values)
+    emit('update-song-document', values)
+    isModalOpen.value = false
+  } catch (error) {
+    console.log(error)
+  }
 })
 </script>
 
@@ -63,11 +119,11 @@ const onSubmit = handleSubmit((values) => {
               <div>
                 <label
                   class="relative mx-auto block aspect-square max-w-[200px] overflow-hidden rounded-lg border-2 border-dashed border-white/50 bg-gradient-to-b from-[#383838] to-[#767676] hover:border-white"
-                  for="uploadCover"
+                  for="cover"
                 >
                   <img
-                    v-if="song.coverUrl"
-                    :src="song.coverUrl"
+                    v-if="coverUrl"
+                    :src="coverUrl"
                     :alt="song.title"
                     class="h-full w-full object-cover"
                   >
@@ -79,9 +135,10 @@ const onSubmit = handleSubmit((values) => {
                   </div>
                 </label>
                 <input
-                  id="uploadCover"
+                  id="cover"
                   type="file"
                   class="hidden"
+                  @change="handleChange"
                 >
                 <h3 class="relative mt-5 text-center font-bold text-white lg:text-xl">
                   上傳歌曲封面 <br>
@@ -100,37 +157,14 @@ const onSubmit = handleSubmit((values) => {
                   label="曲風"
                   :options="genres"
                 />
-                <div>
-                  <label class="font-bold text-white lg:text-lg">
-                    描述
-                  </label>
-                  <textarea
-                    class="mt-2 block h-35 w-full resize-none rounded-[30px] border-[3px] border-transparent bg-[#030303] px-6 py-4 leading-[1.75] text-white outline-none placeholder:text-[#696969] focus:border-[#696969]"
-                    type="text"
-                  />
-                </div>
-                <div>
-                  <label class="font-bold text-white lg:text-lg">
-                    附加標籤
-                  </label>
-                  <div class="mt-2 flex min-h-[60px] cursor-text flex-wrap gap-2 rounded-[30px] border-[3px] border-transparent bg-[#030303] p-3 focus:border-[#696969]" @click="tagInputEl?.focus()">
-                    <div
-                      class="flex h-7.5 cursor-pointer items-center gap-x-1 rounded-full bg-[#383838] px-2.5 text-sm text-white hover:line-through"
-                    >
-                      <span class="opacity-50">
-                        #
-                      </span>
-                      <span>
-                        陳約翰
-                      </span>
-                    </div>
-                    <input
-                      ref="tagInputEl"
-                      type="text"
-                      class="w-30 bg-transparent text-white outline-none"
-                    >
-                  </div>
-                </div>
+                <BaseTextarea
+                  name="description"
+                  label="描述"
+                />
+                <BaseTags
+                  v-model="tags"
+                  label="附加標籤"
+                />
               </div>
               <div
                 class="relative mx-auto mt-5 flex h-15 w-50 overflow-hidden rounded-full border-[3px] border-[#030303] bg-[#212121]"

@@ -9,18 +9,19 @@ import {
   getCountFromServer,
   DocumentData,
   CollectionReference,
+  QueryConstraint,
   QuerySnapshot
 } from 'firebase/firestore'
 
 export function useLimitDocument (
-  limitLength: number,
   collection: CollectionReference,
-  where?: any
+  limitLength: number,
+  where?: QueryConstraint
 ) {
   const document = ref<DocumentData[]>([])
   const documentCount = ref(0)
   const isPending = ref(false)
-  const observerEl = ref(null)
+  const observerEl = ref<HTMLElement | null>(null)
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -46,18 +47,24 @@ export function useLimitDocument (
     let snapshots: QuerySnapshot
 
     try {
-      const lastDoc =
-      document.value.length > 0
+      const lastDoc = document.value.length > 0
         ? await getDoc(doc(collection, document.value[document.value.length - 1].docID))
         : null
 
-      const q = query(
-        collection,
-        where,
-        orderBy('createdAt', 'desc'),
-        ...(lastDoc ? [startAfter(lastDoc)] : []),
-        limit(limitLength)
-      )
+      const q = where
+        ? query(
+          collection,
+          where,
+          orderBy('createdAt', 'desc'),
+          ...(lastDoc ? [startAfter(lastDoc)] : []),
+          limit(limitLength)
+        )
+        : query(
+          collection,
+          orderBy('createdAt', 'desc'),
+          ...(lastDoc ? [startAfter(lastDoc)] : []),
+          limit(limitLength)
+        )
 
       snapshots = await getDocs(q)
     } catch (error) {

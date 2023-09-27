@@ -2,13 +2,13 @@
 import { collection } from 'firebase/firestore'
 
 const db = useFirestore()
-const songCollection = collection(db, 'songs')
+const coll = collection(db, 'songs')
 
 const {
   document: songs,
   isPending,
   observerEl
-} = useLimitDocument(12, songCollection)
+} = useLimitDocument(coll, 12)
 </script>
 
 <template>

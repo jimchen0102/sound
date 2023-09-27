@@ -4,11 +4,11 @@ import { collection, where } from 'firebase/firestore'
 const route = useRoute()
 
 const db = useFirestore()
-const commentCollection = collection(db, 'comments')
+const coll = collection(db, 'comments')
 
 const {
   document: comments
-} = useLimitDocument(12, commentCollection, where('songID', '==', route.params.id))
+} = useLimitDocument(coll, 12, where('songID', '==', route.params.id))
 </script>
 
 <template>

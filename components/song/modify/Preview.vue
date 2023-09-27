@@ -24,10 +24,12 @@ const db = useFirestore()
 const storage = useFirebaseStorage()
 const songCollection = collection(db, 'songs')
 
-async function handleDeleteSong () {
-  const songRef = storageRef(storage, `songs/${user.value?.uid}/${props.song.uuid}`)
+async function deleteSong () {
+  const songRef = storageRef(storage, `songs/${user.value?.uid}/${props.song.songId}`)
+  const coverRef = storageRef(storage, `covers/${user.value?.uid}/${props.song.coverId}`)
   try {
     await deleteObject(songRef)
+    await deleteObject(coverRef)
     await deleteDoc(doc(songCollection, props.song.docID))
     emit('delete-song', props.song.docID)
   } catch (error) {
@@ -75,7 +77,7 @@ async function handleDeleteSong () {
       <button
         type="button"
         class="flex h-10 w-10 items-center justify-center text-white/50 hover:text-white"
-        @click="handleDeleteSong"
+        @click="deleteSong"
       >
         <Icon
           name="Delete"
