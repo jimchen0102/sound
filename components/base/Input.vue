@@ -7,7 +7,7 @@ const props = withDefaults(defineProps<{
   type: 'text'
 })
 
-const { value, errorMessage, handleChange } = useField(
+const { value, errorMessage, handleChange } = useField<string>(
   () => props.name, undefined, {
     validateOnValueUpdate: false
   })

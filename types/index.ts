@@ -1,5 +1,10 @@
 import { UploadTask } from 'firebase/storage'
 
+export interface Option {
+  title: string
+  value: string
+}
+
 export enum AuthType {
   LOGIN = 'LOGIN',
   REGISTER = 'REGISTER'

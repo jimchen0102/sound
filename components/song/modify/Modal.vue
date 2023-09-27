@@ -29,7 +29,6 @@ const coll = collection(db, 'songs')
 
 const { isModalOpen } = useModal('modify')
 
-const tags = ref([...props.song.tags])
 const genres = [
   { title: '無', value: '無' },
   { title: '流行', value: '流行' },
@@ -71,12 +70,11 @@ const { handleSubmit } = useForm({
 })
 
 const onSubmit = handleSubmit(async (values) => {
-  values.tags = tags.value
   if (cover.value) {
     const coverRef = storageRef(storage, `covers/${user.value?.uid}/${uuidv4()}`)
     try {
-      const res = await uploadBytes(coverRef, cover.value)
-      const coverUrl = await getDownloadURL(res.ref)
+      const task = await uploadBytes(coverRef, cover.value)
+      const coverUrl = await getDownloadURL(task.ref)
       values.coverId = coverRef.name
       values.coverUrl = coverUrl
     } catch (error) {
@@ -162,7 +160,7 @@ const onSubmit = handleSubmit(async (values) => {
                   label="描述"
                 />
                 <BaseTags
-                  v-model="tags"
+                  name="tags"
                   label="附加標籤"
                 />
               </div>

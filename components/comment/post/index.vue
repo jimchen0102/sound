@@ -9,6 +9,15 @@ const coll = collection(db, 'comments')
 const {
   document: comments
 } = useLimitDocument(coll, 12, where('songID', '==', route.params.id))
+
+const sort = ref('descending')
+
+const sortedComments = computed(() =>
+  comments.value.slice().sort((a, b) => {
+    if (sort.value === 'descending') return b.createdAt - a.createdAt
+    else return a.createdAt - b.createdAt
+  })
+)
 </script>
 
 <template>
@@ -44,7 +53,7 @@ const {
   <div class="relative mt-7.5">
     <ul class="space-y-7.5">
       <li
-        v-for="comment in comments"
+        v-for="comment in sortedComments"
         :key="comment.docID"
       >
         <CommentPostPreview :comment="comment" />

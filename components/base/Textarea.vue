@@ -4,7 +4,7 @@ const props = defineProps<{
   label: string
 }>()
 
-const { value, errorMessage, handleChange } = useField(
+const { value, errorMessage, handleChange } = useField<string>(
   () => props.name, undefined, {
     validateOnValueUpdate: false
   })
@@ -17,7 +17,7 @@ const { value, errorMessage, handleChange } = useField(
     </label>
     <div class="relative mt-2">
       <textarea
-        :value="(value as string)"
+        :value="value"
         class="block h-35 w-full resize-none rounded-[30px] border-[3px] border-transparent bg-[#030303] px-6 py-4 leading-[1.75] text-white outline-none placeholder:text-[#696969] focus:border-[#696969]"
         :class="{
           '!border-danger': errorMessage

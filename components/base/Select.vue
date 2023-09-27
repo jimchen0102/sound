@@ -1,8 +1,5 @@
 <script setup lang="ts">
-interface Option {
-  title: string
-  value?: string
-}
+import { Option } from '@/types'
 
 const props = defineProps<{
   name: string
@@ -10,7 +7,7 @@ const props = defineProps<{
   options: Option[]
 }>()
 
-const { value, errorMessage } = useField(() => props.name)
+const { value, errorMessage } = useField<string>(() => props.name)
 </script>
 
 <template>
