@@ -8,6 +8,8 @@ import {
   DocumentData
 } from 'firebase/firestore'
 
+const { $on, $off } = useNuxtApp()
+
 const { isModalOpen } = useModal('modify')
 
 const user = useCurrentUser()
@@ -32,8 +34,25 @@ const getSongsDocument = async () => {
   })
 }
 
+const addSong = (song: DocumentData) => {
+  songs.value.unshift({
+    ...song.data(),
+    docID: song.id
+  })
+}
+
+const deleteSong = (docID: string) => {
+  const index = songs.value.findIndex(doc => doc.docID === docID)
+  songs.value.splice(index, 1)
+}
+
 onMounted(async () => {
+  $on('add-song', addSong)
   await getSongsDocument()
+})
+
+onUnmounted(() => {
+  $off('add-song')
 })
 </script>
 
@@ -48,7 +67,10 @@ onMounted(async () => {
         :key="song.docID"
         class="border-b border-white/10"
       >
-        <SongModifyPreview :song="song" />
+        <SongModifyPreview
+          :song="song"
+          @delete-song="deleteSong"
+        />
       </li>
     </ul>
   </div>

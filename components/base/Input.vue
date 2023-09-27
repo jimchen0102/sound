@@ -24,20 +24,20 @@ const { value, errorMessage, handleChange } = useField(
         :type="type"
         class="block h-15 w-full rounded-full border-[3px] border-transparent bg-[#030303] pl-6 pr-12 text-white outline-none focus:border-[#696969]"
         :class="{
-          '!border-[#ee2828]': errorMessage
+          '!border-danger': errorMessage
         }"
         @change="handleChange"
       >
       <div
         v-if="errorMessage"
-        class="absolute right-5 top-1/2 -translate-y-1/2 text-[#ee2828]"
+        class="absolute right-5 top-1/2 -translate-y-1/2 text-danger"
       >
         <Icon name="Alert" />
       </div>
     </div>
     <span
       v-if="errorMessage"
-      class="mt-1.5 inline-block text-sm text-[#ee2828]"
+      class="mt-1.5 inline-block text-sm text-danger"
     >
       {{ errorMessage }}
     </span>

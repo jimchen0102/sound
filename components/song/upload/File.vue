@@ -38,7 +38,7 @@ const uploadFile = (event: Event | DragEvent) => {
       />
       <h3 class="mt-2.5 text-center text-xl font-bold">
         拖曳歌曲至此，或
-        <span class="cursor-pointer text-[#fff645] underline">
+        <span class="cursor-pointer text-primary underline">
           選擇檔案
         </span>
         <br>

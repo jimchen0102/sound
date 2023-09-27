@@ -13,6 +13,8 @@ import {
 import { v4 as uuidv4 } from 'uuid'
 import { Upload } from '@/types'
 
+const { $emit } = useNuxtApp()
+
 const user = useCurrentUser()
 const db = useFirestore()
 const storage = useFirebaseStorage()
@@ -23,7 +25,6 @@ const uploads = ref<Upload[]>([])
 const uploadFile = (files: File[]) => {
   files.forEach((file) => {
     if (file.size > 10 * 1024 * 1024 || file.type !== 'audio/mpeg') return
-
     const songRef = storageRef(storage, `songs/${uuidv4()}`)
     const task = uploadBytesResumable(songRef, file)
     uploads.value.push({
@@ -33,13 +34,11 @@ const uploadFile = (files: File[]) => {
       state: ''
     })
     const index = uploads.value.length - 1
-
     task.on(
       'state_changed',
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        console.log('progress', progress)
         uploads.value[index].progress = progress
       },
       () => {
@@ -62,10 +61,8 @@ const uploadFile = (files: File[]) => {
           song.url = await getDownloadURL(task.snapshot.ref)
           const songRef = await addDoc(songsCollection, song)
           const snapshot = await getDoc(songRef)
-
           uploads.value[index].state = 'success'
-          console.log(snapshot)
-          // emitter.emit('addSong', songSnapshot)
+          $emit('add-song', snapshot)
         } catch (error) {
           console.log(error)
         }
@@ -73,6 +70,12 @@ const uploadFile = (files: File[]) => {
     )
   })
 }
+
+onUnmounted(() => {
+  uploads.value.forEach((upload) => {
+    upload.task.cancel()
+  })
+})
 </script>
 
 <template>

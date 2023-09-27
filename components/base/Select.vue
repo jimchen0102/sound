@@ -23,7 +23,7 @@ const { value, errorMessage } = useField(() => props.name)
         v-model="value"
         class="block h-15 w-full appearance-none rounded-full border-[3px] border-transparent bg-[#030303] px-6 text-white outline-none focus:border-[#696969]"
         :class="{
-          '!border-[#ee2828]': errorMessage
+          '!border-danger': errorMessage
         }"
       >
         <option
@@ -43,7 +43,7 @@ const { value, errorMessage } = useField(() => props.name)
     </div>
     <span
       v-if="errorMessage"
-      class="mt-1.5 inline-block text-sm text-[#ee2828]"
+      class="mt-1.5 inline-block text-sm text-danger"
     >
       {{ errorMessage }}
     </span>

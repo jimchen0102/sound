@@ -89,7 +89,7 @@ onMounted(async () => {
       </div>
       <button
         type="button"
-        class="flex h-16 w-16 items-center justify-center rounded-full bg-[#fff645]"
+        class="flex h-16 w-16 items-center justify-center rounded-full bg-primary"
         @click="createSound(song)"
       >
         <Icon

@@ -15,6 +15,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        primary: '#fff645',
+        secondary: '#fd9d02',
+        danger: '#ee2828'
+      },
       spacing: {
         7.5: '1.875rem',
         12.5: '3.125rem',
