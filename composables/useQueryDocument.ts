@@ -4,22 +4,25 @@ import {
   orderBy,
   startAfter,
   limit,
+  collection,
   getDocs,
   getCountFromServer,
   DocumentData,
   DocumentSnapshot,
-  CollectionReference,
   FieldPath,
   WhereFilterOp
 } from 'firebase/firestore'
 
 export const useQueryDocument = (
-  collection: CollectionReference,
+  name: string,
   options: {
     where?: [fieldPath: string | FieldPath, opStr: WhereFilterOp, value: unknown]
     limit?: number,
   }
 ) => {
+  const db = useFirestore()
+  const coll = collection(db, name)
+
   const document = ref<DocumentData[]>([])
   const lastDocument = ref<DocumentSnapshot | null>(null)
   const documentCount = ref(0)
@@ -36,7 +39,7 @@ export const useQueryDocument = (
   })
 
   const getDocumentCount = async () => {
-    let q = query(collection)
+    let q = query(coll)
     if (options.where) q = query(q, where(...options.where))
     const snapshot = await getCountFromServer(q)
     documentCount.value = snapshot.data().count
@@ -45,7 +48,7 @@ export const useQueryDocument = (
   const getDocument = async () => {
     if (isPending.value || document.value.length === documentCount.value) return
     isPending.value = true
-    let q = query(collection, orderBy('createdAt', 'desc'))
+    let q = query(coll, orderBy('createdAt', 'desc'))
     if (options.where) q = query(q, where(...options.where))
     if (options.limit) q = query(q, limit(options.limit))
     if (lastDocument.value) q = query(q, startAfter(lastDocument.value))

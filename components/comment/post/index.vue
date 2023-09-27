@@ -1,17 +1,12 @@
 <script setup lang="ts">
-import { collection } from 'firebase/firestore'
-
 const route = useRoute()
-
-const db = useFirestore()
-const coll = collection(db, 'comments')
 
 const {
   document: comments,
   isPending,
   observerEl,
   addDocument: addCommentDocument
-} = useQueryDocument(coll, {
+} = useQueryDocument('comments', {
   where: ['songID', '==', route.params.id],
   limit: 12
 })

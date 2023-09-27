@@ -1,16 +1,9 @@
 <script setup lang="ts">
-import { collection } from 'firebase/firestore'
-
-const db = useFirestore()
-const coll = collection(db, 'songs')
-
 const {
   document: songs,
   isPending,
   observerEl
-} = useQueryDocument(coll, {
-  limit: 12
-})
+} = useQueryDocument('songs', { limit: 12 })
 </script>
 
 <template>

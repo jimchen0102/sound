@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { collection, DocumentData } from 'firebase/firestore'
+import { DocumentData } from 'firebase/firestore'
 
 const { $on, $off } = useNuxtApp()
 
 const { isModalOpen } = useModal('modify')
 
 const user = useCurrentUser()
-const db = useFirestore()
-const coll = collection(db, 'songs')
 
 const {
   document: songs,
@@ -16,7 +14,7 @@ const {
   addDocument: addSongDocument,
   updateDocument: updateSongDocument,
   deleteDocument: deleteSongDocument
-} = useQueryDocument(coll, {
+} = useQueryDocument('songs', {
   where: ['uid', '==', user.value?.uid],
   limit: 12
 })
