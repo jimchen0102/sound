@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { collection, where } from 'firebase/firestore'
+import { collection } from 'firebase/firestore'
 
 const route = useRoute()
 
@@ -11,7 +11,10 @@ const {
   isPending,
   observerEl,
   addDocument: addCommentDocument
-} = useLimitDocument(coll, 12, where('songID', '==', route.params.id))
+} = useQueryDocument(coll, {
+  where: ['songID', '==', route.params.id],
+  limit: 12
+})
 
 const sort = ref('descending')
 

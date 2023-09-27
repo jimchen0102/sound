@@ -1,4 +1,4 @@
-export function useModal (type: string) {
+export const useModal = (type: string) => {
   const isModalOpen = useState(`${type}IsModalOpen`, () => false)
 
   watch(isModalOpen, (newVal) => {

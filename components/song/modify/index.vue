@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import {
-  collection,
-  where,
-  DocumentData
-} from 'firebase/firestore'
+import { collection, DocumentData } from 'firebase/firestore'
 
 const { $on, $off } = useNuxtApp()
 
@@ -20,7 +16,10 @@ const {
   addDocument: addSongDocument,
   updateDocument: updateSongDocument,
   deleteDocument: deleteSongDocument
-} = useLimitDocument(coll, 12, where('uid', '==', user.value?.uid))
+} = useQueryDocument(coll, {
+  where: ['uid', '==', user.value?.uid],
+  limit: 12
+})
 
 const modifySong = ref<DocumentData>({})
 

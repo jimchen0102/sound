@@ -1,24 +1,27 @@
 import {
   query,
+  where,
   orderBy,
   startAfter,
   limit,
-  doc,
-  getDoc,
   getDocs,
   getCountFromServer,
   DocumentData,
+  DocumentSnapshot,
   CollectionReference,
-  QueryConstraint,
-  QuerySnapshot
+  FieldPath,
+  WhereFilterOp
 } from 'firebase/firestore'
 
-export function useLimitDocument (
+export const useQueryDocument = (
   collection: CollectionReference,
-  limitLength: number,
-  where?: QueryConstraint
-) {
+  options: {
+    where?: [fieldPath: string | FieldPath, opStr: WhereFilterOp, value: unknown]
+    limit?: number,
+  }
+) => {
   const document = ref<DocumentData[]>([])
+  const lastDocument = ref<DocumentSnapshot | null>(null)
   const documentCount = ref(0)
   const isPending = ref(false)
   const observerEl = ref<HTMLElement | null>(null)
@@ -33,59 +36,29 @@ export function useLimitDocument (
   })
 
   const getDocumentCount = async () => {
-    console.log('getDocumentCount')
-    const q = where
-      ? query(collection, where)
-      : collection
+    let q = query(collection)
+    if (options.where) q = query(q, where(...options.where))
     const snapshot = await getCountFromServer(q)
     documentCount.value = snapshot.data().count
   }
 
   const getDocument = async () => {
     if (isPending.value || document.value.length === documentCount.value) return
-    console.log('getDocument')
-
     isPending.value = true
-    let snapshots: QuerySnapshot
-
-    try {
-      const lastDoc = document.value.length > 0
-        ? await getDoc(doc(collection, document.value[document.value.length - 1].docID))
-        : null
-
-      const q = where
-        ? query(
-          collection,
-          where,
-          orderBy('createdAt', 'desc'),
-          ...(lastDoc ? [startAfter(lastDoc)] : []),
-          limit(limitLength)
-        )
-        : query(
-          collection,
-          orderBy('createdAt', 'desc'),
-          ...(lastDoc ? [startAfter(lastDoc)] : []),
-          limit(limitLength)
-        )
-
-      snapshots = await getDocs(q)
-    } catch (error) {
-      console.error(error)
-      isPending.value = false
-      return
-    }
-
-    setTimeout(async () => {
-      snapshots.forEach((doc) => {
-        document.value.push({
-          ...doc.data(),
-          docID: doc.id
-        })
+    let q = query(collection, orderBy('createdAt', 'desc'))
+    if (options.where) q = query(q, where(...options.where))
+    if (options.limit) q = query(q, limit(options.limit))
+    if (lastDocument.value) q = query(q, startAfter(lastDocument.value))
+    const snapshots = await getDocs(q)
+    lastDocument.value = snapshots.docs[snapshots.docs.length - 1]
+    snapshots.forEach((doc) => {
+      document.value.push({
+        ...doc.data(),
+        docID: doc.id
       })
-      isPending.value = false
-      await nextTick()
-      if (observerEl.value) observer.observe(observerEl.value)
-    }, 500)
+    })
+    isPending.value = false
+    if (observerEl.value) observer.observe(observerEl.value)
   }
 
   const addDocument = (doc: DocumentData) => {

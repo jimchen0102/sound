@@ -1,8 +1,8 @@
-export function useSlider (callbacks: {
+export const useSlider = (callbacks: {
   onDragStart?: (percent: number) => void
   onDragging?: (percent: number) => void
   onDragEnd?: (percent: number) => void
-}) {
+}) => {
   const isDragging = ref(false)
   const percent = ref(0)
   const sliderEl = ref<HTMLElement | null>(null)

@@ -8,7 +8,9 @@ const {
   document: songs,
   isPending,
   observerEl
-} = useLimitDocument(coll, 12)
+} = useQueryDocument(coll, {
+  limit: 12
+})
 </script>
 
 <template>
