@@ -33,6 +33,7 @@ export function useLimitDocument (
   })
 
   const getDocumentCount = async () => {
+    console.log('getDocumentCount')
     const q = where
       ? query(collection, where)
       : collection
@@ -42,6 +43,7 @@ export function useLimitDocument (
 
   const getDocument = async () => {
     if (isPending.value || document.value.length === documentCount.value) return
+    console.log('getDocument')
 
     isPending.value = true
     let snapshots: QuerySnapshot
@@ -103,9 +105,12 @@ export function useLimitDocument (
     document.value.splice(index, 1)
   }
 
-  watch(documentCount, () => {
-    getDocumentCount()
-  })
+  watch(
+    () => document.value.length,
+    () => {
+      getDocumentCount()
+    }
+  )
 
   onMounted(async () => {
     await getDocumentCount()
