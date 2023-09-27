@@ -1,11 +1,37 @@
 <script setup lang="ts">
-import { DocumentData } from 'firebase/firestore'
+import {
+  doc,
+  deleteDoc,
+  collection,
+  DocumentData
+} from 'firebase/firestore'
+import {
+  ref as storageRef,
+  deleteObject
+} from 'firebase/storage'
 
-defineProps<{
+const props = defineProps<{
   song: DocumentData
 }>()
 
+const emit = defineEmits<{(e: 'delete-song', value: string): void}>()
+
+const db = useFirestore()
+const storage = useFirebaseStorage()
+const songsCollection = collection(db, 'songs')
+
 const { isModalOpen } = useModal('modify')
+
+async function handleDeleteSong () {
+  const songRef = storageRef(storage, `songs/${props.song.uuid}`)
+  try {
+    await deleteObject(songRef)
+    await deleteDoc(doc(songsCollection, props.song.docID))
+    emit('delete-song', props.song.docID)
+  } catch (error) {
+    console.log(error)
+  }
+}
 </script>
 
 <template>
@@ -47,6 +73,7 @@ const { isModalOpen } = useModal('modify')
       <button
         type="button"
         class="flex h-10 w-10 items-center justify-center text-white/50 hover:text-white"
+        @click="handleDeleteSong"
       >
         <Icon
           name="Delete"
