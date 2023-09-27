@@ -11,7 +11,7 @@ import { usePlayerStore } from '@/stores/player'
 const route = useRoute()
 
 const db = useFirestore()
-const songsCollection = collection(db, 'songs')
+const songCollection = collection(db, 'songs')
 
 const playerStore = usePlayerStore()
 const { currentSound, isSoundPlaying } = storeToRefs(playerStore)
@@ -21,7 +21,7 @@ const song = ref<DocumentData>()
 
 const getSongDocument = async () => {
   try {
-    const snapshot = await getDoc(doc(songsCollection, route.params.id as string))
+    const snapshot = await getDoc(doc(songCollection, route.params.id as string))
     if (!snapshot.exists()) return await navigateTo('/')
     song.value = {
       ...snapshot.data(),

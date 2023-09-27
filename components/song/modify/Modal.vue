@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import * as yup from 'yup'
+import { DocumentData } from 'firebase/firestore'
 import { vOnClickOutside } from '@vueuse/components'
+
+const props = defineProps<{
+  song: DocumentData
+}>()
 
 const { isModalOpen } = useModal('modify')
 
 const tagInputEl = ref<HTMLInputElement | null>(null)
 const genres = [
-  { title: '無', value: '' },
+  { title: '無', value: '無' },
   { title: '流行', value: '流行' },
   { title: '搖滾', value: '搖滾' },
   { title: '饒舌', value: '饒舌' },
@@ -18,10 +23,9 @@ const genres = [
 
 const { handleSubmit } = useForm({
   initialValues: {
-    title: '',
-    genre: '',
-    description: '',
-    tags: []
+    title: props.song.title,
+    genre: props.song.genre,
+    description: props.song.description
   },
   validationSchema: yup.object({
     title: yup.string().required('歌曲名稱為必填')
@@ -62,8 +66,9 @@ const onSubmit = handleSubmit((values) => {
                   for="uploadCover"
                 >
                   <img
-                    src="https://firebasestorage.googleapis.com/v0/b/sound-ebc19.appspot.com/o/covers%2FqEVcwq1gQhgKK21zz2v0rfjKnnp1%2F51421d7d-a2df-44e4-90fa-94ee5dd8c9f0?alt=media&amp;token=28df2fa5-d39d-44fd-bfc2-4cb76f4a6eb9"
-                    alt=""
+                    v-if="song.coverUrl"
+                    :src="song.coverUrl"
+                    :alt="song.title"
                     class="h-full w-full object-cover"
                   >
                   <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white">

@@ -2,7 +2,7 @@ import mitt from 'mitt'
 import { DocumentData } from 'firebase-admin/firestore'
 
 type Events = {
-  'add-song': DocumentData;
+  'add-song-document': DocumentData;
 };
 
 export default defineNuxtPlugin(() => {

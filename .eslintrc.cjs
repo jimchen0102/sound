@@ -12,6 +12,7 @@ module.exports = {
     'vue/no-multiple-template-root': 'off',
     'vue/multi-word-component-names': 'off',
     'import/no-duplicates': 'off',
+    'func-call-spacing': 'off',
     curly: 'off'
   }
 }

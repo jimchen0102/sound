@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import {
   collection,
-  query,
   where,
-  orderBy,
-  getDocs,
   DocumentData
 } from 'firebase/firestore'
 
@@ -14,45 +11,29 @@ const { isModalOpen } = useModal('modify')
 
 const user = useCurrentUser()
 const db = useFirestore()
-const songsCollection = collection(db, 'songs')
+const songCollection = collection(db, 'songs')
 
-const songs = ref<DocumentData[]>([])
+const {
+  document: songs,
+  getDocument: getSongsDocument,
+  addDocument: addSongDocument,
+  deleteDocument: deleteSongDocument
+} = useLimitDocument(12, songCollection, where('uid', '==', user.value?.uid))
 
-const getSongsDocument = async () => {
-  const q = query(
-    songsCollection,
-    where('uid', '==', user.value?.uid),
-    orderBy('createdAt', 'desc')
-  )
-  const snapshot = await getDocs(q)
+const modifySong = ref<DocumentData>()
 
-  snapshot.forEach((doc) => {
-    songs.value.push({
-      ...doc.data(),
-      docID: doc.id
-    })
-  })
-}
-
-const addSong = (song: DocumentData) => {
-  songs.value.unshift({
-    ...song.data(),
-    docID: song.id
-  })
-}
-
-const deleteSong = (docID: string) => {
-  const index = songs.value.findIndex(doc => doc.docID === docID)
-  songs.value.splice(index, 1)
+const openModifyModal = (song: DocumentData) => {
+  isModalOpen.value = true
+  modifySong.value = song
 }
 
 onMounted(async () => {
-  $on('add-song', addSong)
+  $on('add-song-document', addSongDocument)
   await getSongsDocument()
 })
 
 onUnmounted(() => {
-  $off('add-song')
+  $off('add-song-document')
 })
 </script>
 
@@ -69,14 +50,18 @@ onUnmounted(() => {
       >
         <SongModifyPreview
           :song="song"
-          @delete-song="deleteSong"
+          @open-modal="openModifyModal"
+          @delete-song="deleteSongDocument"
         />
       </li>
     </ul>
   </div>
   <Teleport to="body">
     <Transition name="fade">
-      <SongModifyModal v-if="isModalOpen" />
+      <SongModifyModal
+        v-if="isModalOpen"
+        :song="modifySong!"
+      />
     </Transition>
   </Teleport>
 </template>

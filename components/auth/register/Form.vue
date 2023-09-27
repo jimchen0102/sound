@@ -65,10 +65,12 @@ const onSubmit = handleSubmit(async ({ name, email, password }) => {
       />
       <BaseInput
         name="password"
+        type="password"
         label="密碼"
       />
       <BaseInput
         name="passwordConfirm"
+        type="password"
         label="確認密碼"
       />
     </div>

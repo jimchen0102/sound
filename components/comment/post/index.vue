@@ -1,39 +1,14 @@
 <script setup lang="ts">
-import {
-  collection,
-  query,
-  where,
-  orderBy,
-  getDocs,
-  DocumentData
-} from 'firebase/firestore'
+import { collection, where } from 'firebase/firestore'
 
 const route = useRoute()
 
 const db = useFirestore()
-const commentsCollection = collection(db, 'comments')
+const commentCollection = collection(db, 'comments')
 
-const comments = ref<DocumentData[]>([])
-
-const getCommentsDocument = async () => {
-  const q = query(
-    commentsCollection,
-    where('songID', '==', route.params.id),
-    orderBy('createdAt', 'desc')
-  )
-  const snapshot = await getDocs(q)
-
-  snapshot.forEach((doc) => {
-    comments.value.push({
-      ...doc.data(),
-      docID: doc.id
-    })
-  })
-}
-
-onMounted(async () => {
-  await getCommentsDocument()
-})
+const {
+  document: comments
+} = useLimitDocument(12, commentCollection, where('songID', '==', route.params.id))
 </script>
 
 <template>

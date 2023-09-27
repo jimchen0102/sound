@@ -14,19 +14,21 @@ const props = defineProps<{
   song: DocumentData
 }>()
 
-const emit = defineEmits<{(e: 'delete-song', value: string): void}>()
+const emit = defineEmits<{
+  (e: 'open-modal', value: DocumentData): void,
+  (e: 'delete-song', value: string): void
+}>()
 
+const user = useCurrentUser()
 const db = useFirestore()
 const storage = useFirebaseStorage()
-const songsCollection = collection(db, 'songs')
-
-const { isModalOpen } = useModal('modify')
+const songCollection = collection(db, 'songs')
 
 async function handleDeleteSong () {
-  const songRef = storageRef(storage, `songs/${props.song.uuid}`)
+  const songRef = storageRef(storage, `songs/${user.value?.uid}/${props.song.uuid}`)
   try {
     await deleteObject(songRef)
-    await deleteDoc(doc(songsCollection, props.song.docID))
+    await deleteDoc(doc(songCollection, props.song.docID))
     emit('delete-song', props.song.docID)
   } catch (error) {
     console.log(error)
@@ -63,7 +65,7 @@ async function handleDeleteSong () {
       <button
         type="button"
         class="flex h-10 w-10 items-center justify-center text-white/50 hover:text-white"
-        @click="isModalOpen = true"
+        @click="$emit('open-modal', song)"
       >
         <Icon
           name="Edit"

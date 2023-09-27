@@ -18,14 +18,14 @@ const { $emit } = useNuxtApp()
 const user = useCurrentUser()
 const db = useFirestore()
 const storage = useFirebaseStorage()
-const songsCollection = collection(db, 'songs')
+const songCollection = collection(db, 'songs')
 
 const uploads = ref<Upload[]>([])
 
 const uploadFile = (files: File[]) => {
   files.forEach((file) => {
     if (file.size > 10 * 1024 * 1024 || file.type !== 'audio/mpeg') return
-    const songRef = storageRef(storage, `songs/${uuidv4()}`)
+    const songRef = storageRef(storage, `songs/${user.value?.uid}/${uuidv4()}`)
     const task = uploadBytesResumable(songRef, file)
     uploads.value.push({
       task,
@@ -46,23 +46,23 @@ const uploadFile = (files: File[]) => {
       },
       async () => {
         const song = {
-          createdAt: serverTimestamp(),
-          uuid: task.snapshot.ref.name,
-          uid: user.value?.uid,
-          displayName: user.value?.displayName,
-          title: file.name.replace(/\.[^/\\.]+$/, ''),
-          description: '',
-          tags: [],
           coverUrl: '',
-          genre: '',
-          url: ''
+          createdAt: serverTimestamp(),
+          description: '',
+          displayName: user.value?.displayName,
+          genre: '無',
+          tags: [],
+          title: file.name.replace(/\.[^/\\.]+$/, ''),
+          uid: user.value?.uid,
+          url: '',
+          uuid: task.snapshot.ref.name
         }
         try {
           song.url = await getDownloadURL(task.snapshot.ref)
-          const songRef = await addDoc(songsCollection, song)
+          const songRef = await addDoc(songCollection, song)
           const snapshot = await getDoc(songRef)
           uploads.value[index].state = 'success'
-          $emit('add-song', snapshot)
+          $emit('add-song-document', snapshot)
         } catch (error) {
           console.log(error)
         }
