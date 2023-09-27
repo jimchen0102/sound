@@ -6,13 +6,10 @@ const uploadEl = ref<HTMLInputElement | null>(null)
 
 const uploadFile = (event: Event | DragEvent) => {
   isDragOver.value = false
-
   const files = (event as DragEvent).dataTransfer
     ? [...((event as DragEvent).dataTransfer as DataTransfer).files]
     : [...((event.target as HTMLInputElement).files as FileList)];
-
   (uploadEl.value as HTMLInputElement).value = ''
-
   emit('upload-file', files)
 }
 </script>

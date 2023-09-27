@@ -46,13 +46,13 @@ const uploadFile = (files: File[]) => {
       },
       async () => {
         const song = {
-          coverId: '',
+          coverID: '',
           coverUrl: '',
           createdAt: serverTimestamp(),
           description: '',
           displayName: user.value?.displayName,
           genre: '無',
-          songId: task.snapshot.ref.name,
+          songID: task.snapshot.ref.name,
           songUrl: '',
           tags: [],
           title: file.name.replace(/\.[^/\\.]+$/, ''),

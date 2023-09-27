@@ -7,7 +7,7 @@
       <div
         v-for="num in 8"
         :key="num"
-        class="h-[20vh] bg-[url('@/assets/img/sound-text-fill.svg')] bg-[length:auto_100%] odd:animate-marquee-reverse odd:opacity-[.05] even:animate-marquee even:opacity-[.025]"
+        class="h-[20vh] bg-[url('@/assets/img/sound-text-fill.svg')] bg-[length:auto_100%] odd:animate-[marquee_40s_linear_reverse_infinite] odd:opacity-[.05] even:animate-[marquee_40s_linear_infinite] even:opacity-[.025]"
       />
     </div>
     <div class="absolute bottom-[-20%] left-1/2 top-[20%] -translate-x-1/2 sm:bottom-[-60%] sm:top-[10%]">

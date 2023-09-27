@@ -3,7 +3,9 @@ import { signInWithEmailAndPassword, Auth } from 'firebase/auth'
 import { object, string } from 'yup'
 import { AuthType } from '@/types'
 
-defineEmits<{(e: 'change-auth-type', value: AuthType): void}>()
+defineEmits<{
+  (e: 'change-auth-type', value: AuthType): void
+}>()
 
 const auth = useFirebaseAuth()
 const route = useRoute()

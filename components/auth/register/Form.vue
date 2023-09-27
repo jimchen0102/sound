@@ -4,7 +4,9 @@ import { collection, doc, setDoc } from 'firebase/firestore'
 import { object, string, ref } from 'yup'
 import { AuthType } from '@/types'
 
-defineEmits<{(e: 'change-auth-type', value: AuthType): void}>()
+defineEmits<{
+  (e: 'change-auth-type', value: AuthType): void
+}>()
 
 const route = useRoute()
 

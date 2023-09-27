@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import * as yup from 'yup'
 import {
   doc,
   updateDoc,
@@ -11,6 +10,7 @@ import {
   uploadBytes,
   getDownloadURL
 } from 'firebase/storage'
+import { object, string } from 'yup'
 import { v4 as uuidv4 } from 'uuid'
 import { vOnClickOutside } from '@vueuse/components'
 
@@ -60,13 +60,15 @@ onMounted(() => {
   reader.onload = handleFileLoaded
 })
 
-const { handleSubmit } = useForm({
+const { handleSubmit } = useForm<DocumentData>({
   initialValues: {
     ...props.song
   },
-  validationSchema: yup.object({
-    title: yup.string().required('歌曲名稱為必填')
-  })
+  validationSchema: toTypedSchema(
+    object({
+      title: string().required('歌曲名稱為必填')
+    })
+  )
 })
 
 const onSubmit = handleSubmit(async (values) => {

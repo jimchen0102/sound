@@ -25,7 +25,7 @@ const storage = useFirebaseStorage()
 const coll = collection(db, 'songs')
 
 async function deleteSongDocument () {
-  const songRef = storageRef(storage, `songs/${user.value?.uid}/${props.song.songId}`)
+  const songRef = storageRef(storage, `songs/${user.value?.uid}/${props.song.songID}`)
   const coverRef = storageRef(storage, `covers/${user.value?.uid}/${props.song.coverId}`)
   try {
     await deleteObject(songRef)
