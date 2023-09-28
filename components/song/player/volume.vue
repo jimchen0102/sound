@@ -27,7 +27,14 @@ const {
       :style="{ width: `${volume * 100}%` }"
     />
     <div class="absolute left-5 top-1/2 -translate-y-1/2 text-white">
-      <Icon name="Volume" />
+      <Icon
+        v-if="volume === 0"
+        name="Muted"
+      />
+      <Icon
+        v-else
+        name="Volume"
+      />
     </div>
   </div>
 </template>
