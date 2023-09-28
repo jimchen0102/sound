@@ -10,7 +10,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'delete-comment-document', value: string): void
+  (e: 'delete-comment', value: string): void
 }>()
 
 const user = useCurrentUser()
@@ -19,7 +19,7 @@ const db = useFirestore()
 const handleDeleteComment = async () => {
   try {
     await deleteDoc(doc(db, 'comments', props.comment.id))
-    emit('delete-comment-document', props.comment.id)
+    emit('delete-comment', props.comment.id)
   } catch (error) {
     console.log(error)
   }

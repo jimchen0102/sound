@@ -18,7 +18,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'update-song-document', value: [string, DocumentData]): void
+  (e: 'update-song', value: { id:string, value: DocumentData }): void
 }>()
 
 const user = useCurrentUser()
@@ -89,7 +89,10 @@ const onSubmit = handleSubmit(async (values) => {
   }
   try {
     await updateDoc(songRef, values)
-    emit('update-song-document', [props.song.id, values])
+    emit('update-song', {
+      id: props.song.id,
+      value: values
+    })
     isModalOpen.value = false
   } catch (error) {
     console.log(error)

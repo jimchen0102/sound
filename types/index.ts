@@ -22,7 +22,7 @@ export interface Upload {
   title: string
 }
 
-export interface Query {
+export interface QueryOptions {
   where?: [fieldPath: string | FieldPath, opStr: WhereFilterOp, value: unknown]
   orderBy?: [fieldPath: string | FieldPath, directionStr?: OrderByDirection]
   limit?: number

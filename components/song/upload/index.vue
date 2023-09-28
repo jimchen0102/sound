@@ -2,7 +2,6 @@
 import {
   doc,
   setDoc,
-  getDoc,
   serverTimestamp
 } from 'firebase/firestore'
 import {
@@ -13,15 +12,13 @@ import {
 import { v4 as uuidv4 } from 'uuid'
 import { Upload } from '@/types'
 
-const { $emit } = useNuxtApp()
-
 const user = useCurrentUser()
 const db = useFirestore()
 const storage = useFirebaseStorage()
 
 const uploads = ref<Upload[]>([])
 
-const uploadFile = (files: File[]) => {
+const handleUploadFile = (files: File[]) => {
   files.forEach((file) => {
     if (file.size > 10 * 1024 * 1024 || file.type !== 'audio/mpeg') return
     const id = uuidv4()
@@ -61,9 +58,7 @@ const uploadFile = (files: File[]) => {
         try {
           song.url = await getDownloadURL(task.snapshot.ref)
           await setDoc(songRef, song)
-          const snapshot = await getDoc(songRef)
           uploads.value[index].state = 'success'
-          $emit('add-song-document', snapshot)
         } catch (error) {
           console.log(error)
         }
@@ -84,7 +79,7 @@ onUnmounted(() => {
     上傳歌曲
   </h2>
   <div class="mt-5 lg:mt-7.5">
-    <SongUploadFile @upload-file="uploadFile" />
+    <SongUploadFile @upload-file="handleUploadFile" />
     <ul class="mt-5 space-y-5 lg:mt-7.5">
       <li
         v-for="upload in uploads"

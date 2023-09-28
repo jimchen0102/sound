@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { Query } from '@/types'
+import { QueryOptions } from '@/types'
 
-const props = defineProps<Query>()
+const props = defineProps<QueryOptions>()
 
 const {
   document: comments,
   isPending,
   observerEl,
-  addDocument: addCommentDocument,
-  deleteDocument: deleteCommentDocument
+  addDocument: handleAddComment,
+  deleteDocument: handleDeleteComment
 } = useQueryDocument('comments', {
   where: props.where,
   orderBy: props.orderBy,
@@ -55,7 +55,7 @@ const sortedComments = computed(() =>
   </div>
 
   <div class="relative mt-5">
-    <CommentPostForm @add-comment-document="addCommentDocument" />
+    <CommentPostForm @add-comment="handleAddComment" />
   </div>
 
   <div class="relative mt-7.5">
@@ -66,7 +66,7 @@ const sortedComments = computed(() =>
       >
         <CommentPostPreview
           :comment="comment"
-          @delete-comment-document="deleteCommentDocument"
+          @delete-comment="handleDeleteComment"
         />
       </li>
     </ul>

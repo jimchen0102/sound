@@ -10,9 +10,9 @@ import {
   DocumentData,
   DocumentSnapshot
 } from 'firebase/firestore'
-import { Query } from '@/types'
+import { QueryOptions } from '@/types'
 
-export const useQueryDocument = (name: string, options: Query) => {
+export const useQueryDocument = (name: string, options: QueryOptions) => {
   const db = useFirestore()
   const collectionRef = collection(db, name)
 
@@ -66,7 +66,7 @@ export const useQueryDocument = (name: string, options: Query) => {
     })
   }
 
-  const updateDocument = ([id, value]: [string, DocumentData]) => {
+  const updateDocument = ({ id, value }:{ id:string, value:DocumentData }) => {
     const index = document.value.findIndex(doc => doc.id === id)
     document.value[index] = {
       ...document.value[index],

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Query } from '@/types'
+import { QueryOptions } from '@/types'
 
-const props = defineProps<Query>()
+const props = defineProps<QueryOptions>()
 
 const {
   document: songs,

@@ -1,19 +1,17 @@
 <script setup lang="ts">
 import { DocumentData } from 'firebase/firestore'
-import { Query } from '@/types'
+import { QueryOptions } from '@/types'
 
-const props = defineProps<Query>()
+const props = defineProps<QueryOptions>()
 
-const { $on, $off } = useNuxtApp()
 const { isModalOpen } = useModal('modify')
 
 const {
   document: songs,
   isPending,
   observerEl,
-  addDocument: addSongDocument,
-  updateDocument: updateSongDocument,
-  deleteDocument: deleteSongDocument
+  updateDocument: handleUpdateSong,
+  deleteDocument: handleDeleteSong
 } = useQueryDocument('songs', {
   where: props.where,
   orderBy: props.orderBy,
@@ -22,24 +20,13 @@ const {
 
 const modifySong = ref<DocumentData>({})
 
-const openModifyModal = (song: DocumentData) => {
+const handleOpenModal = (song: DocumentData) => {
   isModalOpen.value = true
   modifySong.value = song
 }
-
-onMounted(() => {
-  $on('add-song-document', addSongDocument)
-})
-
-onUnmounted(() => {
-  $off('add-song-document', addSongDocument)
-})
 </script>
 
 <template>
-  <h2 class="text-2xl font-bold text-white lg:text-3xl">
-    我的歌曲
-  </h2>
   <div class="relative mt-5 lg:mt-7.5">
     <div class="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3">
       <div
@@ -48,8 +35,8 @@ onUnmounted(() => {
       >
         <SongModifyPreview
           :song="song"
-          @open-modify-modal="openModifyModal"
-          @delete-song-document="deleteSongDocument"
+          @open-modal="handleOpenModal"
+          @delete-song="handleDeleteSong"
         />
       </div>
     </div>
@@ -104,7 +91,7 @@ onUnmounted(() => {
       <SongModifyModal
         v-if="isModalOpen"
         :song="modifySong"
-        @update-song-document="updateSongDocument"
+        @update-song="handleUpdateSong"
       />
     </Transition>
   </Teleport>

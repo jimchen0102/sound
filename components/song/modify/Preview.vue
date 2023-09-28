@@ -14,8 +14,8 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'open-modify-modal', value: DocumentData): void,
-  (e: 'delete-song-document', value: string): void
+  (e: 'open-modal', value: DocumentData): void,
+  (e: 'delete-song', value: string): void
 }>()
 
 const user = useCurrentUser()
@@ -27,7 +27,7 @@ const handleDeleteSong = async () => {
   try {
     await deleteObject(songRef)
     await deleteDoc(doc(db, 'songs', props.song.id))
-    emit('delete-song-document', props.song.id)
+    emit('delete-song', props.song.id)
   } catch (error) {
     console.log(error)
   }
@@ -51,7 +51,7 @@ const handleDeleteSong = async () => {
       <button
         type="button"
         class="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white"
-        @click="$emit('open-modify-modal', song)"
+        @click="$emit('open-modal', song)"
       >
         <Icon
           name="Edit"

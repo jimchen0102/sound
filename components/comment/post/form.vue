@@ -9,7 +9,7 @@ import {
 import { v4 as uuidv4 } from 'uuid'
 
 const emit = defineEmits<{
-  (e: 'add-comment-document', value: DocumentData): void
+  (e: 'add-comment', value: DocumentData): void
 }>()
 
 const route = useRoute()
@@ -36,7 +36,7 @@ const onSubmit = handleSubmit(async (values, { resetForm }) => {
   try {
     await setDoc(commentRef, comment)
     const snapshot = await getDoc(commentRef)
-    emit('add-comment-document', snapshot)
+    emit('add-comment', snapshot)
     resetForm()
   } catch (error) {
     console.log(error)
