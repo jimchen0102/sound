@@ -1,15 +1,20 @@
 <script setup lang="ts">
+import { Query } from '@/types'
+
+const props = defineProps<Query>()
+
 const {
   document: songs,
   isPending,
   observerEl
-} = useQueryDocument('songs', { limit: 12 })
+} = useQueryDocument('songs', {
+  where: props.where,
+  orderBy: props.orderBy,
+  limit: props.limit
+})
 </script>
 
 <template>
-  <h2 class="text-2xl font-bold text-white lg:text-3xl">
-    更多歌曲
-  </h2>
   <div class="relative mt-5 lg:mt-7.5">
     <ul>
       <li

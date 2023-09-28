@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const route = useRoute()
+import { Query } from '@/types'
+
+const props = defineProps<Query>()
 
 const {
   document: comments,
@@ -8,8 +10,9 @@ const {
   addDocument: addCommentDocument,
   deleteDocument: deleteCommentDocument
 } = useQueryDocument('comments', {
-  where: ['songID', '==', route.params.id],
-  limit: 12
+  where: props.where,
+  orderBy: props.orderBy,
+  limit: props.limit
 })
 
 const sort = ref('descending')

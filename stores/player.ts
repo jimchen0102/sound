@@ -17,7 +17,7 @@ export const usePlayerStore = defineStore('player', () => {
     if (sound.value && song.docID !== currentSound.value?.docID) sound.value.unload()
     currentSound.value = song
     sound.value = new Howl({
-      src: [song.songUrl],
+      src: [song.url],
       html5: true,
       volume: volume.value,
       onplay () {

@@ -21,8 +21,8 @@ const { createSound } = playerStore
   >
     <div class="relative aspect-square w-16 overflow-hidden rounded bg-gradient-to-b from-[#383838] to-[#767676]">
       <img
-        v-if="song.coverUrl"
-        :src="song.coverUrl"
+        v-if="song.cover.url"
+        :src="song.cover.url"
         :alt="song.title"
         class="h-full w-full object-cover"
       >

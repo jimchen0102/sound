@@ -46,20 +46,22 @@ const uploadFile = (files: File[]) => {
       },
       async () => {
         const song = {
-          coverID: '',
-          coverUrl: '',
+          cover: {
+            id: '',
+            url: ''
+          },
           createdAt: serverTimestamp(),
           description: '',
           displayName: user.value?.displayName,
           genre: '無',
-          songID: task.snapshot.ref.name,
-          songUrl: '',
+          id: task.snapshot.ref.name,
+          url: '',
           tags: [],
           title: file.name.replace(/\.[^/\\.]+$/, ''),
           uid: user.value?.uid
         }
         try {
-          song.songUrl = await getDownloadURL(task.snapshot.ref)
+          song.url = await getDownloadURL(task.snapshot.ref)
           const songRef = await addDoc(coll, song)
           const snapshot = await getDoc(songRef)
           uploads.value[index].state = 'success'

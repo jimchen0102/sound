@@ -1,9 +1,17 @@
 <script setup lang="ts">
+import { Query } from '@/types'
+
+const props = defineProps<Query>()
+
 const {
   document: songs,
   isPending,
   observerEl
-} = useQueryDocument('songs', { limit: 12 })
+} = useQueryDocument('songs', {
+  where: props.where,
+  orderBy: props.orderBy,
+  limit: props.limit
+})
 </script>
 
 <template>

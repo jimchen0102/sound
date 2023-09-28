@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { DocumentData } from 'firebase/firestore'
+import { Query } from '@/types'
+
+const props = defineProps<Query>()
 
 const { $on, $off } = useNuxtApp()
-
 const { isModalOpen } = useModal('modify')
-
-const user = useCurrentUser()
 
 const {
   document: songs,
@@ -15,8 +15,9 @@ const {
   updateDocument: updateSongDocument,
   deleteDocument: deleteSongDocument
 } = useQueryDocument('songs', {
-  where: ['uid', '==', user.value?.uid],
-  limit: 12
+  where: props.where,
+  orderBy: props.orderBy,
+  limit: props.limit
 })
 
 const modifySong = ref<DocumentData>({})
@@ -40,19 +41,18 @@ onUnmounted(() => {
     我的歌曲
   </h2>
   <div class="relative mt-5 lg:mt-7.5">
-    <ul>
-      <li
+    <div class="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3">
+      <div
         v-for="song in songs"
         :key="song.docID"
-        class="border-b border-white/10"
       >
         <SongModifyPreview
           :song="song"
           @open-modify-modal="openModifyModal"
           @delete-song-document="deleteSongDocument"
         />
-      </li>
-    </ul>
+      </div>
+    </div>
 
     <div
       ref="observerEl"

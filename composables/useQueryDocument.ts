@@ -8,18 +8,11 @@ import {
   getDocs,
   getCountFromServer,
   DocumentData,
-  DocumentSnapshot,
-  FieldPath,
-  WhereFilterOp
+  DocumentSnapshot
 } from 'firebase/firestore'
+import { Query } from '@/types'
 
-export const useQueryDocument = (
-  name: string,
-  options: {
-    where?: [fieldPath: string | FieldPath, opStr: WhereFilterOp, value: unknown]
-    limit?: number
-  }
-) => {
+export const useQueryDocument = (name: string, options: Query) => {
   const db = useFirestore()
   const coll = collection(db, name)
 
@@ -49,8 +42,9 @@ export const useQueryDocument = (
   const getDocument = async () => {
     if (isPending.value) return
     isPending.value = true
-    let q = query(coll, orderBy('createdAt', 'desc'))
+    let q = query(coll)
     if (options.where) q = query(q, where(...options.where))
+    if (options.orderBy) q = query(q, orderBy(...options.orderBy))
     if (options.limit) q = query(q, limit(options.limit))
     if (lastDocument.value) q = query(q, startAfter(lastDocument.value))
     const snapshots = await getDocs(q)
@@ -63,7 +57,7 @@ export const useQueryDocument = (
     })
     isPending.value = false
     await getDocumentCount()
-    if (snapshots.size === documentCount.value) return
+    if (document.value.length === documentCount.value) return
     if (observerEl.value) observer.observe(observerEl.value)
   }
 

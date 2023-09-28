@@ -24,12 +24,10 @@ const db = useFirestore()
 const storage = useFirebaseStorage()
 const coll = collection(db, 'songs')
 
-async function handleDeleteSong () {
-  const songRef = storageRef(storage, `songs/${user.value?.uid}/${props.song.songID}`)
-  const coverRef = storageRef(storage, `covers/${user.value?.uid}/${props.song.coverId}`)
+const handleDeleteSong = async () => {
+  const songRef = storageRef(storage, `songs/${user.value?.uid}/${props.song.id}`)
   try {
     await deleteObject(songRef)
-    await deleteObject(coverRef)
     await deleteDoc(doc(coll, props.song.docID))
     emit('delete-song-document', props.song.docID)
   } catch (error) {
@@ -39,34 +37,22 @@ async function handleDeleteSong () {
 </script>
 
 <template>
-  <div class="flex items-center gap-x-5 rounded p-2 hover:bg-[#212121]">
-    <div class="flex flex-1 items-center gap-x-4">
-      <div class="relative aspect-square w-16 overflow-hidden rounded bg-gradient-to-b from-[#383838] to-[#767676]">
-        <img
-          v-if="song.coverUrl"
-          :src="song.coverUrl"
-          :alt="song.title"
-          class="h-full w-full object-cover"
-        >
-      </div>
-      <div class="flex-1">
-        <h3 class="line-clamp-1 font-bold text-white">
-          <NuxtLink
-            :to="`/song/${song.docID}`"
-            class="hover:underline"
-          >
-            {{ song.title }}
-          </NuxtLink>
-        </h3>
-        <h4 class="mt-1 line-clamp-1 text-sm text-white/50">
-          {{ formatCreatedAt(song.createdAt) }}
-        </h4>
-      </div>
-    </div>
-    <div class="flex">
+  <div class="relative">
+    <NuxtLink
+      :to="`/song/${song.docID}`"
+      class="block aspect-square overflow-hidden rounded bg-gradient-to-b from-[#383838] to-[#767676]"
+    >
+      <img
+        v-if="song.cover.url"
+        :src="song.cover.url"
+        :alt="song.title"
+        class="h-full w-full object-cover"
+      >
+    </NuxtLink>
+    <div class="absolute right-4 top-4 flex gap-x-2">
       <button
         type="button"
-        class="flex h-10 w-10 items-center justify-center text-white/50 hover:text-white"
+        class="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white"
         @click="$emit('open-modify-modal', song)"
       >
         <Icon
@@ -76,7 +62,7 @@ async function handleDeleteSong () {
       </button>
       <button
         type="button"
-        class="flex h-10 w-10 items-center justify-center text-white/50 hover:text-white"
+        class="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white"
         @click="handleDeleteSong"
       >
         <Icon
@@ -86,4 +72,15 @@ async function handleDeleteSong () {
       </button>
     </div>
   </div>
+  <h2 class="mt-4 line-clamp-2 font-bold leading-tight text-white">
+    <NuxtLink
+      :to="`/song/${song.docID}`"
+      class="hover:underline"
+    >
+      {{ song.title }}
+    </NuxtLink>
+  </h2>
+  <h3 class="mt-1.5 text-sm text-white/50">
+    {{ song.displayName }} • {{ song.genre }} • {{ formatCreatedAt(song.createdAt) }}
+  </h3>
 </template>

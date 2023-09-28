@@ -4,7 +4,10 @@
       <h1 class="text-2xl font-bold text-white lg:text-3xl xl:text-4xl">
         探索歌曲
       </h1>
-      <SongGallery />
+      <SongGallery
+        :order-by="['createdAt', 'desc']"
+        :limit="12"
+      />
     </div>
   </div>
 </template>

@@ -31,13 +31,26 @@ const handleSignOut = async () => {
       >
         <li>
           <NuxtLink
-            to="/manage"
-            class="flex h-15 items-center gap-x-2.5 rounded-full bg-[#030303] pl-2.5 pr-6"
+            to="/upload"
+            class="group flex h-15 items-center gap-x-2.5 rounded-full bg-[#030303] pl-2.5 pr-6 hover:bg-gradient-to-br hover:from-primary hover:to-secondary"
           >
             <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[#212121] text-white">
               <Icon name="Wave" />
             </div>
-            <span class="font-bold text-white">
+            <span class="font-bold text-white group-hover:text-black">
+              上傳歌曲
+            </span>
+          </NuxtLink>
+        </li>
+        <li>
+          <NuxtLink
+            to="/manage"
+            class="group flex h-15 items-center gap-x-2.5 rounded-full bg-[#030303] pl-2.5 pr-6 hover:bg-gradient-to-br hover:from-primary hover:to-secondary"
+          >
+            <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[#212121] text-white">
+              <Icon name="Wave" />
+            </div>
+            <span class="font-bold text-white group-hover:text-black">
               我的歌曲
             </span>
           </NuxtLink>
@@ -45,7 +58,7 @@ const handleSignOut = async () => {
         <li>
           <button
             type="button"
-            class="flex h-15 w-15 items-center justify-center rounded-full bg-[#030303] text-white"
+            class="flex h-15 w-15 items-center justify-center rounded-full bg-[#030303] text-white hover:bg-gradient-to-br hover:from-primary hover:to-secondary hover:text-black"
             @click="handleSignOut"
           >
             <Icon name="Logout" />
@@ -55,7 +68,7 @@ const handleSignOut = async () => {
       <button
         v-else
         type="button"
-        class="flex h-15 items-center gap-x-2.5 rounded-full bg-[#030303] pl-2.5 pr-6"
+        class="group flex h-15 items-center gap-x-2.5 rounded-full bg-[#030303] pl-2.5 pr-6 hover:bg-gradient-to-br hover:from-primary hover:to-secondary"
         @click="isModalOpen = true"
       >
         <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[#212121] text-white">
@@ -64,7 +77,7 @@ const handleSignOut = async () => {
             :size="20"
           />
         </div>
-        <span class="font-bold text-white">
+        <span class="font-bold text-white group-hover:text-black">
           登入 / 註冊
         </span>
       </button>

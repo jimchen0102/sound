@@ -77,14 +77,23 @@ const onSubmit = handleSubmit(async (values) => {
     try {
       const task = await uploadBytes(coverRef, cover.value)
       const coverUrl = await getDownloadURL(task.ref)
-      values.coverId = coverRef.name
-      values.coverUrl = coverUrl
+      values.cover.id = coverRef.name
+      values.cover.url = coverUrl
     } catch (error) {
       console.log(error)
     }
   }
   try {
-    await updateDoc(doc(coll, props.song.docID), values)
+    await updateDoc(doc(coll, props.song.docID), {
+      cover: {
+        id: values.cover.id,
+        url: values.cover.url
+      },
+      description: values.description,
+      genre: values.genre,
+      tags: values.tags,
+      title: values.title
+    })
     emit('update-song-document', values)
     isModalOpen.value = false
   } catch (error) {

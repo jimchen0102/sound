@@ -19,8 +19,8 @@ const { createSound } = playerStore
       class="block aspect-square overflow-hidden rounded bg-gradient-to-b from-[#383838] to-[#767676]"
     >
       <img
-        v-if="song.coverUrl"
-        :src="song.coverUrl"
+        v-if="song.cover.url"
+        :src="song.cover.url"
         :alt="song.title"
         class="h-full w-full object-cover"
       >
@@ -53,7 +53,7 @@ const { createSound } = playerStore
   </div>
   <h2 class="mt-4 line-clamp-2 font-bold leading-tight text-white">
     <NuxtLink
-      to="/song/D3yU1dTaU4YQhtNiOpGn"
+      :to="`/song/${song.docID}`"
       class="hover:underline"
     >
       {{ song.title }}

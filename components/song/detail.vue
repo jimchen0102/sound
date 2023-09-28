@@ -40,14 +40,13 @@ onMounted(async () => {
 <template>
   <div
     class="relative overflow-hidden rounded-lg bg-[#212121] bg-cover bg-center"
-    :style="{ backgroundImage: `url('${song?.coverUrl
-    }')` }"
+    :style="{ backgroundImage: `url('${song?.cover.url}')` }"
   >
     <div class="absolute inset-0 backdrop-blur-2xl backdrop-brightness-50" />
     <div class="relative aspect-square overflow-hidden bg-gradient-to-b from-[#383838] to-[#767676] sm:mx-auto sm:max-w-[400px]">
       <img
-        v-if="song?.coverUrl"
-        :src="song?.coverUrl"
+        v-if="song?.cover?.url"
+        :src="song?.cover?.url"
         :alt="song?.title"
         class="h-full w-full object-cover"
       >
@@ -59,7 +58,7 @@ onMounted(async () => {
   >
     <div class="flex gap-x-5">
       <div class="mt-1.5 flex-1 lg:mt-0">
-        <div class="h-10 rounded bg-[#383838]" />
+        <div class="h-10 w-2/3 rounded bg-[#383838]" />
         <div class="mt-2 h-3 w-1/5 rounded bg-[#383838]" />
       </div>
       <div class="h-16 w-16 rounded-full bg-[#383838]" />
@@ -93,7 +92,7 @@ onMounted(async () => {
         @click="createSound(song)"
       >
         <Icon
-          v-if="song?.docID === currentSound?.docID && isSoundPlaying"
+          v-if="song.docID === currentSound?.docID && isSoundPlaying"
           name="Pause"
         />
         <Icon
@@ -107,7 +106,7 @@ onMounted(async () => {
     </p>
     <ul class="mt-5 flex flex-wrap gap-2">
       <li
-        v-for="tag in song?.tags"
+        v-for="tag in song.tags"
         :key="tag"
       >
         <div class="flex h-7.5 items-center gap-x-1 rounded-full bg-[#212121] px-2.5 text-sm text-white">
