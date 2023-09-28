@@ -19,7 +19,7 @@ const {
     <ul>
       <li
         v-for="song in songs"
-        :key="song.docID"
+        :key="song.id"
         class="border-b border-white/10"
       >
         <SongBadgePreview :song="song" />

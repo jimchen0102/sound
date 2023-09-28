@@ -2,7 +2,6 @@
 import {
   doc,
   deleteDoc,
-  collection,
   DocumentData
 } from 'firebase/firestore'
 import {
@@ -22,14 +21,13 @@ const emit = defineEmits<{
 const user = useCurrentUser()
 const db = useFirestore()
 const storage = useFirebaseStorage()
-const coll = collection(db, 'songs')
 
 const handleDeleteSong = async () => {
   const songRef = storageRef(storage, `songs/${user.value?.uid}/${props.song.id}`)
   try {
     await deleteObject(songRef)
-    await deleteDoc(doc(coll, props.song.docID))
-    emit('delete-song-document', props.song.docID)
+    await deleteDoc(doc(db, 'songs', props.song.id))
+    emit('delete-song-document', props.song.id)
   } catch (error) {
     console.log(error)
   }
@@ -39,17 +37,17 @@ const handleDeleteSong = async () => {
 <template>
   <div class="relative">
     <NuxtLink
-      :to="`/song/${song.docID}`"
+      :to="`/song/${song.id}`"
       class="block aspect-square overflow-hidden rounded bg-gradient-to-b from-[#383838] to-[#767676]"
     >
       <img
-        v-if="song.cover.url"
-        :src="song.cover.url"
+        v-if="song.cover"
+        :src="song.cover"
         :alt="song.title"
         class="h-full w-full object-cover"
       >
     </NuxtLink>
-    <div class="absolute right-4 top-4 flex gap-x-2">
+    <div class="absolute right-5 top-5 flex gap-x-2">
       <button
         type="button"
         class="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white"
@@ -74,7 +72,7 @@ const handleDeleteSong = async () => {
   </div>
   <h2 class="mt-4 line-clamp-2 font-bold leading-tight text-white">
     <NuxtLink
-      :to="`/song/${song.docID}`"
+      :to="`/song/${song.id}`"
       class="hover:underline"
     >
       {{ song.title }}

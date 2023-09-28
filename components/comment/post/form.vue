@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import {
-  collection,
-  addDoc,
+  doc,
+  setDoc,
   getDoc,
   serverTimestamp,
   DocumentData
 } from 'firebase/firestore'
+import { v4 as uuidv4 } from 'uuid'
 
 const emit = defineEmits<{
   (e: 'add-comment-document', value: DocumentData): void
@@ -15,7 +16,6 @@ const route = useRoute()
 
 const user = useCurrentUser()
 const db = useFirestore()
-const coll = collection(db, 'comments')
 
 const { isModalOpen } = useModal('auth')
 
@@ -23,15 +23,18 @@ const { handleSubmit, defineInputBinds } = useForm()
 const comment = defineInputBinds('comment')
 
 const onSubmit = handleSubmit(async (values, { resetForm }) => {
+  const id = uuidv4()
+  const commentRef = doc(db, 'comments', id)
   const comment = {
     content: values.comment,
     createdAt: serverTimestamp(),
+    id,
     name: user.value?.displayName,
     songID: route.params.id,
     uid: user.value?.uid
   }
   try {
-    const commentRef = await addDoc(coll, comment)
+    await setDoc(commentRef, comment)
     const snapshot = await getDoc(commentRef)
     emit('add-comment-document', snapshot)
     resetForm()

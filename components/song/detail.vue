@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import {
-  collection,
   doc,
   getDoc,
   DocumentData
@@ -11,7 +10,6 @@ import { usePlayerStore } from '@/stores/player'
 const route = useRoute()
 
 const db = useFirestore()
-const coll = collection(db, 'songs')
 
 const playerStore = usePlayerStore()
 const { currentSound, isSoundPlaying } = storeToRefs(playerStore)
@@ -20,12 +18,12 @@ const { createSound } = playerStore
 const song = ref<DocumentData>()
 
 const getSongDocument = async () => {
+  const songRef = doc(db, 'songs', route.params.id as string)
   try {
-    const snapshot = await getDoc(doc(coll, route.params.id as string))
+    const snapshot = await getDoc(songRef)
     if (!snapshot.exists()) return await navigateTo('/')
     song.value = {
-      ...snapshot.data(),
-      docID: snapshot.id
+      ...snapshot.data()
     }
   } catch (error) {
     console.log(error)
@@ -40,13 +38,13 @@ onMounted(async () => {
 <template>
   <div
     class="relative overflow-hidden rounded-lg bg-[#212121] bg-cover bg-center"
-    :style="{ backgroundImage: `url('${song?.cover.url}')` }"
+    :style="{ backgroundImage: `url('${song?.cover}')` }"
   >
     <div class="absolute inset-0 backdrop-blur-2xl backdrop-brightness-50" />
     <div class="relative aspect-square overflow-hidden bg-gradient-to-b from-[#383838] to-[#767676] sm:mx-auto sm:max-w-[400px]">
       <img
-        v-if="song?.cover?.url"
-        :src="song?.cover?.url"
+        v-if="song?.cover"
+        :src="song?.cover"
         :alt="song?.title"
         class="h-full w-full object-cover"
       >
@@ -92,7 +90,7 @@ onMounted(async () => {
         @click="createSound(song)"
       >
         <Icon
-          v-if="song.docID === currentSound?.docID && isSoundPlaying"
+          v-if="song.id === currentSound?.id && isSoundPlaying"
           name="Pause"
         />
         <Icon

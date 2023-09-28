@@ -16,13 +16,13 @@ const { createSound } = playerStore
   <div
     class="group flex items-center gap-x-4 rounded p-2 hover:bg-[#212121]"
     :class="{
-      'bg-[#212121]': song.docID === currentSound?.docID
+      'bg-[#212121]': song.id === currentSound?.id
     }"
   >
     <div class="relative aspect-square w-16 overflow-hidden rounded bg-gradient-to-b from-[#383838] to-[#767676]">
       <img
-        v-if="song.cover.url"
-        :src="song.cover.url"
+        v-if="song.cover"
+        :src="song.cover"
         :alt="song.title"
         class="h-full w-full object-cover"
       >
@@ -30,12 +30,12 @@ const { createSound } = playerStore
         type="button"
         class="absolute inset-0 z-10 flex items-center justify-center bg-black/80 text-white"
         :class="
-          song.docID === currentSound?.docID ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+          song.id === currentSound?.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
         "
         @click="createSound(song)"
       >
         <Icon
-          v-if="song.docID === currentSound?.docID && isSoundPlaying"
+          v-if="song.id === currentSound?.id && isSoundPlaying"
           name="Pause"
           :size="20"
         />
@@ -49,7 +49,7 @@ const { createSound } = playerStore
     <div class="flex-1">
       <h3 class="line-clamp-1 font-bold text-white">
         <NuxtLink
-          :to="`/song/${song.docID}`"
+          :to="`/song/${song.id}`"
           class="hover:underline"
         >
           {{ song.title }}

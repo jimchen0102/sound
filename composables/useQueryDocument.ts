@@ -14,7 +14,7 @@ import { Query } from '@/types'
 
 export const useQueryDocument = (name: string, options: Query) => {
   const db = useFirestore()
-  const coll = collection(db, name)
+  const collectionRef = collection(db, name)
 
   const document = ref<DocumentData[]>([])
   const lastDocument = ref<DocumentSnapshot | null>(null)
@@ -33,8 +33,8 @@ export const useQueryDocument = (name: string, options: Query) => {
 
   const getDocumentCount = async () => {
     const q = options.where
-      ? query(coll, where(...options.where))
-      : query(coll)
+      ? query(collectionRef, where(...options.where))
+      : query(collectionRef)
     const snapshot = await getCountFromServer(q)
     documentCount.value = snapshot.data().count
   }
@@ -42,7 +42,7 @@ export const useQueryDocument = (name: string, options: Query) => {
   const getDocument = async () => {
     if (isPending.value) return
     isPending.value = true
-    let q = query(coll)
+    let q = query(collectionRef)
     if (options.where) q = query(q, where(...options.where))
     if (options.orderBy) q = query(q, orderBy(...options.orderBy))
     if (options.limit) q = query(q, limit(options.limit))
@@ -51,8 +51,7 @@ export const useQueryDocument = (name: string, options: Query) => {
     lastDocument.value = snapshots.docs[snapshots.docs.length - 1]
     snapshots.forEach((doc) => {
       document.value.push({
-        ...doc.data(),
-        docID: doc.id
+        ...doc.data()
       })
     })
     isPending.value = false
@@ -63,18 +62,20 @@ export const useQueryDocument = (name: string, options: Query) => {
 
   const addDocument = (doc: DocumentData) => {
     document.value.unshift({
-      ...doc.data(),
-      docID: doc.id
+      ...doc.data()
     })
   }
 
-  const updateDocument = (updateDoc: DocumentData) => {
-    const index = document.value.findIndex(doc => doc.docID === updateDoc.docID)
-    document.value[index] = updateDoc
+  const updateDocument = ([id, value]: [string, DocumentData]) => {
+    const index = document.value.findIndex(doc => doc.id === id)
+    document.value[index] = {
+      ...document.value[index],
+      ...value
+    }
   }
 
-  const deleteDocument = (docID: string) => {
-    const index = document.value.findIndex(doc => doc.docID === docID)
+  const deleteDocument = (id: string) => {
+    const index = document.value.findIndex(doc => doc.id === id)
     document.value.splice(index, 1)
   }
 

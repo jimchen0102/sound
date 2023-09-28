@@ -8,7 +8,7 @@ const { isModalOpen } = useModal('auth')
 
 const handleSignOut = async () => {
   await signOut(auth as Auth)
-  if (route.name === 'manage') await navigateTo('/')
+  if (route.name === 'upload' || route.name === 'manage') await navigateTo('/')
 }
 </script>
 

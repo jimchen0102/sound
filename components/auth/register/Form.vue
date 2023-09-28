@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { createUserWithEmailAndPassword, updateProfile, Auth } from 'firebase/auth'
-import { collection, doc, setDoc } from 'firebase/firestore'
+import { doc, setDoc } from 'firebase/firestore'
 import { object, string, ref } from 'yup'
 import { AuthType } from '@/types'
 
@@ -12,7 +12,6 @@ const route = useRoute()
 
 const auth = useFirebaseAuth()
 const db = useFirestore()
-const coll = collection(db, 'users')
 
 const { isModalOpen } = useModal('auth')
 
@@ -29,19 +28,13 @@ const { handleSubmit } = useForm({
 
 const onSubmit = handleSubmit(async ({ name, email, password }) => {
   try {
-    const userCredential = await createUserWithEmailAndPassword(
+    const credential = await createUserWithEmailAndPassword(
       auth as Auth,
       email,
       password
     )
-    const userRef = doc(coll, userCredential.user.uid)
-    await setDoc(userRef, {
-      name,
-      email
-    })
-    await updateProfile(userCredential.user, {
-      displayName: name
-    })
+    await setDoc(doc(db, 'users', credential.user.uid), { name, email })
+    await updateProfile(credential.user, { displayName: name })
     isModalOpen.value = false
     if (route.query.redirect) await navigateTo(`${route.query.redirect}`)
   } catch (error) {

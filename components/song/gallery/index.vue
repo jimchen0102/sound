@@ -22,7 +22,7 @@ const {
     <div class="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
       <div
         v-for="song in songs"
-        :key="song.docID"
+        :key="song.id"
       >
         <SongGalleryPreview :song="song" />
       </div>

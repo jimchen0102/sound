@@ -13,8 +13,8 @@ export const usePlayerStore = defineStore('player', () => {
   const isSoundPlaying = computed(() => sound.value?.playing() || false)
 
   const createSound = (song: DocumentData) => {
-    if (song.docID === currentSound.value?.docID) return toggleSound()
-    if (sound.value && song.docID !== currentSound.value?.docID) sound.value.unload()
+    if (song.id === currentSound.value?.id) return toggleSound()
+    if (sound.value && song.id !== currentSound.value?.id) sound.value.unload()
     currentSound.value = song
     sound.value = new Howl({
       src: [song.url],

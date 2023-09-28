@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import {
-  collection,
   doc,
   deleteDoc,
   DocumentData
@@ -14,13 +13,13 @@ const emit = defineEmits<{
   (e: 'delete-comment-document', value: string): void
 }>()
 
+const user = useCurrentUser()
 const db = useFirestore()
-const coll = collection(db, 'comments')
 
 const handleDeleteComment = async () => {
   try {
-    await deleteDoc(doc(coll, props.comment.docID))
-    emit('delete-comment-document', props.comment.docID)
+    await deleteDoc(doc(db, 'comments', props.comment.id))
+    emit('delete-comment-document', props.comment.id)
   } catch (error) {
     console.log(error)
   }
@@ -30,6 +29,7 @@ const handleDeleteComment = async () => {
 <template>
   <div class="relative">
     <button
+      v-if="comment.uid === user?.uid"
       type="button"
       class="absolute right-0 top-0 text-white"
       @click="handleDeleteComment"

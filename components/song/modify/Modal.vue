@@ -2,7 +2,6 @@
 import {
   doc,
   updateDoc,
-  collection,
   DocumentData
 } from 'firebase/firestore'
 import {
@@ -19,13 +18,12 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'update-song-document', value: DocumentData): void
+  (e: 'update-song-document', value: [string, DocumentData]): void
 }>()
 
 const user = useCurrentUser()
 const db = useFirestore()
 const storage = useFirebaseStorage()
-const coll = collection(db, 'songs')
 
 const { isModalOpen } = useModal('modify')
 
@@ -40,20 +38,20 @@ const genres = [
   { title: '鄉村', value: '鄉村' }
 ]
 
-const cover = ref<File | null>(null)
-const coverUrl = ref(props.song.coverUrl)
-const coverTypes = ['image/jpeg', 'image/png']
+const upload = ref<File | null>(null)
+const cover = ref(props.song.cover)
+const types = ['image/jpeg', 'image/png']
 const reader = new FileReader()
 
 const handleChange = (event: Event) => {
   const file = ((event.target as HTMLInputElement).files as FileList)[0]
-  if (file.size > 1 * 1024 * 1024 || !coverTypes.includes(file.type)) return
-  cover.value = file
+  if (file.size > 1 * 1024 * 1024 || !types.includes(file.type)) return
+  upload.value = file
   reader.readAsDataURL(file)
 }
 
 const handleFileLoaded = (event: ProgressEvent) => {
-  coverUrl.value = (event.target as FileReader).result
+  cover.value = (event.target as FileReader).result
 }
 
 onMounted(() => {
@@ -62,7 +60,11 @@ onMounted(() => {
 
 const { handleSubmit } = useForm<DocumentData>({
   initialValues: {
-    ...props.song
+    cover: props.song.cover,
+    description: props.song.description,
+    genre: props.song.genre,
+    tags: props.song.tags,
+    title: props.song.title
   },
   validationSchema: toTypedSchema(
     object({
@@ -72,29 +74,22 @@ const { handleSubmit } = useForm<DocumentData>({
 })
 
 const onSubmit = handleSubmit(async (values) => {
-  if (cover.value) {
-    const coverRef = storageRef(storage, `covers/${user.value?.uid}/${uuidv4()}`)
+  const songRef = doc(db, 'songs', props.song.id)
+  if (upload.value) {
+    const id = uuidv4()
+    const coverRef = storageRef(storage, `covers/${user.value?.uid}/${id}`)
     try {
-      const task = await uploadBytes(coverRef, cover.value)
-      const coverUrl = await getDownloadURL(task.ref)
-      values.cover.id = coverRef.name
-      values.cover.url = coverUrl
+      const task = await uploadBytes(coverRef, upload.value)
+      const url = await getDownloadURL(task.ref)
+      await updateDoc(songRef, { cover: url })
+      values.cover = url
     } catch (error) {
       console.log(error)
     }
   }
   try {
-    await updateDoc(doc(coll, props.song.docID), {
-      cover: {
-        id: values.cover.id,
-        url: values.cover.url
-      },
-      description: values.description,
-      genre: values.genre,
-      tags: values.tags,
-      title: values.title
-    })
-    emit('update-song-document', values)
+    await updateDoc(songRef, values)
+    emit('update-song-document', [props.song.id, values])
     isModalOpen.value = false
   } catch (error) {
     console.log(error)
@@ -131,8 +126,8 @@ const onSubmit = handleSubmit(async (values) => {
                   for="cover"
                 >
                   <img
-                    v-if="coverUrl"
-                    :src="coverUrl"
+                    v-if="cover"
+                    :src="cover"
                     :alt="song.title"
                     class="h-full w-full object-cover"
                   >

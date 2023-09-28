@@ -62,7 +62,7 @@ const sortedComments = computed(() =>
     <ul class="space-y-7.5">
       <li
         v-for="comment in sortedComments"
-        :key="comment.docID"
+        :key="comment.id"
       >
         <CommentPostPreview
           :comment="comment"

@@ -44,7 +44,7 @@ onUnmounted(() => {
     <div class="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3">
       <div
         v-for="song in songs"
-        :key="song.docID"
+        :key="song.id"
       >
         <SongModifyPreview
           :song="song"
