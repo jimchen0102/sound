@@ -54,8 +54,8 @@ const onSubmit = handleSubmit(async (values, { resetForm }) => {
       class="relative mx-auto -mt-7.5 flex h-15 w-50 overflow-hidden rounded-full border-[3px] border-[#030303] bg-[#212121]"
     >
       <button
-        class="flex w-1/2 items-center justify-center text-white hover:bg-[#383838]"
-        :disabled="!comment"
+        class="flex w-1/2 items-center justify-center text-white hover:bg-[#383838] disabled:cursor-not-allowed"
+        :disabled="!comment.value"
       >
         留言
       </button>

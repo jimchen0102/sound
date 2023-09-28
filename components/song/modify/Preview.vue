@@ -24,7 +24,7 @@ const db = useFirestore()
 const storage = useFirebaseStorage()
 const coll = collection(db, 'songs')
 
-async function deleteSongDocument () {
+async function handleDeleteSong () {
   const songRef = storageRef(storage, `songs/${user.value?.uid}/${props.song.songID}`)
   const coverRef = storageRef(storage, `covers/${user.value?.uid}/${props.song.coverId}`)
   try {
@@ -77,7 +77,7 @@ async function deleteSongDocument () {
       <button
         type="button"
         class="flex h-10 w-10 items-center justify-center text-white/50 hover:text-white"
-        @click="deleteSongDocument"
+        @click="handleDeleteSong"
       >
         <Icon
           name="Delete"

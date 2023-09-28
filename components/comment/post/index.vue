@@ -5,7 +5,8 @@ const {
   document: comments,
   isPending,
   observerEl,
-  addDocument: addCommentDocument
+  addDocument: addCommentDocument,
+  deleteDocument: deleteCommentDocument
 } = useQueryDocument('comments', {
   where: ['songID', '==', route.params.id],
   limit: 12
@@ -60,7 +61,10 @@ const sortedComments = computed(() =>
         v-for="comment in sortedComments"
         :key="comment.docID"
       >
-        <CommentPostPreview :comment="comment" />
+        <CommentPostPreview
+          :comment="comment"
+          @delete-comment-document="deleteCommentDocument"
+        />
       </li>
     </ul>
     <div

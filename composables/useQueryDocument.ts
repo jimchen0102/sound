@@ -17,7 +17,7 @@ export const useQueryDocument = (
   name: string,
   options: {
     where?: [fieldPath: string | FieldPath, opStr: WhereFilterOp, value: unknown]
-    limit?: number,
+    limit?: number
   }
 ) => {
   const db = useFirestore()
@@ -39,14 +39,15 @@ export const useQueryDocument = (
   })
 
   const getDocumentCount = async () => {
-    let q = query(coll)
-    if (options.where) q = query(q, where(...options.where))
+    const q = options.where
+      ? query(coll, where(...options.where))
+      : query(coll)
     const snapshot = await getCountFromServer(q)
     documentCount.value = snapshot.data().count
   }
 
   const getDocument = async () => {
-    if (isPending.value || document.value.length === documentCount.value) return
+    if (isPending.value) return
     isPending.value = true
     let q = query(coll, orderBy('createdAt', 'desc'))
     if (options.where) q = query(q, where(...options.where))
@@ -61,6 +62,8 @@ export const useQueryDocument = (
       })
     })
     isPending.value = false
+    await getDocumentCount()
+    if (snapshots.size === documentCount.value) return
     if (observerEl.value) observer.observe(observerEl.value)
   }
 
@@ -89,7 +92,6 @@ export const useQueryDocument = (
   )
 
   onMounted(async () => {
-    await getDocumentCount()
     await getDocument()
   })
 
