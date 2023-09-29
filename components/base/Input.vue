@@ -32,7 +32,7 @@ const { value, errorMessage, handleChange } = useField<string>(
         v-if="errorMessage"
         class="absolute right-5 top-1/2 -translate-y-1/2 text-danger"
       >
-        <Icon name="Alert" />
+        <Icon name="IconAlertCircle" />
       </div>
     </div>
     <span

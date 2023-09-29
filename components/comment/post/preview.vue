@@ -35,7 +35,7 @@ const handleDeleteComment = async () => {
       @click="handleDeleteComment"
     >
       <Icon
-        name="Delete"
+        name="IconX"
         :size="16"
       />
     </button>

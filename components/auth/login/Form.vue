@@ -44,7 +44,7 @@ const onSubmit = handleSubmit(async ({ email, password }) => {
     <button class="relative mt-10 block h-15 w-full rounded-full bg-primary">
       <div class="absolute left-2.5 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-[#030303] text-white">
         <Icon
-          name="User"
+          name="IconUser"
           :size="20"
         />
       </div>

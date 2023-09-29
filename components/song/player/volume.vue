@@ -29,11 +29,11 @@ const {
     <div class="absolute left-5 top-1/2 -translate-y-1/2 text-white">
       <Icon
         v-if="volume === 0"
-        name="Muted"
+        name="IconVolumeOff"
       />
       <Icon
         v-else
-        name="Volume"
+        name="IconVolume"
       />
     </div>
   </div>

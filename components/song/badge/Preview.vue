@@ -36,12 +36,12 @@ const { createSound } = playerStore
       >
         <Icon
           v-if="song.id === currentSound?.id && isSoundPlaying"
-          name="Pause"
+          name="IconPlayerPauseFilled"
           :size="20"
         />
         <Icon
           v-else
-          name="Play"
+          name="IconPlayerPlayFilled"
           :size="20"
         />
       </button>

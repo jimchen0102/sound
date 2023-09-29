@@ -16,11 +16,11 @@ const { toggleSound } = playerStore
     <div class="translate-x-1 translate-y-[3px]">
       <Icon
         v-if="isSoundPlaying"
-        name="Pause"
+        name="IconPlayerPauseFilled"
       />
       <Icon
         v-else
-        name="Play"
+        name="IconPlayerPlayFilled"
       />
     </div>
   </button>

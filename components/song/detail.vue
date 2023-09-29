@@ -91,11 +91,11 @@ onMounted(async () => {
       >
         <Icon
           v-if="song.id === currentSound?.id && isSoundPlaying"
-          name="Pause"
+          name="IconPlayerPauseFilled"
         />
         <Icon
           v-else
-          name="Play"
+          name="IconPlayerPlayFilled"
         />
       </button>
     </div>

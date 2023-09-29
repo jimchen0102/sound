@@ -49,7 +49,9 @@ const sortedComments = computed(() =>
         </option>
       </select>
       <div class="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2">
-        <Icon name="Adjust" />
+        <Icon
+          name="IconSortDescending"
+        />
       </div>
     </div>
   </div>

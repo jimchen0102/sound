@@ -10,12 +10,9 @@ const isUserModalOpen = ref(false)
 
 const handleSignOut = async () => {
   await signOut(auth as Auth)
+  isUserModalOpen.value = false
   if (route.name === 'upload' || route.name === 'manage') await navigateTo('/')
 }
-
-watch(() => route.fullPath, () => {
-  isUserModalOpen.value = false
-})
 </script>
 
 <template>
@@ -33,31 +30,32 @@ watch(() => route.fullPath, () => {
     <nav class="pointer-events-auto relative">
       <div
         v-if="user"
+        v-on-click-outside="() => isUserModalOpen = false"
         class="relative"
       >
         <button
           type="button"
-          class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/10 bg-[#030303] px-2.5 text-white"
-          @click.stop="isUserModalOpen = !isUserModalOpen"
+          class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/10 bg-[#030303] text-white"
+          @click="isUserModalOpen = !isUserModalOpen"
         >
           <Icon
-            name="User"
+            name="IconUser"
             :size="20"
           />
         </button>
         <ul
           v-show="isUserModalOpen"
-          v-on-click-outside.bubble="() => isUserModalOpen = false"
-          class="absolute right-0 top-[calc(100%+8px)] w-48 rounded-lg border-2 border-white/10 bg-[#212121] py-4 text-white"
+          class="absolute right-0 top-[calc(100%+8px)] w-48 rounded border-2 border-white/10 bg-[#212121] py-4 text-white"
         >
           <li>
             <NuxtLink
               to="/upload"
-              class="flex items-center gap-x-4 px-6 py-3 text-sm hover:bg-white/5"
+              class="flex items-center gap-x-4 px-6 py-2 text-sm hover:bg-white/5"
+              @click="isUserModalOpen = false"
             >
               <Icon
-                name="Upload"
-                :size="20"
+                name="IconCloudUpload"
+                :stroke-width="1"
               />
               上傳歌曲
             </NuxtLink>
@@ -65,11 +63,12 @@ watch(() => route.fullPath, () => {
           <li>
             <NuxtLink
               to="/manage"
-              class="flex items-center gap-x-4 px-6 py-3 text-sm hover:bg-white/5"
+              class="flex items-center gap-x-4 px-6 py-2 text-sm hover:bg-white/5"
+              @click="isUserModalOpen = false"
             >
               <Icon
-                name="Adjust"
-                :size="20"
+                name="IconSettings"
+                :stroke-width="1"
               />
               管理歌曲
             </NuxtLink>
@@ -77,12 +76,12 @@ watch(() => route.fullPath, () => {
           <li>
             <button
               type="button"
-              class="flex w-full items-center gap-x-4 px-6 py-3 text-sm hover:bg-white/5"
+              class="flex w-full items-center gap-x-4 px-6 py-2 text-sm hover:bg-white/5"
               @click="handleSignOut"
             >
               <Icon
-                name="Logout"
-                :size="20"
+                name="IconLogin2"
+                :stroke-width="1"
               />
               登出
             </button>
@@ -97,7 +96,7 @@ watch(() => route.fullPath, () => {
       >
         <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[#212121] text-white">
           <Icon
-            name="User"
+            name="IconUser"
             :size="20"
           />
         </div>

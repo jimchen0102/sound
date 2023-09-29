@@ -136,8 +136,8 @@ const onSubmit = handleSubmit(async (values) => {
                   >
                   <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white">
                     <Icon
-                      name="Camera"
-                      :size="36"
+                      name="IconCamera"
+                      :size="32"
                     />
                   </div>
                 </label>

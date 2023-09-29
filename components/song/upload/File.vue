@@ -29,7 +29,7 @@ const handleChange = (event: Event | DragEvent) => {
   >
     <div>
       <Icon
-        name="Upload"
+        name="IconCloudUpload"
         :size="40"
         class="mx-auto"
       />
