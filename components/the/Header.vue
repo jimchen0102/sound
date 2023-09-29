@@ -30,14 +30,70 @@ watch(() => route.fullPath, () => {
         class="w-20 lg:w-auto"
       >
     </NuxtLink>
-    <nav
-      v-if="user"
-      class="pointer-events-auto relative"
-    >
+    <nav class="pointer-events-auto relative">
+      <div
+        v-if="user"
+        class="relative"
+      >
+        <button
+          type="button"
+          class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/10 bg-[#030303] px-2.5 text-white"
+          @click.stop="isUserModalOpen = !isUserModalOpen"
+        >
+          <Icon
+            name="User"
+            :size="20"
+          />
+        </button>
+        <ul
+          v-show="isUserModalOpen"
+          v-on-click-outside.bubble="() => isUserModalOpen = false"
+          class="absolute right-0 top-[calc(100%+8px)] w-48 rounded-lg border-2 border-white/10 bg-[#212121] py-4 text-white"
+        >
+          <li>
+            <NuxtLink
+              to="/upload"
+              class="flex items-center gap-x-4 px-6 py-3 text-sm hover:bg-white/5"
+            >
+              <Icon
+                name="Upload"
+                :size="20"
+              />
+              上傳歌曲
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink
+              to="/manage"
+              class="flex items-center gap-x-4 px-6 py-3 text-sm hover:bg-white/5"
+            >
+              <Icon
+                name="Adjust"
+                :size="20"
+              />
+              管理歌曲
+            </NuxtLink>
+          </li>
+          <li>
+            <button
+              type="button"
+              class="flex w-full items-center gap-x-4 px-6 py-3 text-sm hover:bg-white/5"
+              @click="handleSignOut"
+            >
+              <Icon
+                name="Logout"
+                :size="20"
+              />
+              登出
+            </button>
+          </li>
+        </ul>
+      </div>
       <button
+        v-else
         type="button"
-        class="group flex h-15 items-center gap-x-2.5 rounded-full bg-[#030303] px-2.5 hover:bg-gradient-to-br hover:from-primary hover:to-secondary"
-        @click.stop="isUserModalOpen = !isUserModalOpen"
+        class="group pointer-events-auto flex h-15 items-center gap-x-2.5 rounded-full bg-[#030303] pl-2.5 pr-6 hover:bg-gradient-to-br hover:from-primary hover:to-secondary"
+        @click="isModalOpen = true"
       >
         <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[#212121] text-white">
           <Icon
@@ -45,67 +101,11 @@ watch(() => route.fullPath, () => {
             :size="20"
           />
         </div>
+        <span class="font-bold text-white group-hover:text-black">
+          登入 / 註冊
+        </span>
       </button>
-      <ul
-        v-if="isUserModalOpen"
-        v-on-click-outside.bubble="() => isUserModalOpen = false"
-        class="absolute right-0 top-[calc(100%+8px)] w-48 rounded-lg bg-black py-4 text-white"
-      >
-        <li>
-          <NuxtLink
-            to="/upload"
-            class="flex items-center gap-x-4 px-6 py-2 text-sm hover:bg-white/10"
-          >
-            <Icon
-              name="Upload"
-              :size="20"
-            />
-            上傳歌曲
-          </NuxtLink>
-        </li>
-        <li>
-          <NuxtLink
-            to="/manage"
-            class="flex items-center gap-x-4 px-6 py-2 text-sm hover:bg-white/10"
-          >
-            <Icon
-              name="Adjust"
-              :size="20"
-            />
-            管理歌曲
-          </NuxtLink>
-        </li>
-        <li>
-          <button
-            type="button"
-            class="flex w-full items-center gap-x-4 px-6 py-2 text-sm hover:bg-white/10"
-            @click="handleSignOut"
-          >
-            <Icon
-              name="Logout"
-              :size="20"
-            />
-            登出
-          </button>
-        </li>
-      </ul>
     </nav>
-    <button
-      v-else
-      type="button"
-      class="group pointer-events-auto flex h-15 items-center gap-x-2.5 rounded-full bg-[#030303] pl-2.5 pr-6 hover:bg-gradient-to-br hover:from-primary hover:to-secondary"
-      @click="isModalOpen = true"
-    >
-      <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[#212121] text-white">
-        <Icon
-          name="User"
-          :size="20"
-        />
-      </div>
-      <span class="font-bold text-white group-hover:text-black">
-        登入 / 註冊
-      </span>
-    </button>
   </header>
 
   <Teleport to="body">

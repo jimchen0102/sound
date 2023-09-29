@@ -14,12 +14,12 @@ const { createSound } = playerStore
 
 <template>
   <div
-    class="group flex items-center gap-x-4 rounded p-2 hover:bg-[#212121]"
+    class="group flex items-center gap-x-4 rounded-sm p-2 hover:bg-[#212121]"
     :class="{
       'bg-[#212121]': song.id === currentSound?.id
     }"
   >
-    <div class="relative aspect-square w-16 overflow-hidden rounded bg-gradient-to-b from-[#383838] to-[#767676]">
+    <div class="relative aspect-square w-16 overflow-hidden rounded-sm bg-gradient-to-b from-[#383838] to-[#767676]">
       <img
         v-if="song.cover"
         :src="song.cover"

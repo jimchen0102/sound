@@ -33,7 +33,7 @@ const { createSound } = playerStore
     </NuxtLink>
     <button
       type="button"
-      class="absolute bottom-5 right-5 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-[#030303] text-white"
+      class="absolute bottom-5 right-5 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white"
       :class="
         song.id === currentSound?.id ? 'visible opacity-100' : 'invisible opacity-0 group-hover:visible group-hover:opacity-100'
       "
@@ -42,12 +42,12 @@ const { createSound } = playerStore
       <Icon
         v-if="song.id === currentSound?.id && isSoundPlaying"
         name="Pause"
-        :size="20"
+        :size="18"
       />
       <Icon
         v-else
         name="Play"
-        :size="20"
+        :size="18"
       />
     </button>
   </div>
