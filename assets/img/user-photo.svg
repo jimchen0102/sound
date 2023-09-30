@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" viewBox="0 0 40 40">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#e5b109"/>
+      <stop offset="1" stop-color="#eec852"/>
+    </linearGradient>
+    <clipPath id="clip-user-photo">
+      <rect width="40" height="40"/>
+    </clipPath>
+  </defs>
+  <g id="user-photo" clip-path="url(#clip-user-photo)">
+    <rect id="Rectangle_4" data-name="Rectangle 4" width="40" height="40" fill="url(#linear-gradient)"/>
+    <circle id="Ellipse_3" data-name="Ellipse 3" cx="2.25" cy="2.25" r="2.25" transform="translate(6.75 11)" fill="#fff"/>
+    <circle id="Ellipse_4" data-name="Ellipse 4" cx="2.25" cy="2.25" r="2.25" transform="translate(28.75 11)" fill="#fff"/>
+    <path id="Path_1" data-name="Path 1" d="M1317.45,762.471s8.267,4.367,16.088-.386" transform="translate(-1300 -740)" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2"/>
+  </g>
+</svg>

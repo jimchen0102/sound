@@ -27,7 +27,7 @@ const handleSignOut = async () => {
         class="w-20 lg:w-auto"
       >
     </NuxtLink>
-    <nav class="pointer-events-auto relative">
+    <nav class="pointer-events-auto">
       <div
         v-if="user"
         v-on-click-outside="() => isUserModalOpen = false"
@@ -35,18 +35,24 @@ const handleSignOut = async () => {
       >
         <button
           type="button"
-          class="flex h-10 w-10 items-center justify-center rounded-md border-2 border-white/20 bg-[#030303]"
+          class="block h-10 w-10 overflow-hidden rounded-full"
           @click="isUserModalOpen = !isUserModalOpen"
         >
-          <img src="@/assets/img/smile.svg">
+          <img
+            src="@/assets/img/user-photo.svg"
+            class="h-full w-full object-cover"
+          >
         </button>
         <div
           v-show="isUserModalOpen"
           class="absolute right-0 top-[calc(100%+8px)] w-60 rounded border-2 border-white/10 bg-[#212121] text-white"
         >
           <div class="flex items-center gap-x-4 p-4">
-            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded bg-white/10">
-              <img src="@/assets/img/smile.svg">
+            <div class="block h-10 w-10 overflow-hidden rounded-full">
+              <img
+                src="@/assets/img/user-photo.svg"
+                class="w-10 rounded-full"
+              >
             </div>
             <div class="min-w-0">
               <h3 class="line-clamp-1">
