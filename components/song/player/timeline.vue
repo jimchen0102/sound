@@ -7,7 +7,8 @@ const {
   currentSound,
   seek,
   duration,
-  progress
+  progress,
+  isSoundLoaded
 } = storeToRefs(playerStore)
 const { updateSeek } = playerStore
 
@@ -19,6 +20,12 @@ const {
 } = useSlider({
   onDragEnd: updateSeek
 })
+
+const timeline = computed(() => {
+  return isDragging.value && isSoundLoaded
+    ? percent.value * 100
+    : progress.value * 100
+})
 </script>
 
 <template>
@@ -29,17 +36,9 @@ const {
     @touchstart="handleSliderDown"
   >
     <div
-      v-show="!isDragging"
       class="absolute left-0 top-0 h-full bg-[#383838] bg-[url('/assets/img/progress-arrow.svg')]"
       :style="{
-        width: `${progress * 100}%`
-      }"
-    />
-    <div
-      v-show="isDragging"
-      class="absolute left-0 top-0 h-full bg-[#4c4c4c] bg-[url('/assets/img/progress-arrow.svg')]"
-      :style="{
-        width: `${percent * 100}%`
+        width: `${timeline}%`
       }"
     />
     <div class="pointer-events-none relative flex h-full items-center justify-between gap-x-7.5 px-7.5 font-bold text-white">
@@ -50,7 +49,7 @@ const {
         {{ formatTime(seek) }}
       </span>
       <h2 class="line-clamp-1 flex-1 text-center">
-        {{ currentSound?.title ? currentSound.title : '尚無播放的歌曲' }}
+        {{ currentSound ? currentSound.title : '尚無播放的歌曲' }}
       </h2>
       <span
         v-if="currentSound"

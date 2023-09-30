@@ -7,14 +7,15 @@ export const usePlayerStore = defineStore('player', () => {
   const sound = ref<Howl>()
   const seek = ref(0)
   const duration = ref(0)
-  const volume = ref(0.25)
+  const volume = ref(0.1)
   const progress = ref(0)
 
+  const isSoundLoaded = computed(() => sound.value?.state() === 'loaded')
   const isSoundPlaying = computed(() => sound.value?.playing() || false)
 
   const createSound = (song: DocumentData) => {
     if (song.id === currentSound.value?.id) return toggleSound()
-    if (sound.value && song.id !== currentSound.value?.id) sound.value.unload()
+    if (sound.value instanceof Howl) sound.value.unload()
     currentSound.value = song
     sound.value = new Howl({
       src: [song.url],
@@ -32,8 +33,8 @@ export const usePlayerStore = defineStore('player', () => {
   }
 
   const toggleSound = () => {
-    if (!sound.value) return
-    sound.value.playing() ? sound.value.pause() : sound.value.play()
+    if (!sound.value || !isSoundLoaded.value) return
+    isSoundPlaying.value ? sound.value.pause() : sound.value.play()
   }
 
   const updateProgress = () => {
@@ -41,18 +42,17 @@ export const usePlayerStore = defineStore('player', () => {
     seek.value = sound.value.seek()
     duration.value = sound.value.duration()
     progress.value = sound.value.seek() / sound.value.duration()
-    if (isSoundPlaying.value) requestAnimationFrame(updateProgress)
+    if (isSoundPlaying) requestAnimationFrame(updateProgress)
   }
 
   const updateSeek = (percent: number) => {
-    if (!sound.value) return
+    if (!sound.value || !isSoundLoaded.value) return
     const seconds = sound.value.duration() * percent
     sound.value.seek(seconds)
-    sound.value.play()
   }
 
   const updateVolume = (percent: number) => {
-    if (!sound.value) return
+    if (!sound.value || !isSoundLoaded.value) return
     sound.value.volume(percent)
     volume.value = percent
   }
@@ -64,6 +64,7 @@ export const usePlayerStore = defineStore('player', () => {
     duration,
     volume,
     progress,
+    isSoundLoaded,
     isSoundPlaying,
     createSound,
     toggleSound,
