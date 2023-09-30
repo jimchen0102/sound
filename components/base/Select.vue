@@ -32,7 +32,7 @@ const { value, errorMessage } = useField<string>(() => props.name)
         </option>
       </select>
       <div class="absolute right-6 top-1/2 -translate-y-1/2 text-white">
-        <Icon name="IconCaretDown" />
+        <Icon name="IconCaretDownFilled" />
       </div>
     </div>
     <span

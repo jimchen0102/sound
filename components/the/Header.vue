@@ -35,21 +35,18 @@ const handleSignOut = async () => {
       >
         <button
           type="button"
-          class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/10 bg-[#030303] text-white"
+          class="flex h-10 w-10 items-center justify-center rounded-md border-2 border-white/20 bg-[#030303]"
           @click="isUserModalOpen = !isUserModalOpen"
         >
-          <Icon
-            name="IconUser"
-            :size="20"
-          />
+          <img src="@/assets/img/smile.svg">
         </button>
         <div
           v-show="isUserModalOpen"
           class="absolute right-0 top-[calc(100%+8px)] w-60 rounded border-2 border-white/10 bg-[#212121] text-white"
         >
           <div class="flex items-center gap-x-4 p-4">
-            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10">
-              <Icon name="IconUser" :size="18" />
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded bg-white/10">
+              <img src="@/assets/img/smile.svg">
             </div>
             <div class="min-w-0">
               <h3 class="line-clamp-1">

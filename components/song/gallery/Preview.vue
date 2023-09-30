@@ -25,17 +25,17 @@ const { createSound } = playerStore
         class="h-full w-full object-cover"
       >
       <div
-        class="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent"
+        class="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent group-hover:visible group-hover:opacity-100"
         :class="
-          song.id === currentSound?.id ? 'visible opacity-100' : 'invisible opacity-0 group-hover:visible group-hover:opacity-100'
+          song.id === currentSound?.id ? 'visible opacity-100' : 'invisible opacity-0'
         "
       />
     </NuxtLink>
     <button
       type="button"
-      class="absolute bottom-5 right-5 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white"
+      class="absolute bottom-5 right-5 flex h-10 w-10 items-center justify-center rounded-full bg-black/60 text-white group-hover:visible group-hover:opacity-100"
       :class="
-        song.id === currentSound?.id ? 'visible opacity-100' : 'invisible opacity-0 group-hover:visible group-hover:opacity-100'
+        song.id === currentSound?.id ? 'visible opacity-100' : 'invisible opacity-0'
       "
       @click="createSound(song)"
     >
