@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Option } from '@/types'
+import type { Option } from '@/types'
 
 const props = defineProps<{
   name: string

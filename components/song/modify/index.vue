@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { DocumentData } from 'firebase/firestore'
-import { QueryOptions } from '@/types'
+import type { DocumentData } from 'firebase/firestore'
+import type { QueryOptions } from '@/types'
 
 const props = defineProps<QueryOptions>()
 

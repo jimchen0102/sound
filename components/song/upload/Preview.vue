@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Upload } from '@/types'
+import type { Upload } from '@/types'
 
 defineProps<{
   upload: Upload

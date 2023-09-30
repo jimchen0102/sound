@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { QueryOptions } from '@/types'
+import type { QueryOptions } from '@/types'
 
 const props = defineProps<QueryOptions>()
 

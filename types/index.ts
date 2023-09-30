@@ -1,9 +1,5 @@
-import {
-  FieldPath,
-  WhereFilterOp,
-  OrderByDirection
-} from 'firebase/firestore'
-import { UploadTask } from 'firebase/storage'
+import type { FieldPath, WhereFilterOp, OrderByDirection } from 'firebase/firestore'
+import type { UploadTask } from 'firebase/storage'
 
 export interface Option {
   title: string

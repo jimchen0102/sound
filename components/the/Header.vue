@@ -84,7 +84,7 @@ const handleSignOut = async () => {
                   name="IconPlaylist"
                   :stroke-width="1"
                 />
-                管理歌曲
+                我的歌曲
               </NuxtLink>
             </li>
             <li>

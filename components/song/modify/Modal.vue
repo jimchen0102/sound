@@ -1,14 +1,7 @@
 <script setup lang="ts">
-import {
-  doc,
-  updateDoc,
-  DocumentData
-} from 'firebase/firestore'
-import {
-  ref as storageRef,
-  uploadBytes,
-  getDownloadURL
-} from 'firebase/storage'
+import { doc, updateDoc } from 'firebase/firestore'
+import type { DocumentData } from 'firebase/firestore'
+import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { object, string } from 'yup'
 import { v4 as uuidv4 } from 'uuid'
 import { vOnClickOutside } from '@vueuse/components'

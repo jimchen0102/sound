@@ -1,14 +1,6 @@
 <script setup lang="ts">
-import {
-  doc,
-  setDoc,
-  serverTimestamp
-} from 'firebase/firestore'
-import {
-  ref as storageRef,
-  uploadBytesResumable,
-  getDownloadURL
-} from 'firebase/storage'
+import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
+import { ref as storageRef, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import { v4 as uuidv4 } from 'uuid'
 import { Upload } from '@/types'
 
@@ -75,9 +67,6 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <h2 class="text-2xl font-bold text-white lg:text-3xl">
-    上傳歌曲
-  </h2>
   <div class="mt-5 lg:mt-7.5">
     <SongUploadFile @upload-file="handleUploadFile" />
     <ul class="mt-5 space-y-5 lg:mt-7.5">

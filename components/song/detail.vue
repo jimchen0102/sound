@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import {
-  doc,
-  getDoc,
-  DocumentData
-} from 'firebase/firestore'
+import { doc, getDoc } from 'firebase/firestore'
+import type { DocumentData } from 'firebase/firestore'
 import { usePlayerStore } from '@/stores/player'
 
 const route = useRoute()
@@ -37,24 +34,13 @@ onMounted(async () => {
 
 <template>
   <div
-    class="relative overflow-hidden rounded-lg bg-[#212121] bg-cover bg-center"
-    :style="{ backgroundImage: `url('${song?.cover}')` }"
-  >
-    <div class="absolute inset-0 backdrop-blur-2xl backdrop-brightness-50" />
-    <div class="relative aspect-square overflow-hidden bg-gradient-to-b from-[#383838] to-[#767676] sm:mx-auto sm:max-w-[400px]">
-      <img
-        v-if="song?.cover"
-        :src="song?.cover"
-        :alt="song?.title"
-        class="h-full w-full object-cover"
-      >
-    </div>
-  </div>
-  <div
     v-if="!song"
-    class="mt-7.5 animate-pulse"
+    class="animate-pulse"
   >
-    <div class="flex gap-x-5">
+    <div class="relative overflow-hidden rounded-lg bg-[#212121]">
+      <div class="relative aspect-square overflow-hidden bg-[#383838] sm:mx-auto sm:max-w-[400px]" />
+    </div>
+    <div class="mt-7.5 flex gap-x-5">
       <div class="mt-1.5 flex-1 lg:mt-0">
         <div class="h-10 w-2/3 rounded bg-[#383838]" />
         <div class="mt-2 h-3 w-1/5 rounded bg-[#383838]" />
@@ -71,11 +57,22 @@ onMounted(async () => {
       </li>
     </ul>
   </div>
-  <div
-    v-else
-    class="mt-7.5"
-  >
-    <div class="flex gap-x-5">
+  <template v-else>
+    <div
+      class="relative overflow-hidden rounded-lg bg-[#212121] bg-cover bg-center"
+      :style="{ backgroundImage: `url('${song?.cover}')` }"
+    >
+      <div class="absolute inset-0 backdrop-blur-2xl backdrop-brightness-50" />
+      <div class="relative aspect-square overflow-hidden bg-gradient-to-b from-[#383838] to-[#767676] sm:mx-auto sm:max-w-[400px]">
+        <img
+          v-if="song?.cover"
+          :src="song?.cover"
+          :alt="song?.title"
+          class="h-full w-full object-cover"
+        >
+      </div>
+    </div>
+    <div class="mt-7.5 flex gap-x-5">
       <div class="mt-1.5 flex-1 lg:mt-0">
         <h1 class="text-2xl font-bold text-white lg:text-3xl">
           {{ song.title }}
@@ -117,5 +114,5 @@ onMounted(async () => {
         </div>
       </li>
     </ul>
-  </div>
+  </template>
 </template>

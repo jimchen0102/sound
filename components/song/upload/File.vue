@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const emit = defineEmits<{(e: 'upload-file', value: File[]): void}>()
+const emit = defineEmits<{
+  (e: 'upload-file', value: File[]): void
+}>()
 
 const isDragOver = ref(false)
 const uploadEl = ref<HTMLInputElement | null>(null)

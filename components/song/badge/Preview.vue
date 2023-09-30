@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { DocumentData } from 'firebase/firestore'
+import type { DocumentData } from 'firebase/firestore'
 import { usePlayerStore } from '@/stores/player'
 
 defineProps<{

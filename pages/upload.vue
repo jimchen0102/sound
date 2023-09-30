@@ -11,6 +11,9 @@ const user = useCurrentUser()
     <div class="mx-auto max-w-[1500px]">
       <div class="grid grid-cols-1 gap-x-10 gap-y-15 lg:grid-cols-2">
         <div>
+          <h1 class="text-2xl font-bold text-white lg:text-3xl">
+            上傳歌曲
+          </h1>
           <SongUpload />
         </div>
         <div>

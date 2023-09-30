@@ -1,11 +1,6 @@
 <script setup lang="ts">
-import {
-  doc,
-  setDoc,
-  getDoc,
-  serverTimestamp,
-  DocumentData
-} from 'firebase/firestore'
+import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore'
+import type { DocumentData } from 'firebase/firestore'
 import { v4 as uuidv4 } from 'uuid'
 
 const emit = defineEmits<{

@@ -1,13 +1,7 @@
 <script setup lang="ts">
-import {
-  doc,
-  deleteDoc,
-  DocumentData
-} from 'firebase/firestore'
-import {
-  ref as storageRef,
-  deleteObject
-} from 'firebase/storage'
+import { doc, deleteDoc } from 'firebase/firestore'
+import type { DocumentData } from 'firebase/firestore'
+import { ref as storageRef, deleteObject } from 'firebase/storage'
 import { vOnClickOutside } from '@vueuse/components'
 
 const props = defineProps<{

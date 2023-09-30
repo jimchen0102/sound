@@ -1,16 +1,6 @@
-import {
-  query,
-  where,
-  orderBy,
-  startAfter,
-  limit,
-  collection,
-  getDocs,
-  getCountFromServer,
-  DocumentData,
-  DocumentSnapshot
-} from 'firebase/firestore'
-import { QueryOptions } from '@/types'
+import { query, where, orderBy, startAfter, limit, collection, getDocs, getCountFromServer } from 'firebase/firestore'
+import type { DocumentData, DocumentSnapshot } from 'firebase/firestore'
+import type { QueryOptions } from '@/types'
 
 export const useQueryDocument = (name: string, options: QueryOptions) => {
   const db = useFirestore()

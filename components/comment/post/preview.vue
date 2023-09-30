@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import {
-  doc,
-  deleteDoc,
-  DocumentData
-} from 'firebase/firestore'
+import { doc, deleteDoc } from 'firebase/firestore'
+import type { DocumentData } from 'firebase/firestore'
 
 const props = defineProps<{
   comment: DocumentData

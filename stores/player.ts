@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { DocumentData } from 'firebase/firestore'
+import type { DocumentData } from 'firebase/firestore'
 import { Howl } from 'howler'
 
 export const usePlayerStore = defineStore('player', () => {
