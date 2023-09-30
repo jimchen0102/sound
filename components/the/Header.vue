@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { signOut, Auth } from 'firebase/auth'
+import { signOut } from 'firebase/auth'
 import { vOnClickOutside } from '@vueuse/components'
 
 const auth = useFirebaseAuth()
@@ -9,7 +9,7 @@ const { isModalOpen } = useModal('auth')
 const isUserModalOpen = ref(false)
 
 const handleSignOut = async () => {
-  await signOut(auth as Auth)
+  await signOut(auth!)
   isUserModalOpen.value = false
   if (route.name === 'upload' || route.name === 'manage') await navigateTo('/')
 }
@@ -43,50 +43,65 @@ const handleSignOut = async () => {
             :size="20"
           />
         </button>
-        <ul
+        <div
           v-show="isUserModalOpen"
-          class="absolute right-0 top-[calc(100%+8px)] w-48 rounded border-2 border-white/10 bg-[#212121] py-4 text-white"
+          class="absolute right-0 top-[calc(100%+8px)] w-60 rounded border-2 border-white/10 bg-[#212121] text-white"
         >
-          <li>
-            <NuxtLink
-              to="/upload"
-              class="flex items-center gap-x-4 px-6 py-2 text-sm hover:bg-white/5"
-              @click="isUserModalOpen = false"
-            >
-              <Icon
-                name="IconCloudUpload"
-                :stroke-width="1"
-              />
-              上傳歌曲
-            </NuxtLink>
-          </li>
-          <li>
-            <NuxtLink
-              to="/manage"
-              class="flex items-center gap-x-4 px-6 py-2 text-sm hover:bg-white/5"
-              @click="isUserModalOpen = false"
-            >
-              <Icon
-                name="IconSettings"
-                :stroke-width="1"
-              />
-              管理歌曲
-            </NuxtLink>
-          </li>
-          <li>
-            <button
-              type="button"
-              class="flex w-full items-center gap-x-4 px-6 py-2 text-sm hover:bg-white/5"
-              @click="handleSignOut"
-            >
-              <Icon
-                name="IconLogin2"
-                :stroke-width="1"
-              />
-              登出
-            </button>
-          </li>
-        </ul>
+          <div class="flex items-center gap-x-4 p-4">
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10">
+              <Icon name="IconUser" :size="18" />
+            </div>
+            <div class="min-w-0">
+              <h3 class="line-clamp-1">
+                {{ user.displayName }}
+              </h3>
+              <h4 class="line-clamp-1 text-sm">
+                {{ user.email }}
+              </h4>
+            </div>
+          </div>
+          <ul class="border-t-2 border-white/10 py-4">
+            <li>
+              <NuxtLink
+                to="/upload"
+                class="flex items-center gap-x-4 px-4 py-2 text-sm hover:bg-white/5"
+                @click="isUserModalOpen = false"
+              >
+                <Icon
+                  name="IconCloudUpload"
+                  :stroke-width="1"
+                />
+                上傳歌曲
+              </NuxtLink>
+            </li>
+            <li>
+              <NuxtLink
+                to="/manage"
+                class="flex items-center gap-x-4 px-4 py-2 text-sm hover:bg-white/5"
+                @click="isUserModalOpen = false"
+              >
+                <Icon
+                  name="IconPlaylist"
+                  :stroke-width="1"
+                />
+                管理歌曲
+              </NuxtLink>
+            </li>
+            <li>
+              <button
+                type="button"
+                class="flex w-full items-center gap-x-4 px-4 py-2 text-sm hover:bg-white/5"
+                @click="handleSignOut"
+              >
+                <Icon
+                  name="IconLogin2"
+                  :stroke-width="1"
+                />
+                登出
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
       <button
         v-else

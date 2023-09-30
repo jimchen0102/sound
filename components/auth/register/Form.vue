@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { createUserWithEmailAndPassword, updateProfile, Auth } from 'firebase/auth'
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { doc, setDoc } from 'firebase/firestore'
 import { object, string, ref } from 'yup'
 import { AuthType } from '@/types'
@@ -28,11 +28,7 @@ const { handleSubmit } = useForm({
 
 const onSubmit = handleSubmit(async ({ name, email, password }) => {
   try {
-    const credential = await createUserWithEmailAndPassword(
-      auth as Auth,
-      email,
-      password
-    )
+    const credential = await createUserWithEmailAndPassword(auth!, email, password)
     await setDoc(doc(db, 'users', credential.user.uid), { name, email })
     await updateProfile(credential.user, { displayName: name })
     isModalOpen.value = false

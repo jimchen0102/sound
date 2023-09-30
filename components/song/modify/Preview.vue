@@ -58,7 +58,7 @@ const handleDeleteSong = async () => {
       <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent opacity-0 group-hover:opacity-100" />
     </NuxtLink>
     <div
-      v-on-click-outside.bubble="() => isUserModalOpen = false"
+      v-on-click-outside="() => isUserModalOpen = false"
       class="absolute right-2 top-2 flex gap-x-2"
     >
       <button
@@ -73,12 +73,12 @@ const handleDeleteSong = async () => {
       </button>
       <ul
         v-show="isUserModalOpen"
-        class="absolute right-0 top-[calc(100%+8px)] w-48 rounded border-2 border-white/10 bg-[#212121] py-4 text-white"
+        class="absolute right-0 top-[calc(100%+8px)] w-44 rounded border-2 border-white/10 bg-[#212121] py-4 text-white"
       >
         <li>
           <button
             type="button"
-            class="flex w-full items-center gap-x-4 px-6 py-2 text-sm hover:bg-white/5"
+            class="flex w-full items-center gap-x-4 px-4 py-2 text-sm hover:bg-white/5"
             @click="handleUpdateSong"
           >
             <Icon
@@ -91,7 +91,7 @@ const handleDeleteSong = async () => {
         <li>
           <button
             type="button"
-            class="flex w-full items-center gap-x-4 px-6 py-2 text-sm hover:bg-white/5"
+            class="flex w-full items-center gap-x-4 px-4 py-2 text-sm hover:bg-white/5"
             @click="handleDeleteSong"
           >
             <Icon
