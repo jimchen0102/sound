@@ -6,4 +6,6 @@
   <slot />
 
   <SongPlayer />
+
+  <TheTransition />
 </template>

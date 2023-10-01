@@ -7,11 +7,12 @@ const user = useCurrentUser()
 const route = useRoute()
 const { isModalOpen } = useModal('auth')
 const isUserModalOpen = ref(false)
+const requireAuth = ['upload', 'manage']
 
 const handleSignOut = async () => {
   await signOut(auth!)
   isUserModalOpen.value = false
-  if (route.name === 'upload' || route.name === 'manage') await navigateTo('/')
+  if (requireAuth.includes(route.name as string)) await navigateTo('/')
 }
 </script>
 
