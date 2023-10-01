@@ -43,7 +43,7 @@ onMounted(() => {
       <div
         v-for="num in 6"
         :key="num"
-        class="h-[30vh] bg-[length:auto_100%] odd:animate-[marquee_40s_linear_reverse_infinite] odd:bg-[url('@/assets/img/sound-text-fill.svg')] odd:opacity-10 even:animate-[marquee_40s_linear_infinite] even:bg-[url('@/assets/img/sound-text-stroke.svg')] even:opacity-20"
+        class="h-[30vh] border-b-[1vh] border-white bg-[length:auto_100%] odd:animate-[marquee_40s_linear_reverse_infinite] odd:bg-[url('@/assets/img/text-decoration.svg')] odd:opacity-[.15] even:animate-[marquee_40s_linear_infinite] even:bg-[url('@/assets/img/arrow-decoration.svg')] even:opacity-[.15]"
       />
     </div>
     <div class="absolute inset-0 bg-[repeating-linear-gradient(40deg,rgba(255,255,255,.1),rgba(255,255,255,.1)_3px,rgba(255,255,255,.15)_3px,rgba(255,255,255,.15)_8px)]" />
