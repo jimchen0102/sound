@@ -5,6 +5,7 @@ import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage
 import * as yup from 'yup'
 import { v4 as uuidv4 } from 'uuid'
 import { vOnClickOutside } from '@vueuse/components'
+import { IconCamera } from '@tabler/icons-vue'
 
 const props = defineProps<{
   song: DocumentData
@@ -128,10 +129,7 @@ const onSubmit = handleSubmit(async (values) => {
                     class="h-full w-full object-cover"
                   >
                   <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white">
-                    <Icon
-                      name="IconCamera"
-                      :size="32"
-                    />
+                    <IconCamera :size="32" />
                   </div>
                 </label>
                 <input

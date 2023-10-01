@@ -3,6 +3,7 @@ import type { FirebaseError } from 'firebase/app'
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { doc, setDoc } from 'firebase/firestore'
 import * as yup from 'yup'
+import { IconAlertCircle, IconUser } from '@tabler/icons-vue'
 import { AuthType } from '@/types'
 
 defineEmits<{
@@ -54,7 +55,7 @@ const onSubmit = handleSubmit(async ({ name, email, password }) => {
     v-if="errorMessage"
     class="mb-2.5 flex items-center justify-center gap-x-1 text-sm text-danger"
   >
-    <Icon name="IconAlertCircle" />
+    <IconAlertCircle />
     {{ errorMessage }}
   </div>
   <form @submit="onSubmit">
@@ -83,10 +84,7 @@ const onSubmit = handleSubmit(async ({ name, email, password }) => {
       :disabled="isLoading"
     >
       <div class="absolute left-2.5 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-[#030303] text-white">
-        <Icon
-          name="IconUser"
-          :size="20"
-        />
+        <IconUser :size="20" />
       </div>
       <span class="text-lg font-bold">
         註冊

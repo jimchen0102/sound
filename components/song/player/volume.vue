@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import { IconVolume, IconVolumeOff } from '@tabler/icons-vue'
 import { usePlayerStore } from '@/stores/player'
 
 const playerStore = usePlayerStore()
@@ -27,14 +28,8 @@ const {
       :style="{ width: `${volume * 100}%` }"
     />
     <div class="absolute left-5 top-1/2 -translate-y-1/2 text-white">
-      <Icon
-        v-if="volume === 0"
-        name="IconVolumeOff"
-      />
-      <Icon
-        v-else
-        name="IconVolume"
-      />
+      <IconVolumeOff v-if="volume === 0" />
+      <IconVolume v-else />
     </div>
   </div>
 </template>

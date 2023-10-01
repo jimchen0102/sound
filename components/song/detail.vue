@@ -2,6 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { doc, getDoc } from 'firebase/firestore'
 import type { DocumentData } from 'firebase/firestore'
+import { IconPlayerPauseFilled, IconPlayerPlayFilled } from '@tabler/icons-vue'
 import { usePlayerStore } from '@/stores/player'
 
 const route = useRoute()
@@ -86,14 +87,8 @@ onMounted(async () => {
         class="flex h-16 w-16 items-center justify-center rounded-full bg-primary"
         @click="createSound(song)"
       >
-        <Icon
-          v-if="song.id === currentSound?.id && isSoundPlaying"
-          name="IconPlayerPauseFilled"
-        />
-        <Icon
-          v-else
-          name="IconPlayerPlayFilled"
-        />
+        <IconPlayerPauseFilled v-if="song.id === currentSound?.id && isSoundPlaying" />
+        <IconPlayerPlayFilled v-else />
       </button>
     </div>
     <p class="mt-5 whitespace-pre-wrap leading-[1.75] text-white/70">

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import type { DocumentData } from 'firebase/firestore'
+import { IconPlayerPauseFilled, IconPlayerPlayFilled } from '@tabler/icons-vue'
 import { usePlayerStore } from '@/stores/player'
 
 defineProps<{
@@ -39,14 +40,12 @@ const { createSound } = playerStore
       "
       @click="createSound(song)"
     >
-      <Icon
+      <IconPlayerPauseFilled
         v-if="song.id === currentSound?.id && isSoundPlaying"
-        name="IconPlayerPauseFilled"
         :size="20"
       />
-      <Icon
+      <IconPlayerPlayFilled
         v-else
-        name="IconPlayerPlayFilled"
         :size="20"
       />
     </button>

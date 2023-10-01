@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import { IconPlayerPauseFilled, IconPlayerPlayFilled } from '@tabler/icons-vue'
 import { usePlayerStore } from '@/stores/player'
 
 const playerStore = usePlayerStore()
@@ -14,14 +15,8 @@ const { toggleSound } = playerStore
     @click="toggleSound"
   >
     <div class="translate-x-1 translate-y-[3px]">
-      <Icon
-        v-if="isSoundPlaying"
-        name="IconPlayerPauseFilled"
-      />
-      <Icon
-        v-else
-        name="IconPlayerPlayFilled"
-      />
+      <IconPlayerPauseFilled v-if="isSoundPlaying" />
+      <IconPlayerPlayFilled v-else />
     </div>
   </button>
 </template>

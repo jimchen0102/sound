@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { IconCaretDownFilled } from '@tabler/icons-vue'
 import type { Option } from '@/types'
 
 const props = defineProps<{
@@ -32,7 +33,7 @@ const { value, errorMessage } = useField<string>(() => props.name)
         </option>
       </select>
       <div class="absolute right-6 top-1/2 -translate-y-1/2 text-white">
-        <Icon name="IconCaretDownFilled" />
+        <IconCaretDownFilled />
       </div>
     </div>
     <span

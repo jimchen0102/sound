@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { signOut } from 'firebase/auth'
 import { vOnClickOutside } from '@vueuse/components'
+import { IconCloudUpload, IconPlaylist, IconLogin2, IconUser } from '@tabler/icons-vue'
 
 const auth = useFirebaseAuth()
 const user = useCurrentUser()
@@ -71,10 +72,7 @@ const handleSignOut = async () => {
                 class="flex items-center gap-x-4 px-4 py-2 text-sm hover:bg-white/5"
                 @click="isUserModalOpen = false"
               >
-                <Icon
-                  name="IconCloudUpload"
-                  :stroke-width="1"
-                />
+                <IconCloudUpload :stroke-width="1" />
                 上傳歌曲
               </NuxtLink>
             </li>
@@ -84,10 +82,7 @@ const handleSignOut = async () => {
                 class="flex items-center gap-x-4 px-4 py-2 text-sm hover:bg-white/5"
                 @click="isUserModalOpen = false"
               >
-                <Icon
-                  name="IconPlaylist"
-                  :stroke-width="1"
-                />
+                <IconPlaylist :stroke-width="1" />
                 我的歌曲
               </NuxtLink>
             </li>
@@ -97,10 +92,7 @@ const handleSignOut = async () => {
                 class="flex w-full items-center gap-x-4 px-4 py-2 text-sm hover:bg-white/5"
                 @click="handleSignOut"
               >
-                <Icon
-                  name="IconLogin2"
-                  :stroke-width="1"
-                />
+                <IconLogin2 :stroke-width="1" />
                 登出
               </button>
             </li>
@@ -114,10 +106,7 @@ const handleSignOut = async () => {
         @click="isModalOpen = true"
       >
         <div class="flex h-8 w-8 items-center justify-center rounded-full bg-[#030303] text-white lg:h-10 lg:w-10">
-          <Icon
-            name="IconUser"
-            :size="18"
-          />
+          <IconUser :size="18" />
         </div>
         <span class="text-sm font-bold group-hover:text-black lg:text-base">
           登入 / 註冊

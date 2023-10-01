@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { IconSortDescending } from '@tabler/icons-vue'
 import type { QueryOptions } from '@/types'
 
 const props = defineProps<QueryOptions>()
@@ -49,9 +50,7 @@ const sortedComments = computed(() => {
         </option>
       </select>
       <div class="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2">
-        <Icon
-          name="IconSortDescending"
-        />
+        <IconSortDescending />
       </div>
     </div>
   </div>

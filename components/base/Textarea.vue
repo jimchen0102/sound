@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { IconAlertCircle } from '@tabler/icons-vue'
+
 const props = defineProps<{
   name: string
   label: string
@@ -28,7 +30,7 @@ const { value, errorMessage, handleChange } = useField<string>(
         v-if="errorMessage"
         class="absolute right-5 top-1/2 -translate-y-1/2 text-danger"
       >
-        <Icon name="IconAlertCircle" />
+        <IconAlertCircle />
       </div>
     </div>
     <span

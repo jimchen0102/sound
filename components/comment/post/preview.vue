@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { doc, deleteDoc } from 'firebase/firestore'
 import type { DocumentData } from 'firebase/firestore'
+import { IconX } from '@tabler/icons-vue'
 
 const props = defineProps<{
   comment: DocumentData
@@ -31,10 +32,7 @@ const handleDeleteComment = async () => {
       class="absolute right-0 top-0 text-white"
       @click="handleDeleteComment"
     >
-      <Icon
-        name="IconX"
-        :size="16"
-      />
+      <IconX :size="16" />
     </button>
     <div class="flex items-center gap-x-2">
       <h3 class="line-clamp-1 font-bold text-white lg:text-lg">

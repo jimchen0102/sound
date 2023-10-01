@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { IconCloudUpload } from '@tabler/icons-vue'
+
 const emit = defineEmits<{
   (e: 'upload-file', value: File[]): void
 }>()
@@ -30,8 +32,7 @@ const handleChange = (event: Event | DragEvent) => {
     @drop.prevent.stop="handleChange"
   >
     <div>
-      <Icon
-        name="IconCloudUpload"
+      <IconCloudUpload
         :size="40"
         class="mx-auto"
       />

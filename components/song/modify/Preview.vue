@@ -3,6 +3,7 @@ import { doc, deleteDoc } from 'firebase/firestore'
 import type { DocumentData } from 'firebase/firestore'
 import { ref as storageRef, deleteObject } from 'firebase/storage'
 import { vOnClickOutside } from '@vueuse/components'
+import { IconDotsVertical, IconEdit, IconTrash } from '@tabler/icons-vue'
 
 const props = defineProps<{
   song: DocumentData
@@ -68,10 +69,7 @@ const handleDeleteSong = async () => {
         class="flex h-9 w-9 items-center justify-center rounded-full text-white hover:bg-white/20"
         @click="isUserModalOpen = !isUserModalOpen"
       >
-        <Icon
-          name="IconDotsVertical"
-          :size="20"
-        />
+        <IconDotsVertical :size="20" />
       </button>
       <ul
         v-show="isUserModalOpen"
@@ -83,10 +81,7 @@ const handleDeleteSong = async () => {
             class="flex w-full items-center gap-x-4 px-4 py-2 text-sm hover:bg-white/5"
             @click="handleUpdateSong"
           >
-            <Icon
-              name="IconEdit"
-              :stroke-width="1"
-            />
+            <IconEdit :stroke-width="1" />
             編輯歌曲
           </button>
         </li>
@@ -96,10 +91,7 @@ const handleDeleteSong = async () => {
             class="flex w-full items-center gap-x-4 px-4 py-2 text-sm hover:bg-white/5"
             @click="handleDeleteSong"
           >
-            <Icon
-              name="IconTrash"
-              :stroke-width="1"
-            />
+            <IconTrash :stroke-width="1" />
             刪除歌曲
           </button>
         </li>
