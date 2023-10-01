@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import type { FirebaseError } from 'firebase/app'
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { doc, setDoc } from 'firebase/firestore'
-import { object, string, ref } from 'yup'
+import * as yup from 'yup'
 import { AuthType } from '@/types'
 
 defineEmits<{
@@ -14,36 +15,48 @@ const auth = useFirebaseAuth()
 const db = useFirestore()
 
 const { isModalOpen } = useModal('auth')
+const isLoading = ref(false)
+const errorMessage = ref('')
 
 const { handleSubmit } = useForm({
   validationSchema: toTypedSchema(
-    object({
-      name: string().required('姓名為必填'),
-      email: string().required('電子郵件為必填').email('須為有效的電子信箱'),
-      password: string().required('密碼為必填').min(6, '不能小於 6 個字元'),
-      passwordConfirm: string().oneOf([ref('password')], '密碼不一致')
+    yup.object({
+      name: yup.string().required('姓名為必填'),
+      email: yup.string().required('電子郵件為必填').email('須為有效的電子信箱'),
+      password: yup.string().required('密碼為必填').min(6, '不能小於 6 個字元'),
+      passwordConfirm: yup.string().oneOf([yup.ref('password')], '密碼不一致')
     })
   )
 })
 
 const onSubmit = handleSubmit(async ({ name, email, password }) => {
+  isLoading.value = true
   try {
     const credential = await createUserWithEmailAndPassword(auth!, email, password)
     await setDoc(doc(db, 'users', credential.user.uid), { name, email })
     await updateProfile(credential.user, { displayName: name })
     isModalOpen.value = false
-    if (route.query.redirect) await navigateTo(`${route.query.redirect}`)
+    if (route.query.redirect) {
+      await navigateTo(`${route.query.redirect}`)
+    }
   } catch (error) {
-    console.log(error)
-    // const errorCode = error.code
-    // if (errorCode === 'auth/email-already-in-use') {
-    //   errorCodeMessage.value = '這個電子郵件已經有人使用，請試試其他電子郵件。'
-    // }
+    const errorCode = (error as FirebaseError).code
+    if (errorCode === 'auth/email-already-in-use') {
+      errorMessage.value = '這個電子郵件已經被使用。'
+    }
   }
+  isLoading.value = false
 })
 </script>
 
 <template>
+  <div
+    v-if="errorMessage"
+    class="mb-2.5 flex items-center justify-center gap-x-1 text-sm text-danger"
+  >
+    <Icon name="IconAlertCircle" />
+    {{ errorMessage }}
+  </div>
   <form @submit="onSubmit">
     <div class="space-y-5">
       <BaseInput
@@ -65,7 +78,10 @@ const onSubmit = handleSubmit(async ({ name, email, password }) => {
         label="確認密碼"
       />
     </div>
-    <button class="relative mt-10 block h-15 w-full rounded-full bg-primary">
+    <button
+      class="relative mt-10 block h-15 w-full rounded-full bg-primary hover:bg-gradient-to-b hover:from-primary hover:to-secondary"
+      :disabled="isLoading"
+    >
       <div class="absolute left-2.5 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-[#030303] text-white">
         <Icon
           name="IconUser"

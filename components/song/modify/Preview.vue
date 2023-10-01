@@ -18,6 +18,7 @@ const db = useFirestore()
 const storage = useFirebaseStorage()
 
 const isUserModalOpen = ref(false)
+const isLoading = ref(false)
 
 const handleUpdateSong = () => {
   isUserModalOpen.value = false
@@ -25,6 +26,7 @@ const handleUpdateSong = () => {
 }
 
 const handleDeleteSong = async () => {
+  isLoading.value = true
   isUserModalOpen.value = false
   const songRef = storageRef(storage, `songs/${user.value?.uid}/${props.song.id}`)
   try {
@@ -34,11 +36,17 @@ const handleDeleteSong = async () => {
   } catch (error) {
     console.log(error)
   }
+  isLoading.value = false
 }
 </script>
 
 <template>
-  <div class="group relative">
+  <div
+    class="group relative"
+    :class="{
+      'pointer-events-none opacity-50': isLoading
+    }"
+  >
     <NuxtLink
       :to="`/song/${song.id}`"
       class="block aspect-square overflow-hidden rounded bg-gradient-to-b from-[#383838] to-[#767676]"

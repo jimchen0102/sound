@@ -2,7 +2,7 @@
 import { doc, updateDoc } from 'firebase/firestore'
 import type { DocumentData } from 'firebase/firestore'
 import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage'
-import { object, string } from 'yup'
+import * as yup from 'yup'
 import { v4 as uuidv4 } from 'uuid'
 import { vOnClickOutside } from '@vueuse/components'
 
@@ -60,8 +60,8 @@ const { handleSubmit } = useForm<DocumentData>({
     title: props.song.title
   },
   validationSchema: toTypedSchema(
-    object({
-      title: string().required('歌曲名稱為必填')
+    yup.object({
+      title: yup.string().required('歌曲名稱為必填')
     })
   )
 })

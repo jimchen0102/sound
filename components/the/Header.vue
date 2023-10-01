@@ -110,16 +110,16 @@ const handleSignOut = async () => {
       <button
         v-else
         type="button"
-        class="group pointer-events-auto flex h-15 items-center gap-x-2.5 rounded-full bg-[#030303] pl-2.5 pr-6 hover:bg-gradient-to-br hover:from-primary hover:to-secondary"
+        class="group pointer-events-auto flex h-12 items-center gap-x-2 rounded-full bg-primary pl-2 pr-4 hover:bg-gradient-to-b hover:from-primary hover:to-secondary lg:h-15 lg:pl-2.5 lg:pr-6"
         @click="isModalOpen = true"
       >
-        <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[#212121] text-white">
+        <div class="flex h-8 w-8 items-center justify-center rounded-full bg-[#030303] text-white lg:h-10 lg:w-10">
           <Icon
             name="IconUser"
-            :size="20"
+            :size="18"
           />
         </div>
-        <span class="font-bold text-white group-hover:text-black">
+        <span class="text-sm font-bold group-hover:text-black lg:text-base">
           登入 / 註冊
         </span>
       </button>

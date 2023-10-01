@@ -39,7 +39,6 @@ onMounted(() => {
 
 <template>
   <div class="pointer-events-none fixed inset-0 overflow-hidden">
-    <!-- <div class="absolute inset-0 bg-[repeating-linear-gradient(40deg,#262626,#262626_3px,#181818_3px,#181818_8px)]" /> -->
     <div class="absolute left-1/2 top-1/2 w-[120%] -translate-x-1/2 -translate-y-1/2 rotate-[-12.5deg]">
       <div
         v-for="num in 6"

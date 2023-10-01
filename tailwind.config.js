@@ -33,15 +33,11 @@ module.exports = {
       keyframes: {
         marquee: {
           '0%': { backgroundPosition: '0 0' },
-          '100%': { backgroundPosition: '410vh 0' }
+          '100%': { backgroundPosition: '615vh 0' }
         },
         progress: {
           '0%': { backgroundPosition: '0 0' },
           '100%': { backgroundPosition: '3.125rem 0' }
-        },
-        wave: {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-100%)' }
         },
         rotate: {
           '100%': { transform: 'rotate(360deg)' }

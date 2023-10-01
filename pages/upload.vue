@@ -18,7 +18,7 @@ const user = useCurrentUser()
         </div>
         <div>
           <h2 class="text-2xl font-bold text-white lg:text-3xl">
-            探索歌曲
+            其他人上傳
           </h2>
           <SongBadge
             :where="['uid', '!=', user?.uid]"
