@@ -13,13 +13,13 @@ const { value, errorMessage } = useField<string>(() => props.name)
 
 <template>
   <div>
-    <label class="font-bold text-white lg:text-lg">
+    <label class="font-bold text-white">
       {{ label }}
     </label>
     <div class="relative mt-2">
       <select
         v-model="value"
-        class="block h-15 w-full appearance-none rounded-full border-[3px] border-transparent bg-[#030303] px-6 text-white outline-none focus:border-[#696969]"
+        class="block h-12 w-full appearance-none rounded-full border-[3px] border-transparent bg-[#030303] px-4 text-white outline-none focus:border-[#696969] lg:h-15 lg:px-6"
         :class="{
           '!border-danger': errorMessage
         }"
@@ -32,8 +32,8 @@ const { value, errorMessage } = useField<string>(() => props.name)
           {{ option.title }}
         </option>
       </select>
-      <div class="absolute right-6 top-1/2 -translate-y-1/2 text-white">
-        <IconCaretDownFilled />
+      <div class="absolute right-4 top-1/2 -translate-y-1/2 text-white lg:right-6">
+        <IconCaretDownFilled :size="20" />
       </div>
     </div>
     <span

@@ -17,14 +17,14 @@ const { value, errorMessage, handleChange } = useField<string>(
 
 <template>
   <div>
-    <label class="font-bold text-white lg:text-lg">
+    <label class="font-bold text-white">
       {{ label }}
     </label>
     <div class="relative mt-2">
       <input
         :value="value"
         :type="type"
-        class="block h-15 w-full rounded-full border-[3px] border-transparent bg-[#030303] pl-6 pr-12 text-white outline-none focus:border-[#696969]"
+        class="block h-12 w-full rounded-full border-[3px] border-transparent bg-[#030303] pl-4 pr-10 text-white outline-none focus:border-[#696969] lg:h-15 lg:pl-6 lg:pr-12"
         :class="{
           '!border-danger': errorMessage
         }"
@@ -32,7 +32,7 @@ const { value, errorMessage, handleChange } = useField<string>(
       >
       <div
         v-if="errorMessage"
-        class="absolute right-5 top-1/2 -translate-y-1/2 text-danger"
+        class="absolute right-3 top-1/2 -translate-y-1/2 text-danger lg:right-5"
       >
         <IconAlertCircle />
       </div>

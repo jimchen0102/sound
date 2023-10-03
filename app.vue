@@ -29,6 +29,10 @@ const onLeave = (_el: Element, done: () => void) => {
     .to('#transitionBackground', { opacity: 1, duration: 0.5 })
     .to('#transitionArrow', { x: '-33.33333%', duration: 0.75 }, 0)
 }
+
+useSeoMeta({
+  title: 'SOUND'
+})
 </script>
 
 <template>

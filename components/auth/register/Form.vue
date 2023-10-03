@@ -80,10 +80,10 @@ const onSubmit = handleSubmit(async ({ name, email, password }) => {
       />
     </div>
     <button
-      class="relative mt-10 block h-15 w-full rounded-full bg-primary hover:bg-gradient-to-b hover:from-primary hover:to-secondary"
+      class="relative mt-7.5 block h-12 w-full rounded-full bg-primary hover:bg-gradient-to-b hover:from-primary hover:to-secondary lg:mt-10 lg:h-15"
       :disabled="isLoading"
     >
-      <div class="absolute left-2.5 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-[#030303] text-white">
+      <div class="absolute left-2.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-[#030303] text-white lg:h-10 lg:w-10">
         <IconLoader
           v-if="isLoading"
           :size="20"
@@ -98,7 +98,7 @@ const onSubmit = handleSubmit(async ({ name, email, password }) => {
         註冊
       </span>
     </button>
-    <p class="mt-5 text-center font-bold text-white lg:text-lg">
+    <p class="mt-5 text-center font-bold text-white">
       已經有帳號了？
       <span
         class="cursor-pointer underline"

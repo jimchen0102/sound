@@ -8,7 +8,7 @@ const authType = ref<AuthType>(AuthType.LOGIN)
 
 <template>
   <div class="fixed inset-0 z-[1000] overflow-y-auto overflow-x-hidden bg-[repeating-linear-gradient(40deg,rgba(255,255,255,.1),rgba(255,255,255,.1)_3px,rgba(255,255,255,.05)_3px,rgba(255,255,255,.05)_8px)] backdrop-blur-md">
-    <div class="mx-auto my-15 flex min-h-[calc(100%-120px)] max-w-[600px] items-center">
+    <div class="mx-auto my-15 flex min-h-[calc(100%-120px)] max-w-[480px] items-center lg:max-w-[600px]">
       <div
         v-on-click-outside="() => isModalOpen = false"
         class="relative w-full"

@@ -60,7 +60,7 @@ const handleSignOut = async () => {
               <h3 class="line-clamp-1">
                 {{ user.displayName }}
               </h3>
-              <h4 class="line-clamp-1 text-sm">
+              <h4 class="line-clamp-1 text-sm opacity-50">
                 {{ user.email }}
               </h4>
             </div>

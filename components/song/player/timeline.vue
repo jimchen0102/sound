@@ -36,7 +36,7 @@ const timeline = computed(() => {
     @touchstart="handleSliderDown"
   >
     <div
-      class="absolute left-0 top-0 h-full bg-[#383838] bg-[url('/assets/img/progress-arrow.svg')]"
+      class="absolute left-0 top-0 h-full animate-[progress_1s_linear_infinite] bg-[#383838] bg-[url('/assets/img/progress-arrow.svg')]"
       :style="{
         width: `${timeline}%`
       }"

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { IconCheck, IconAlertCircle } from '@tabler/icons-vue'
 import type { Upload } from '@/types'
 
 defineProps<{
@@ -8,18 +9,18 @@ defineProps<{
 
 <template>
   <div>
-    <h3 class="text-sm text-white lg:text-base">
+    <h3 class="flex items-center gap-x-2 text-sm text-white lg:text-base">
       {{ upload.title }}
-      <span
-        v-if="upload.state"
-        :class="
-          upload.state === 'success' ? 'text-primary' : 'text-danger'
-        "
-      >
-        {{ upload.state === 'success' ? '(上傳成功)' : '(上傳失敗)' }}
-      </span>
+      <IconCheck
+        v-if="upload.state === 'success'"
+        class="text-primary"
+      />
+      <IconAlertCircle
+        v-if="upload.state === 'error'"
+        class="text-danger"
+      />
     </h3>
-    <div class="relative mt-2 h-10 rounded-full bg-[#212121]">
+    <div class="relative mt-2 h-8 rounded-full bg-[#212121] lg:h-10">
       <div
         class="absolute left-0 top-0 h-full overflow-hidden rounded-full bg-[#696969] transition-[width] duration-100"
         :class="{
