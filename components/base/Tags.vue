@@ -29,7 +29,7 @@ const deleteTag = (index: number) => {
       {{ label }}
     </label>
     <div
-      class="mt-2 flex min-h-[60px] cursor-text flex-wrap gap-2 rounded-[30px] border-[3px] border-transparent bg-[#030303] px-6 py-3 focus:border-[#696969]"
+      class="mt-2 flex cursor-text flex-wrap gap-2 rounded-[30px] border-[3px] border-transparent bg-[#030303] px-4 py-1.5 focus:border-[#696969] lg:px-6 lg:py-3"
       @click="inputEl?.focus()"
     >
       <div

@@ -24,7 +24,7 @@ const { value, errorMessage, handleChange } = useField<string>(
       <input
         :value="value"
         :type="type"
-        class="block h-12 w-full rounded-full border-[3px] border-transparent bg-[#030303] pl-4 pr-10 text-white outline-none focus:border-[#696969] lg:h-15 lg:pl-6 lg:pr-12"
+        class="block h-12 w-full rounded-full border-[3px] border-transparent bg-[#030303] px-4 text-white outline-none focus:border-[#696969] lg:h-15 lg:px-6"
         :class="{
           '!border-danger': errorMessage
         }"

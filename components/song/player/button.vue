@@ -14,7 +14,7 @@ const { toggleSound } = playerStore
     class="flex h-15 w-20 items-center justify-center overflow-hidden bg-primary lg:w-30"
     @click="toggleSound"
   >
-    <div class="translate-x-1 translate-y-[3px]">
+    <div class="translate-x-0.5 translate-y-0.5 lg:translate-x-1">
       <IconPlayerPauseFilled v-if="isSoundPlaying" />
       <IconPlayerPlayFilled v-else />
     </div>

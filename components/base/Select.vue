@@ -19,7 +19,7 @@ const { value, errorMessage } = useField<string>(() => props.name)
     <div class="relative mt-2">
       <select
         v-model="value"
-        class="block h-12 w-full appearance-none rounded-full border-[3px] border-transparent bg-[#030303] px-4 text-white outline-none focus:border-[#696969] lg:h-15 lg:px-6"
+        class="block h-12 w-full appearance-none rounded-full border-[3px] border-transparent bg-[#030303] pl-4 pr-10 text-white outline-none focus:border-[#696969] lg:h-15 lg:pl-6 lg:pr-12"
         :class="{
           '!border-danger': errorMessage
         }"
