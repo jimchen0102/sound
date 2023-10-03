@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { doc, deleteDoc } from 'firebase/firestore'
 import type { DocumentData } from 'firebase/firestore'
-import { IconX } from '@tabler/icons-vue'
+import { IconX, IconLoader } from '@tabler/icons-vue'
 
 const props = defineProps<{
   comment: DocumentData
@@ -14,13 +14,17 @@ const emit = defineEmits<{
 const user = useCurrentUser()
 const db = useFirestore()
 
+const isLoading = ref(false)
+
 const handleDeleteComment = async () => {
+  isLoading.value = true
   try {
     await deleteDoc(doc(db, 'comments', props.comment.id))
     emit('delete-comment', props.comment.id)
   } catch (error) {
     console.log(error)
   }
+  isLoading.value = false
 }
 </script>
 
@@ -32,7 +36,15 @@ const handleDeleteComment = async () => {
       class="absolute right-0 top-0 text-white"
       @click="handleDeleteComment"
     >
-      <IconX :size="16" />
+      <IconLoader
+        v-if="isLoading"
+        :size="16"
+        class="animate-spin"
+      />
+      <IconX
+        v-else
+        :size="16"
+      />
     </button>
     <div class="flex items-center gap-x-2">
       <h3 class="line-clamp-1 font-bold text-white lg:text-lg">

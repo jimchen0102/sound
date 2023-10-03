@@ -2,6 +2,7 @@
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore'
 import type { DocumentData } from 'firebase/firestore'
 import { v4 as uuidv4 } from 'uuid'
+import { IconLoader } from '@tabler/icons-vue'
 
 const emit = defineEmits<{
   (e: 'add-comment', value: DocumentData): void
@@ -13,11 +14,13 @@ const user = useCurrentUser()
 const db = useFirestore()
 
 const { isModalOpen } = useModal('auth')
+const isLoading = ref(false)
 
 const { handleSubmit, defineInputBinds } = useForm()
 const comment = defineInputBinds('comment')
 
 const onSubmit = handleSubmit(async (values, { resetForm }) => {
+  isLoading.value = true
   const id = uuidv4()
   const commentRef = doc(db, 'comments', id)
   const comment = {
@@ -36,6 +39,7 @@ const onSubmit = handleSubmit(async (values, { resetForm }) => {
   } catch (error) {
     console.log(error)
   }
+  isLoading.value = false
 })
 </script>
 
@@ -52,9 +56,14 @@ const onSubmit = handleSubmit(async (values, { resetForm }) => {
       class="relative mx-auto -mt-7.5 flex h-15 w-50 overflow-hidden rounded-full border-[3px] border-[#030303] bg-[#212121]"
     >
       <button
-        class="flex w-1/2 items-center justify-center text-white hover:bg-[#383838] disabled:cursor-not-allowed"
+        class="flex w-1/2 items-center justify-center gap-x-1 text-white hover:bg-[#383838]"
         :disabled="!comment.value"
       >
+        <IconLoader
+          v-if="isLoading"
+          :size="20"
+          class="animate-spin"
+        />
         留言
       </button>
       <span class="absolute left-1/2 top-1/2 h-7.5 w-[3px] -translate-x-1/2 -translate-y-1/2 bg-[#030303]" />

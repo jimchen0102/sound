@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import * as yup from 'yup'
-import { IconAlertCircle, IconUser } from '@tabler/icons-vue'
+import { IconAlertCircle, IconUser, IconLoader } from '@tabler/icons-vue'
 import { AuthType } from '@/types'
 
 defineEmits<{
@@ -64,7 +64,15 @@ const onSubmit = handleSubmit(async ({ email, password }) => {
       :disabled="isLoading"
     >
       <div class="absolute left-2.5 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-[#030303] text-white">
-        <IconUser :size="20" />
+        <IconLoader
+          v-if="isLoading"
+          :size="20"
+          class="animate-spin"
+        />
+        <IconUser
+          v-else
+          :size="20"
+        />
       </div>
       <span class="text-lg font-bold">
         登入

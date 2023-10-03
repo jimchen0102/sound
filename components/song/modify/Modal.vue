@@ -5,7 +5,7 @@ import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage
 import * as yup from 'yup'
 import { v4 as uuidv4 } from 'uuid'
 import { vOnClickOutside } from '@vueuse/components'
-import { IconCamera } from '@tabler/icons-vue'
+import { IconCamera, IconLoader } from '@tabler/icons-vue'
 
 const props = defineProps<{
   song: DocumentData
@@ -31,11 +31,11 @@ const genres = [
   { title: '爵士', value: '爵士' },
   { title: '鄉村', value: '鄉村' }
 ]
-
 const upload = ref<File | null>(null)
 const cover = ref(props.song.cover)
 const types = ['image/jpeg', 'image/png']
 const reader = new FileReader()
+const isLoading = ref(false)
 
 const handleChange = (event: Event) => {
   const file = ((event.target as HTMLInputElement).files as FileList)[0]
@@ -68,6 +68,7 @@ const { handleSubmit } = useForm<DocumentData>({
 })
 
 const onSubmit = handleSubmit(async (values) => {
+  isLoading.value = true
   const songRef = doc(db, 'songs', props.song.id)
   if (upload.value) {
     const id = uuidv4()
@@ -91,6 +92,7 @@ const onSubmit = handleSubmit(async (values) => {
   } catch (error) {
     console.log(error)
   }
+  isLoading.value = false
 })
 </script>
 
@@ -167,7 +169,15 @@ const onSubmit = handleSubmit(async (values) => {
               <div
                 class="relative mx-auto mt-5 flex h-15 w-50 overflow-hidden rounded-full border-[3px] border-[#030303] bg-[#212121]"
               >
-                <button class="flex h-full w-1/2 items-center justify-center text-white hover:bg-[#383838]">
+                <button
+                  class="flex h-full w-1/2 items-center justify-center gap-x-1 text-white hover:bg-[#383838]"
+                  :disabled="isLoading"
+                >
+                  <IconLoader
+                    v-if="isLoading"
+                    :size="20"
+                    class="animate-spin"
+                  />
                   確定
                 </button>
                 <span class="absolute left-1/2 top-1/2 h-7.5 w-[3px] -translate-x-1/2 -translate-y-1/2 bg-[#030303]" />

@@ -3,7 +3,7 @@ import { doc, deleteDoc } from 'firebase/firestore'
 import type { DocumentData } from 'firebase/firestore'
 import { ref as storageRef, deleteObject } from 'firebase/storage'
 import { vOnClickOutside } from '@vueuse/components'
-import { IconDotsVertical, IconEdit, IconTrash } from '@tabler/icons-vue'
+import { IconDotsVertical, IconEdit, IconTrash, IconLoader } from '@tabler/icons-vue'
 
 const props = defineProps<{
   song: DocumentData
@@ -18,17 +18,17 @@ const user = useCurrentUser()
 const db = useFirestore()
 const storage = useFirebaseStorage()
 
-const isUserModalOpen = ref(false)
+const isPopupOpen = ref(false)
 const isLoading = ref(false)
 
 const handleUpdateSong = () => {
-  isUserModalOpen.value = false
+  isPopupOpen.value = false
   emit('open-modal', props.song)
 }
 
 const handleDeleteSong = async () => {
   isLoading.value = true
-  isUserModalOpen.value = false
+  isPopupOpen.value = false
   const songRef = storageRef(storage, `songs/${user.value?.uid}/${props.song.id}`)
   try {
     await deleteObject(songRef)
@@ -45,7 +45,7 @@ const handleDeleteSong = async () => {
   <div
     class="group relative"
     :class="{
-      'pointer-events-none opacity-50': isLoading
+      'pointer-events-none': isLoading
     }"
   >
     <NuxtLink
@@ -61,18 +61,18 @@ const handleDeleteSong = async () => {
       <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent opacity-0 group-hover:opacity-100" />
     </NuxtLink>
     <div
-      v-on-click-outside="() => isUserModalOpen = false"
+      v-on-click-outside="() => isPopupOpen = false"
       class="absolute right-2 top-2 flex gap-x-2"
     >
       <button
         type="button"
         class="flex h-9 w-9 items-center justify-center rounded-full text-white hover:bg-white/20"
-        @click="isUserModalOpen = !isUserModalOpen"
+        @click="isPopupOpen = !isPopupOpen"
       >
         <IconDotsVertical :size="20" />
       </button>
       <ul
-        v-show="isUserModalOpen"
+        v-show="isPopupOpen"
         class="absolute right-0 top-[calc(100%+8px)] w-44 rounded border-2 border-white/10 bg-[#212121] py-4 text-white"
       >
         <li>
@@ -96,6 +96,18 @@ const handleDeleteSong = async () => {
           </button>
         </li>
       </ul>
+    </div>
+    <div
+      v-if="isLoading"
+      class="absolute inset-0 flex items-center justify-center bg-black/50 text-white"
+    >
+      <div class="flex items-center gap-x-2">
+        <IconLoader
+          :size="20"
+          class="animate-spin"
+        />
+        <span>刪除中</span>
+      </div>
     </div>
   </div>
   <h2 class="mt-4 line-clamp-2 font-bold leading-tight text-white">

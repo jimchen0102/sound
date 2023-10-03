@@ -7,12 +7,12 @@ const auth = useFirebaseAuth()
 const user = useCurrentUser()
 const route = useRoute()
 const { isModalOpen } = useModal('auth')
-const isUserModalOpen = ref(false)
+const isPopupOpen = ref(false)
 const requireAuth = ['upload', 'manage']
 
 const handleSignOut = async () => {
   await signOut(auth!)
-  isUserModalOpen.value = false
+  isPopupOpen.value = false
   if (requireAuth.includes(route.name as string)) await navigateTo('/')
 }
 </script>
@@ -32,13 +32,13 @@ const handleSignOut = async () => {
     <nav class="pointer-events-auto">
       <div
         v-if="user"
-        v-on-click-outside="() => isUserModalOpen = false"
+        v-on-click-outside="() => isPopupOpen = false"
         class="relative"
       >
         <button
           type="button"
           class="block h-10 w-10 overflow-hidden rounded-full"
-          @click="isUserModalOpen = !isUserModalOpen"
+          @click="isPopupOpen = !isPopupOpen"
         >
           <img
             src="@/assets/img/user-photo.svg"
@@ -46,7 +46,7 @@ const handleSignOut = async () => {
           >
         </button>
         <div
-          v-show="isUserModalOpen"
+          v-show="isPopupOpen"
           class="absolute right-0 top-[calc(100%+8px)] w-60 rounded border-2 border-white/10 bg-[#212121] text-white"
         >
           <div class="flex items-center gap-x-4 p-4">
@@ -70,7 +70,7 @@ const handleSignOut = async () => {
               <NuxtLink
                 to="/upload"
                 class="flex items-center gap-x-4 px-4 py-2 text-sm hover:bg-white/5"
-                @click="isUserModalOpen = false"
+                @click="isPopupOpen = false"
               >
                 <IconCloudUpload :stroke-width="1" />
                 上傳歌曲
@@ -80,7 +80,7 @@ const handleSignOut = async () => {
               <NuxtLink
                 to="/manage"
                 class="flex items-center gap-x-4 px-4 py-2 text-sm hover:bg-white/5"
-                @click="isUserModalOpen = false"
+                @click="isPopupOpen = false"
               >
                 <IconPlaylist :stroke-width="1" />
                 我的歌曲
@@ -106,9 +106,9 @@ const handleSignOut = async () => {
         @click="isModalOpen = true"
       >
         <div class="flex h-8 w-8 items-center justify-center rounded-full bg-[#030303] text-white lg:h-10 lg:w-10">
-          <IconUser :size="18" />
+          <IconUser :size="20" />
         </div>
-        <span class="text-sm font-bold group-hover:text-black lg:text-base">
+        <span class="text-sm font-bold lg:text-base">
           登入 / 註冊
         </span>
       </button>
