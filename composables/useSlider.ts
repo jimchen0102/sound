@@ -22,8 +22,11 @@ export const useSlider = (callbacks: {
     const sliderSize = sliderEl.value.clientWidth
     const sliderOffsetLeft = sliderEl.value.getBoundingClientRect().left
     percent.value = (clientX - sliderOffsetLeft) / sliderSize
-    if (percent.value < 0) percent.value = 0
-    else if (percent.value > 1) percent.value = 1
+    if (percent.value < 0) {
+      percent.value = 0
+    } else if (percent.value > 1) {
+      percent.value = 1
+    }
   }
 
   const handleDragStart = (e: MouseEvent | TouchEvent) => {

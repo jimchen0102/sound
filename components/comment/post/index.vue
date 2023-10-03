@@ -20,8 +20,11 @@ const sort = ref('descending')
 
 const sortedComments = computed(() => {
   return comments.value.slice().sort((a, b) => {
-    if (sort.value === 'descending') return b.createdAt - a.createdAt
-    else return a.createdAt - b.createdAt
+    if (sort.value === 'descending') {
+      return b.createdAt - a.createdAt
+    } else {
+      return a.createdAt - b.createdAt
+    }
   })
 })
 </script>

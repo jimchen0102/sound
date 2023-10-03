@@ -19,7 +19,10 @@ const getSongDocument = async () => {
   const songRef = doc(db, 'songs', route.params.id as string)
   try {
     const snapshot = await getDoc(songRef)
-    if (!snapshot.exists()) return await navigateTo('/')
+    if (!snapshot.exists()) {
+      await navigateTo('/')
+      return
+    }
     song.value = {
       ...snapshot.data()
     }

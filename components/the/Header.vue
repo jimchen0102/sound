@@ -13,7 +13,9 @@ const requireAuth = ['upload', 'manage']
 const handleSignOut = async () => {
   await signOut(auth!)
   isPopupOpen.value = false
-  if (requireAuth.includes(route.name as string)) await navigateTo('/')
+  if (requireAuth.includes(route.name as string)) {
+    await navigateTo('/')
+  }
 }
 </script>
 

@@ -17,7 +17,10 @@ export const formatTime = (time: number) => {
 
 export const getClientX = (e: MouseEvent | TouchEvent) => {
   let clientX: number
-  if (e.type.startsWith('touch')) clientX = (e as TouchEvent).touches[0].clientX
-  else clientX = (e as MouseEvent).clientX
+  if (e.type.startsWith('touch')) {
+    clientX = (e as TouchEvent).touches[0].clientX
+  } else {
+    clientX = (e as MouseEvent).clientX
+  }
   return clientX
 }
