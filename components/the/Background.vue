@@ -51,7 +51,7 @@ onMounted(() => {
       <img
         id="character"
         class="h-full max-w-none"
-        src="@/assets/img/cd-2.png"
+        src="@/assets/img/character.png"
         alt="cd"
       >
     </div>
