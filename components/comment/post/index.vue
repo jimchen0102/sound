@@ -6,6 +6,7 @@ const props = defineProps<QueryOptions>()
 
 const {
   document: comments,
+  documentCount: commentsCount,
   isPending,
   observerEl,
   addDocument: handleAddComment,
@@ -32,7 +33,7 @@ const sortedComments = computed(() => {
 <template>
   <div class="mt-15 flex items-center justify-between gap-x-7.5 lg:mt-10 lg:justify-start">
     <span class="text-white">
-      {{ comments.length }} 則留言
+      {{ commentsCount }} 則留言
     </span>
     <div class="relative text-white">
       <select
