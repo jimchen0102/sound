@@ -18,7 +18,7 @@ const route = useRoute()
             更多歌曲
           </h2>
           <SongBadge
-            :where="['__name__', '!=', route.params.id]"
+            :where="['id', '!=', route.params.id]"
             :limit="12"
           />
         </div>
