@@ -118,7 +118,14 @@ const handleSignOut = async () => {
   </header>
 
   <Teleport to="body">
-    <Transition name="fade">
+    <Transition
+      enter-active-class="transition-[opacity] duration-300"
+      enter-from-class="opacity-0"
+      enter-to-class="opacity-1"
+      leave-active-class="transition-[opacity] duration-300"
+      leave-to-class="opacity-0"
+      leave-from-class="opacity-1"
+    >
       <AuthModal v-if="isModalOpen" />
     </Transition>
   </Teleport>
