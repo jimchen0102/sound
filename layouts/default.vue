@@ -1,4 +1,6 @@
 <template>
+  <TheLoading />
+
   <TheBackground />
 
   <TheHeader />

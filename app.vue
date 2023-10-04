@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onAuthStateChanged } from 'firebase/auth'
 import gsap from 'gsap'
 
 const onEnter = (_el: Element, done: () => void) => {
@@ -29,6 +30,35 @@ const onLeave = (_el: Element, done: () => void) => {
     .to('#transitionBackground', { opacity: 1, duration: 0.5 })
     .to('#transitionArrow', { x: '-33.33333%', duration: 0.75 }, 0)
 }
+
+const auth = useFirebaseAuth()
+
+onMounted(() => {
+  const tl = gsap.timeline()
+  tl
+    .set('#loadingArrow', { x: '-50%' })
+    .set('#loadingLogo', { opacity: 0, y: 60 })
+    .set('#character', { y: '100%', rotate: 1440 })
+    .to('#loadingLogo', { opacity: 1, y: 0, duration: 1.5, delay: 0.5, ease: 'power3' })
+
+  onAuthStateChanged(auth!, () => {
+    tl
+      .to('#loadingLogo', { opacity: 0, y: -100, duration: 1, ease: 'power3.in' })
+      .to('#loadingArrow', {
+        x: '50%',
+        duration: 0.75,
+        onComplete: () => {
+          gsap.set('#loading', { autoAlpha: 0 })
+        }
+      })
+      .to('#character', {
+        y: 0,
+        rotate: '0',
+        duration: 2.5,
+        ease: 'power3'
+      }, 3)
+  })
+})
 
 useSeoMeta({
   title: 'SOUND'
