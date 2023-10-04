@@ -57,7 +57,7 @@ const onSubmit = handleSubmit(async (values, { resetForm }) => {
     >
       <button
         class="flex w-1/2 items-center justify-center gap-x-1 text-white hover:bg-[#383838]"
-        :disabled="!comment.value"
+        :disabled="!comment.value || isLoading"
       >
         <IconLoader
           v-if="isLoading"

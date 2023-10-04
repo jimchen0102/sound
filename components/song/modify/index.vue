@@ -28,6 +28,19 @@ const handleOpenModal = (song: DocumentData) => {
 
 <template>
   <div class="relative mt-5 lg:mt-7.5">
+    <h3
+      v-if="!isPending && !songs.length"
+      class="text-white"
+    >
+      尚無任何歌曲，試著
+      <NuxtLink
+        to="/upload"
+        class="underline"
+      >
+        上傳
+      </NuxtLink>
+      看看吧!
+    </h3>
     <div class="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 lg:gap-x-6 xl:grid-cols-6">
       <div
         v-for="song in songs"

@@ -6,7 +6,6 @@ import { usePlayerStore } from '@/stores/player'
 const playerStore = usePlayerStore()
 const { isSoundPlaying } = storeToRefs(playerStore)
 
-const characterl = ref(null)
 const animation = ref(null)
 
 watch(isSoundPlaying, (newVal) => {
@@ -26,7 +25,7 @@ watch(isSoundPlaying, (newVal) => {
 
 onMounted(() => {
   animation.value = gsap
-    .to(characterl.value, {
+    .to('#character', {
       rotation: 360,
       duration: 0.75,
       ease: 'none',
@@ -38,7 +37,7 @@ onMounted(() => {
 
 <template>
   <div class="pointer-events-none fixed inset-0 overflow-hidden">
-    <div class="absolute left-1/2 top-1/2 w-[120%] -translate-x-1/2 -translate-y-1/2 rotate-[-12.5deg]">
+    <div class="absolute left-1/2 top-1/2 w-[150%] -translate-x-1/2 -translate-y-1/2 rotate-[-12.5deg]">
       <div
         v-for="num in 6"
         :key="num"
@@ -51,7 +50,6 @@ onMounted(() => {
     <div class="absolute bottom-[-20%] left-1/2 top-[20%] -translate-x-1/2 sm:bottom-[-60%] sm:top-[10%]">
       <img
         id="character"
-        ref="characterl"
         class="h-full max-w-none"
         src="@/assets/img/cd-2.png"
         alt="cd"
