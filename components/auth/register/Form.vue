@@ -43,7 +43,7 @@ const onSubmit = handleSubmit(async ({ name, email, password }) => {
   } catch (error) {
     const errorCode = (error as FirebaseError).code
     if (errorCode === 'auth/email-already-in-use') {
-      errorMessage.value = '這個電子郵件已經被使用。'
+      errorMessage.value = '電子郵件已經被使用'
     }
   }
   isLoading.value = false
@@ -53,7 +53,7 @@ const onSubmit = handleSubmit(async ({ name, email, password }) => {
 <template>
   <div
     v-if="errorMessage"
-    class="mb-2.5 flex items-center justify-center gap-x-1 text-sm text-danger"
+    class="mb-5 flex items-center justify-center gap-x-1 rounded bg-danger p-2 text-sm text-white"
   >
     <IconAlertCircle />
     {{ errorMessage }}

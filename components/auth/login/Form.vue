@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { FirebaseError } from 'firebase/app'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import * as yup from 'yup'
 import { IconAlertCircle, IconUser, IconLoader } from '@tabler/icons-vue'
@@ -33,7 +34,10 @@ const onSubmit = handleSubmit(async ({ email, password }) => {
       await navigateTo(`${route.query.redirect}`)
     }
   } catch (error) {
-    errorMessage.value = '帳號或密碼錯誤'
+    const errorCode = (error as FirebaseError).code
+    if (errorCode === 'auth/invalid-login-credentials') {
+      errorMessage.value = '帳號或密碼錯誤'
+    }
   }
   isLoading.value = false
 })
@@ -42,7 +46,7 @@ const onSubmit = handleSubmit(async ({ email, password }) => {
 <template>
   <div
     v-if="errorMessage"
-    class="mb-2.5 flex items-center justify-center gap-x-1 text-sm text-danger"
+    class="mb-5 flex items-center justify-center gap-x-1 rounded bg-danger p-2 text-sm text-white"
   >
     <IconAlertCircle />
     {{ errorMessage }}
