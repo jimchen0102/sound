@@ -14,7 +14,7 @@ export const useQueryDocument = (name: string, options: QueryOptions) => {
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
-      if (entry.isIntersecting) {
+      if (entry.isIntersecting && observerEl.value) {
         observer.unobserve(observerEl.value!)
         getDocument()
       }
@@ -46,7 +46,6 @@ export const useQueryDocument = (name: string, options: QueryOptions) => {
     })
     isPending.value = false
     await getDocumentCount()
-    await nextTick()
     if (document.value.length === documentCount.value) return
     if (observerEl.value) observer.observe(observerEl.value)
   }
