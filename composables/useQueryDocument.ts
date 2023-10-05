@@ -46,6 +46,7 @@ export const useQueryDocument = (name: string, options: QueryOptions) => {
     })
     isPending.value = false
     await getDocumentCount()
+    await nextTick()
     if (document.value.length === documentCount.value) return
     if (observerEl.value) observer.observe(observerEl.value)
   }
