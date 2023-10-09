@@ -41,7 +41,7 @@ onMounted(() => {
       <div
         v-for="num in 6"
         :key="num"
-        class="border-b-[1vh] border-white opacity-[.15] [&_div]:h-[30vh] [&_div]:bg-[length:auto_100%] [&_div]:odd:animate-[marquee_40s_linear_reverse_infinite] [&_div]:odd:bg-[url('@/assets/img/text-decoration.png')] [&_div]:even:animate-[marquee_40s_linear_infinite] [&_div]:even:bg-[url('@/assets/img/arrow-decoration.png')]"
+        class="border-b-[1vh] border-white opacity-20 [&:nth-child(4n)_div]:!bg-[url('@/assets/img/arrow-decoration-2.png')] [&_div]:h-[30vh] [&_div]:bg-[length:auto_100%] [&_div]:odd:animate-[marquee_40s_linear_reverse_infinite] [&_div]:odd:bg-[url('@/assets/img/text-decoration.png')] [&_div]:even:animate-[marquee_40s_linear_infinite] [&_div]:even:bg-[url('@/assets/img/arrow-decoration-1.png')]"
       >
         <div />
       </div>
