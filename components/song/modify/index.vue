@@ -35,7 +35,7 @@ const handleOpenModal = (song: DocumentData) => {
       尚無任何歌曲，試著
       <NuxtLink
         to="/upload"
-        class="underline"
+        class="text-primary hover:underline"
       >
         上傳
       </NuxtLink>
