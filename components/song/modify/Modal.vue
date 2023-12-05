@@ -15,6 +15,8 @@ const emit = defineEmits<{
   (e: 'update-song', value: { id:string, value: DocumentData }): void
 }>()
 
+const { $toast } = useNuxtApp()
+
 const user = useCurrentUser()
 const db = useFirestore()
 const storage = useFirebaseStorage()
@@ -39,7 +41,14 @@ const isLoading = ref(false)
 
 const handleChange = (event: Event) => {
   const file = ((event.target as HTMLInputElement).files as FileList)[0]
-  if (file.size > 1 * 1024 * 1024 || !types.includes(file.type)) return
+  if (!types.includes(file.type)) {
+    $toast.error('檔案格式不符')
+    return
+  }
+  if (file.size > 1 * 1024 * 1024) {
+    $toast.error('檔案大小超過 1MB')
+    return
+  }
   upload.value = file
   reader.readAsDataURL(file)
 }
@@ -79,7 +88,7 @@ const onSubmit = handleSubmit(async (values) => {
       await updateDoc(songRef, { cover: url })
       values.cover = url
     } catch (error) {
-      console.log(error)
+      $toast.error('圖片上傳失敗')
     }
   }
   try {
@@ -90,7 +99,7 @@ const onSubmit = handleSubmit(async (values) => {
     })
     isModalOpen.value = false
   } catch (error) {
-    console.log(error)
+    $toast.error('歌曲更新失敗')
   }
   isLoading.value = false
 })

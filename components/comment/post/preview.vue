@@ -11,6 +11,8 @@ const emit = defineEmits<{
   (e: 'delete-comment', value: string): void
 }>()
 
+const { $toast } = useNuxtApp()
+
 const user = useCurrentUser()
 const db = useFirestore()
 
@@ -22,7 +24,7 @@ const handleDeleteComment = async () => {
     await deleteDoc(doc(db, 'comments', props.comment.id))
     emit('delete-comment', props.comment.id)
   } catch (error) {
-    console.log(error)
+    $toast.error('評論刪除失敗')
   }
   isLoading.value = false
 }

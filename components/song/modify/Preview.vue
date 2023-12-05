@@ -14,6 +14,8 @@ const emit = defineEmits<{
   (e: 'delete-song', value: string): void
 }>()
 
+const { $toast } = useNuxtApp()
+
 const user = useCurrentUser()
 const db = useFirestore()
 const storage = useFirebaseStorage()
@@ -35,7 +37,7 @@ const handleDeleteSong = async () => {
     await deleteDoc(doc(db, 'songs', props.song.id))
     emit('delete-song', props.song.id)
   } catch (error) {
-    console.log(error)
+    $toast.error('歌曲刪除失敗')
   }
   isLoading.value = false
 }

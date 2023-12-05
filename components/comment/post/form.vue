@@ -8,6 +8,8 @@ const emit = defineEmits<{
   (e: 'add-comment', value: DocumentData): void
 }>()
 
+const { $toast } = useNuxtApp()
+
 const route = useRoute()
 
 const user = useCurrentUser()
@@ -37,7 +39,7 @@ const onSubmit = handleSubmit(async (values, { resetForm }) => {
     emit('add-comment', snapshot)
     resetForm()
   } catch (error) {
-    console.log(error)
+    $toast.error('評論新增失敗')
   }
   isLoading.value = false
 })

@@ -4,6 +4,8 @@ import { ref as storageRef, uploadBytesResumable, getDownloadURL } from 'firebas
 import { v4 as uuidv4 } from 'uuid'
 import { Upload } from '@/types'
 
+const { $toast } = useNuxtApp()
+
 const user = useCurrentUser()
 const db = useFirestore()
 const storage = useFirebaseStorage()
@@ -12,7 +14,14 @@ const uploads = ref<Upload[]>([])
 
 const handleUploadFile = (files: File[]) => {
   files.forEach((file) => {
-    if (file.size > 10 * 1024 * 1024 || file.type !== 'audio/mpeg') return
+    if (file.type !== 'audio/mpeg') {
+      $toast.error('檔案格式不符')
+      return
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      $toast.error('檔案大小超過 10MB')
+      return
+    }
     const id = uuidv4()
     const songRef = doc(db, 'songs', id)
     const songStorageRef = storageRef(storage, `songs/${user.value?.uid}/${id}`)
@@ -52,7 +61,7 @@ const handleUploadFile = (files: File[]) => {
           await setDoc(songRef, song)
           uploads.value[index].state = 'success'
         } catch (error) {
-          console.log(error)
+          $toast.error('歌曲上傳失敗')
         }
       }
     )

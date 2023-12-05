@@ -5,6 +5,8 @@ import type { DocumentData } from 'firebase/firestore'
 import { IconPlayerPauseFilled, IconPlayerPlayFilled } from '@tabler/icons-vue'
 import { usePlayerStore } from '@/stores/player'
 
+const { $toast } = useNuxtApp()
+
 const route = useRoute()
 
 const db = useFirestore()
@@ -27,7 +29,7 @@ const getSongDocument = async () => {
       ...snapshot.data()
     }
   } catch (error) {
-    console.log(error)
+    $toast.error('歌曲不存在')
   }
 }
 
